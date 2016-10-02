@@ -26,11 +26,6 @@ public:
 	AsteroidColorizer();
 	~AsteroidColorizer();
 
-	void startConcurrentTint(const QColor& tintColor);
-
-	// copys all asteroidImages_ to the asteroidPixmaps_;
-	// convert the cached images to pixmaps this must happen in the gui thread
-	void imagesIntoPixmaps();
 
 	// taken from ImageTint in graphics dojo
 	// Tint an image with the specified color and return it as a new image
@@ -44,33 +39,16 @@ public:
 	void loadDefault();
 
 private:
-	// this functor calls tinted on a QList<QImage> but with argument color binded
-	struct TintList
-	{
-		TintList() : color(0,0,0) {}
-		inline void operator()(ImageList& images);
-		QColor color;
-	};
-
 	QStringList asteroidNames_;
 	QHash< QString, ImageList> defaultImages_;
 	QHash< QString, ImageList> asteroidImages_;
-    QHash< QString, ImageList> asteroidPixmaps_;
-	QFuture<void > future_; // a future that won't contain results
-	bool pixmapsSynchronized_; // true if asteroidImages_ have been converted to asteroidPixmaps_
 };
 
-void AsteroidColorizer::TintList::operator ()(ImageList& images)
-{
-   for(int i = 0; i< images.size(); ++i)
-   {
-	   images[i] = tinted(images[i],color);
-   }
-}
+
 
 ImageList AsteroidColorizer::imagesForAsteroid(const QString asteroidName)
 {
-	return asteroidPixmaps_.value(asteroidName);
+    return asteroidImages_.value(asteroidName);
 }
 
 

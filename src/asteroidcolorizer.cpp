@@ -3,14 +3,13 @@
 
 AsteroidColorizer::AsteroidColorizer()
 {
-	pixmapsSynchronized_ = false;
 	asteroidNames_ << "golevka" << "kleopatra" << "ky26" << "toutatis"; // << "bacchus" ;
 	loadDefault();
 }
 
 AsteroidColorizer::~AsteroidColorizer()
 {
-	future_.cancel();
+
 }
 
 void AsteroidColorizer::loadDefault()
@@ -18,13 +17,11 @@ void AsteroidColorizer::loadDefault()
 	if(!defaultImages_.isEmpty()) // then reuse old defaultImages
 	{
 		asteroidImages_ = defaultImages_;
-		imagesIntoPixmaps();
 		return;
 	}
 	foreach(QString name, asteroidNames_)
 	{
 		ImageList images;
-        ImageList pixmaps;
 		for(int i = 0; i< 32; ++i)
 		{
                         //load image
@@ -34,23 +31,10 @@ void AsteroidColorizer::loadDefault()
 			int newWidth = image.width() * 2;
 			QImage scaledImage = image.scaledToWidth(newWidth,Qt::SmoothTransformation).convertToFormat(QImage::Format_ARGB32);
 			images << scaledImage;
-                        pixmaps << scaledImage;
 		}
-		asteroidPixmaps_.insert(name,pixmaps);
-		pixmapsSynchronized_ = true;
 		defaultImages_.insert(name,images);
 		asteroidImages_ = defaultImages_;
 	}
-}
-
-void AsteroidColorizer::startConcurrentTint(const QColor& tintColor)
-{
-	// tint asteroids in seperate thead
-	TintList tintList; // functor
-	tintList.color = tintColor;
-	asteroidImages_ = defaultImages_;
-	future_ = QtConcurrent::map(asteroidImages_,tintList);
-	pixmapsSynchronized_ = false;
 }
 
 /*static*/ QImage AsteroidColorizer::tinted(const QImage &image, const QColor &color, QPainter::CompositionMode mode)
@@ -66,23 +50,3 @@ void AsteroidColorizer::startConcurrentTint(const QColor& tintColor)
 	return resultImage;
 }
 
-void AsteroidColorizer::imagesIntoPixmaps()
-{
-	if(future_.isRunning() || pixmapsSynchronized_ == true)
-		return;
-
-    QHash<QString, ImageList> tempAsteroidPixmaps;
-	foreach(QString name, asteroidNames_)
-	{
-		const ImageList& images = asteroidImages_.value(name);
-        ImageList pixmaps;
-		foreach(QImage image, images)
-		{
-            pixmaps << image;
-		}
-		tempAsteroidPixmaps.insert(name,pixmaps);
-	}
-	asteroidPixmaps_.clear();
-	asteroidPixmaps_ = tempAsteroidPixmaps;
-	pixmapsSynchronized_ = true;
-}

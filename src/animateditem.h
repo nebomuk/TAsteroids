@@ -84,6 +84,7 @@ public:
 	inline int frame() const { return currentFrame_; }
     inline int frameCount() const { return images_.size() *frameRateDivisor_;}
 
+
     QImage imageAt(int frame) const;
 
 	int loopsRemaining() const { return loopsRemaining_;}
@@ -113,10 +114,13 @@ public:
 	QRectF boundingRect() const;
 	QPainterPath shape() const; // returns bounding Rect
 
-protected:
-	void advance(int phase);
+    QColor getTintColor() const;
+    void setTintColor(const QColor &tintColor);
 
-	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+protected:
+    void advance(int phase);
+
+    void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 
 private:
 	void init();
@@ -138,6 +142,7 @@ private:
 	int loopsRemaining_;
 	qreal scaleFactor_;
 	QPointF offset_;
+    QColor tintColor_;
 
 	QSvgRenderer * renderer_;
 };

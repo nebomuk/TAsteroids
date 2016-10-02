@@ -187,7 +187,6 @@ function isNearPlayers(px,py)
 function phaseChange(newPhase)
 {
 		graphicsEngine.showText('Level ' + (newPhase+1),3000);
-		graphicsEngine.loadColoredAsteroids(gameState.phase);
 
 		for(i = 0; i< 3; ++i)
 		{

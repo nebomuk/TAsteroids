@@ -23,9 +23,9 @@
 GraphicsView::GraphicsView(QWidget * parent)
 	: QGraphicsView(parent)
 {
-	scriptProxy = NULL;
-	graphicsEngine = NULL;
-	highScoreCounter_ = NULL;
+    scriptProxy = Q_NULLPTR;
+    graphicsEngine = Q_NULLPTR;
+    highScoreCounter_ = Q_NULLPTR;
 	lastHighScore_ = 0;
 
 	this->setWindowTitle("TAsteroids");
@@ -118,7 +118,7 @@ void GraphicsView::clear()
 
 	bodyItems_.clear();
 
-	highScoreCounter_ = NULL;
+    highScoreCounter_ = Q_NULLPTR;
 
 	hitpointBars_.clear();
 	playerVehicles_.clear();

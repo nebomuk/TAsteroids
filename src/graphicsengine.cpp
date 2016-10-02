@@ -17,7 +17,7 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 
 	asteroidColorizer_ = new AsteroidColorizer();
 
-	colorList_ << QColor(150,0,0) << QColor(0,0,150) << QColor(0,150,0)
+    colorList_ << QColor(120,0,0) << QColor(0,0,150) << QColor(0,100,0)
 			<< QColor(50,0,150) << QColor(50,150,0)  << QColor(0,50,150)
 			<< QColor(150,50,0) << QColor(150,0,50) << QColor(0,150,50)
 			<< QColor(150,150,0) << QColor(0,150,150) << QColor(150,0,150);
@@ -57,6 +57,7 @@ GraphicsEngine::~GraphicsEngine()
 	delete contactListener_;
 	delete world_;
 	delete asteroidColorizer_;
+    delete soundEngine_;
 }
 
 void GraphicsEngine::initWorld()
@@ -309,7 +310,7 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 	asteroid->setOffset(Vehicle::center(asteroid)); // origin to center
 	asteroid->setPos(x,y);
 	asteroid->setDiplomacy(2);
-
+   // asteroid->setTintColor(this->colorList_.at(this->game));
 	asteroid->setScale(scale);
 	asteroid->setSize(asteroidSize);
 
@@ -338,15 +339,3 @@ Vehicle * GraphicsEngine::createUfoAt(qreal x, qreal y)
 	return ufo;
 }
 
-void GraphicsEngine::loadColoredAsteroids(int index)
-{
-	if(!asteroidColorizer_ || index < 0)
-		return;
-
-	if(index == 0)
-		asteroidColorizer_->loadDefault();
-
-	asteroidColorizer_->imagesIntoPixmaps();
-
-	asteroidColorizer_->startConcurrentTint(colorList_[index%colorList_.size()]);
-}

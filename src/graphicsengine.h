@@ -87,11 +87,6 @@ enum asteroidType
 	/*Q_INVOKABLE*/ AnimatedItem* createExplosionAt(const QPointF& position);
 	/*Q_INVOKABLE*/ AnimatedItem* createHitpointsBarAt(const QPointF& position);
 
-	// makes all colorized (tinted) asteroids available to createAsteroidAt
-	// and asynchronously begins to colorize (tint) a copy of all asteroids
-	// the index is only a hint which color should be applied next and should be the same as the current level (phase) number
-	Q_INVOKABLE void loadColoredAsteroids(int index = 0);
-
 	// clears all lists and stops all sounds
 	void clear();
 

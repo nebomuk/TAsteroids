@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include "svgcache.h"
+#include "asteroidcolorizer.h"
 
 AnimatedItem::AnimatedItem(QGraphicsItem * parent)
 	: QObject(), QGraphicsItem(parent)
@@ -19,7 +20,7 @@ void AnimatedItem::init()
 	frameRateDivisor_ = 1;
 	currentFrame_ = 0;
 
-	renderer_ = NULL;
+    renderer_ = Q_NULLPTR;
 
 	this->setCacheMode(QGraphicsItem::NoCache);
 }
@@ -31,9 +32,19 @@ void AnimatedItem::init()
 		return rendererHash;
 }
 
+QColor AnimatedItem::getTintColor() const
+{
+    return tintColor_;
+}
+
+void AnimatedItem::setTintColor(const QColor &tintColor)
+{
+    tintColor_ = tintColor;
+}
+
 void AnimatedItem::setRenderer(QSvgRenderer* renderer)
 {
-	renderer_ = renderer;
+    renderer_ = renderer;
     images_ << SvgCache::renderToImage(renderer_,scaleFactor_);
 }
 
@@ -119,7 +130,14 @@ void AnimatedItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * 
 	Q_UNUSED(widget);
 
     if(images_.size() > 0)
-        painter->drawImage(offset_,imageAt(currentFrame_));
+    {
+        QImage img = imageAt(currentFrame_);
+        if(tintColor_.isValid())
+        {
+            img = AsteroidColorizer::tinted(img,QColor(Qt::red),QPainter::CompositionMode_Overlay);
+        }
+        painter->drawImage(offset_,img);
+    }
 	else if(renderer())
 		renderer()->render(painter,QRectF(offset_,this->renderer()->defaultSize()));
 }
