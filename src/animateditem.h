@@ -59,8 +59,8 @@ public:
 	qreal width() const { return boundingRect_.width();}
 	qreal height() const { return boundingRect_.height();}
 
-	void addPixmap(const QPixmap & pixmap);
-	void addPixmaps(const QList<QPixmap> &pixmaps);
+    void addImage(const QImage & image);
+    void addImages(const ImageList &images);
 
 	// automatically creates 1 renderer for each filename that is shared among all AnimatedItem objects
 	// this is only for single frame objects
@@ -71,7 +71,7 @@ public:
 
 	// this virtual function is called by AnimatedItem if a new file is assigned
 	// the default implementation does nothing
-	virtual void fileChanged() {};
+    virtual void fileChanged() {}
 
 	// scale factor used for rendering
 	void setScaleFactor(qreal scale){ scaleFactor_ = scale;}
@@ -82,9 +82,9 @@ public:
 
 	void setFrame(int frame);
 	inline int frame() const { return currentFrame_; }
-	inline int frameCount() const { return pixmaps_.size() *frameRateDivisor_;}
+    inline int frameCount() const { return images_.size() *frameRateDivisor_;}
 
-	QPixmap pixmapAt(int frame) const;
+    QImage imageAt(int frame) const;
 
 	int loopsRemaining() const { return loopsRemaining_;}
 
@@ -107,7 +107,7 @@ public:
 	static QPointF center(QGraphicsItem * s)
 	{return QPointF(-s->boundingRect().width()/2, -s->boundingRect().height()/2);}
 
-	enum { Type = UserType+TYPE_ANIMATEDPIXMAPITEM};
+    enum { Type = UserType+TYPE_ANIMATEDITEM};
 	int type() const {return Type;} // Enable the use of qgraphicsitem_cast with this item.
 
 	QRectF boundingRect() const;
@@ -125,9 +125,9 @@ private:
 
 	QRectF boundingRect_;
 
-	QPixmap currentPixmap_;
+    QImage currentImage_;
 
-	PixmapList pixmaps_;
+    ImageList images_;
 
 	// reference to a hash that stores svgrenderers shared among all objects of AnimatedItem
 	static QHash<QString,QSvgRenderer*>& getRendererHash();

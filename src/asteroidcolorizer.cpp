@@ -24,7 +24,7 @@ void AsteroidColorizer::loadDefault()
 	foreach(QString name, asteroidNames_)
 	{
 		ImageList images;
-		PixmapList pixmaps;
+        ImageList pixmaps;
 		for(int i = 0; i< 32; ++i)
 		{
                         //load image
@@ -34,7 +34,7 @@ void AsteroidColorizer::loadDefault()
 			int newWidth = image.width() * 2;
 			QImage scaledImage = image.scaledToWidth(newWidth,Qt::SmoothTransformation).convertToFormat(QImage::Format_ARGB32);
 			images << scaledImage;
-                        pixmaps << QPixmap::fromImage(scaledImage);
+                        pixmaps << scaledImage;
 		}
 		asteroidPixmaps_.insert(name,pixmaps);
 		pixmapsSynchronized_ = true;
@@ -71,14 +71,14 @@ void AsteroidColorizer::imagesIntoPixmaps()
 	if(future_.isRunning() || pixmapsSynchronized_ == true)
 		return;
 
-	QHash<QString, PixmapList> tempAsteroidPixmaps;
+    QHash<QString, ImageList> tempAsteroidPixmaps;
 	foreach(QString name, asteroidNames_)
 	{
 		const ImageList& images = asteroidImages_.value(name);
-		PixmapList pixmaps;
+        ImageList pixmaps;
 		foreach(QImage image, images)
 		{
-			pixmaps << QPixmap::fromImage(image);
+            pixmaps << image;
 		}
 		tempAsteroidPixmaps.insert(name,pixmaps);
 	}

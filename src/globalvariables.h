@@ -17,7 +17,7 @@ static const float B2_TIMESTEP = 1.0f / 30.0f; // used by Box2D's world
 enum itemType
 {
 	TYPE_EMPTY = 0,
-	TYPE_ANIMATEDPIXMAPITEM = 2,
+    TYPE_ANIMATEDITEM = 2,
 	TYPE_MOVINGITEM = 3,
 	TYPE_VEHICLE = 4,
 };

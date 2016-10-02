@@ -34,12 +34,12 @@ void AnimatedItem::init()
 void AnimatedItem::setRenderer(QSvgRenderer* renderer)
 {
 	renderer_ = renderer;
-	pixmaps_ << SvgCache::renderToPixmap(renderer_,scaleFactor_);
+    images_ << SvgCache::renderToImage(renderer_,scaleFactor_);
 }
 
-QPixmap AnimatedItem::pixmapAt(int frame) const
+QImage AnimatedItem::imageAt(int frame) const
 {
-	return pixmaps_.empty() ? QPixmap() : pixmaps_.at(div(frame,frameRateDivisor_).quot);
+    return images_.empty() ? QImage() : images_.at(div(frame,frameRateDivisor_).quot);
 }
 
 void AnimatedItem::setFile(const QString& svgFile)
@@ -57,24 +57,24 @@ void AnimatedItem::setFile(const QString& svgFile)
 		rendererHashRef.insert(svgFile,renderer());
 	}
 
-	pixmaps_.clear();
-	pixmaps_ << SvgCache::renderToPixmap(renderer_,scaleFactor_);
+    images_.clear();
+    images_ << SvgCache::renderToImage(renderer_,scaleFactor_);
 	boundingRect_ = QRectF(offset_,renderer()->defaultSize());
 	fileChanged(); // virtual, does nothing by default
 }
 
-void AnimatedItem::addPixmap(const QPixmap & pixmap)
+void AnimatedItem::addImage(const QImage &image)
 {
-	pixmaps_+=pixmap;
+    images_+=image;
 	//currentPixmap_ = pixmapAt(currentFrame_);
-	boundingRect_ = QRectF(offset_,pixmapAt(currentFrame_).size());
+    boundingRect_ = QRectF(offset_,imageAt(currentFrame_).size());
 
 }
-void AnimatedItem::addPixmaps(const QList<QPixmap> &pixmaps)
+void AnimatedItem::addImages(const ImageList &images)
 {
-	pixmaps_+=pixmaps;
+    images_+=images;
 	//currentPixmap_ = pixmapAt(currentFrame_);
-	boundingRect_ = QRectF(offset_,pixmapAt(currentFrame_).size());
+    boundingRect_ = QRectF(offset_,imageAt(currentFrame_).size());
 }
 
 void AnimatedItem::setOffset(const QPointF &offset)
@@ -118,15 +118,15 @@ void AnimatedItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * 
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 
-	if(pixmaps_.size() > 0)
-		painter->drawPixmap(offset_,pixmapAt(currentFrame_));
+    if(images_.size() > 0)
+        painter->drawImage(offset_,imageAt(currentFrame_));
 	else if(renderer())
 		renderer()->render(painter,QRectF(offset_,this->renderer()->defaultSize()));
 }
 
 void AnimatedItem::setFrame(int value)
 {
-	int newFrame = value % (pixmaps_.size() * frameRateDivisor_); // operator  % has same precedence as *
+    int newFrame = value % (images_.size() * frameRateDivisor_); // operator  % has same precedence as *
 	if (currentFrame_ != newFrame)
 	{
 		currentFrame_ = newFrame;

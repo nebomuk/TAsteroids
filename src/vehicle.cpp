@@ -95,7 +95,7 @@ void Vehicle::endWormholeTravel()
 /*virtual*/ void Vehicle::fileChanged()
 {
 	// update wormhole effect image
-	sourceImage = this->pixmapAt(0).toImage().convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    sourceImage = this->imageAt(0).convertToFormat(QImage::Format_ARGB32_Premultiplied);
 	setupWormhole();
 	animate(wormholeFrame_);
 }

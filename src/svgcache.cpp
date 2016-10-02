@@ -6,33 +6,38 @@ SvgCache::SvgCache()
 	scaleFactor_ = 1.0;
 }
 
-/*static*/ QPixmap SvgCache::renderToPixmap(QSvgRenderer * renderer, qreal scaleFactor /* = 1.0 */)
+/*static*/ QImage SvgCache::renderToImage(QSvgRenderer * renderer, qreal scaleFactor /* = 1.0 */)
 {
 	if(!renderer)
-		return QPixmap();
+        return QImage();
 
 	if(!renderer->isValid())
 	{
 		qDebug("renderToPixmap: no valid svg file.");
-		return QPixmap();
+        return QImage();
 	}
 
-	QPixmap pixmap(renderer->defaultSize()*scaleFactor);
+    QImage image(renderer->defaultSize()*scaleFactor,QImage::Format_ARGB32_Premultiplied);
 
-	pixmap.fill(Qt::transparent);
-	QPainter painter(&pixmap);
+    image.fill(Qt::transparent);
+    QPainter painter(&image);
 	renderer->render(&painter);
-	return pixmap;
+    return image;
 }
 
 
 void SvgCache::update()
 {
-	pixmaps_.clear();
+    images_.clear();
 	for(int i = 0; i<svgRenderers_.size(); ++i)
 	{
 		QSvgRenderer * renderer = svgRenderers_[i];
 
-		pixmaps_.push_back(renderToPixmap(renderer,scaleFactor_));
+        images_.push_back(renderToImage(renderer,scaleFactor_));
 	}
+}
+
+QList<QImage> SvgCache::images() const
+{
+    return images_;
 }

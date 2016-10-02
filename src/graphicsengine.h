@@ -128,8 +128,8 @@ protected:
 	void initWorld();
 
 private:
-	PixmapList explosionPixmaps_;
-	PixmapList hitpointsBarPixmaps_;
+    ImageList explosionImages_;
+    ImageList hitpointsBarImages_;
 	QList<AnimatedItem*> explosions;
 	QList<Vehicle*> projectiles_;
 	QList<Vehicle*> asteroids_;

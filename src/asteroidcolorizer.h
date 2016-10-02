@@ -38,7 +38,7 @@ public:
 	static QImage tinted(const QImage &image, const QColor &color, QPainter::CompositionMode mode = QPainter::CompositionMode_Overlay);
 
 	// get the pixmaps for a particular asteroid
-	inline PixmapList pixmapsForAsteroid(const QString asteroidName);
+    inline ImageList imagesForAsteroid(const QString asteroidName);
 
 	// loads resource images and pixmaps into asteroidImages_ and asteroidPixmaps_
 	void loadDefault();
@@ -55,7 +55,7 @@ private:
 	QStringList asteroidNames_;
 	QHash< QString, ImageList> defaultImages_;
 	QHash< QString, ImageList> asteroidImages_;
-	QHash< QString, PixmapList> asteroidPixmaps_;
+    QHash< QString, ImageList> asteroidPixmaps_;
 	QFuture<void > future_; // a future that won't contain results
 	bool pixmapsSynchronized_; // true if asteroidImages_ have been converted to asteroidPixmaps_
 };
@@ -68,7 +68,7 @@ void AsteroidColorizer::TintList::operator ()(ImageList& images)
    }
 }
 
-PixmapList AsteroidColorizer::pixmapsForAsteroid(const QString asteroidName)
+ImageList AsteroidColorizer::imagesForAsteroid(const QString asteroidName)
 {
 	return asteroidPixmaps_.value(asteroidName);
 }

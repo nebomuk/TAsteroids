@@ -22,13 +22,13 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 			<< QColor(150,50,0) << QColor(150,0,50) << QColor(0,150,50)
 			<< QColor(150,150,0) << QColor(0,150,150) << QColor(150,0,150);
 
-	QPixmap first = QPixmap(":explosion_images/explosionBackground.png");
+    QImage first = QImage(":explosion_images/explosionBackground.png");
 	int explosionWidth = first.width();
-	explosionPixmaps_ << first.scaledToWidth(explosionWidth*3,Qt::SmoothTransformation);
+    explosionImages_ << first.scaledToWidth(explosionWidth*3,Qt::SmoothTransformation);
 	for(int i = 0; i <15; ++i)
 	{
-		QPixmap pixmap(":explosion_images/explosion" + QString::number(i)+".png");
-		explosionPixmaps_ << pixmap.scaledToWidth(explosionWidth*3,Qt::SmoothTransformation);
+        QImage image(":explosion_images/explosion" + QString::number(i)+".png");
+        explosionImages_ << image.scaledToWidth(explosionWidth*3,Qt::SmoothTransformation);
 	}
 
 	QList<QSvgRenderer*> renderers;
@@ -37,7 +37,7 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 
 	SvgCache * hitpointsBarCache = new SvgCache;
 	hitpointsBarCache->addSvgRenderers(renderers);
-	hitpointsBarPixmaps_ << hitpointsBarCache->pixmaps();
+    hitpointsBarImages_ << hitpointsBarCache->images();
 
 	hideTextTimer_.setSingleShot(true);
 	connect(&hideTextTimer_,SIGNAL(timeout()),this,SLOT(hideText()));
@@ -219,7 +219,7 @@ void GraphicsEngine::clear()
 AnimatedItem* GraphicsEngine::createExplosionAt(const QPointF& position)
 {
 	AnimatedItem * explosion = new AnimatedItem;
-	explosion->addPixmaps(explosionPixmaps_);
+    explosion->addImages(explosionImages_);
 	explosion->setZValue(5.0);
 	explosion->setFrameRateDivisor(2);
 	explosion->setPos(position);
@@ -235,7 +235,7 @@ AnimatedItem* GraphicsEngine::createHitpointsBarAt(const QPointF& position)
 {
 	AnimatedItem * hitpointsBar = new AnimatedItem;
 	hitpointsBar->setAdvancing(false);
-	hitpointsBar->addPixmaps(hitpointsBarPixmaps_);
+    hitpointsBar->addImages(hitpointsBarImages_);
 	hitpointsBar->setZValue(100.0);
 	//hitpointsBar->setOffset(AnimatedItem::center(hitpointsBar));
 	hitpointsBar->setPos(position);
@@ -294,10 +294,10 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 
 	switch(type)
 	{
-	case golevka:	asteroid->addPixmaps(asteroidColorizer_->pixmapsForAsteroid("golevka")); break;
-	case kleopatra: asteroid->addPixmaps(asteroidColorizer_->pixmapsForAsteroid("kleopatra")); break;
-	case ky26:		asteroid->addPixmaps(asteroidColorizer_->pixmapsForAsteroid("ky26")); break;
-	case toutatis:  asteroid->addPixmaps(asteroidColorizer_->pixmapsForAsteroid("toutatis")); break;
+    case golevka:	asteroid->addImages(asteroidColorizer_->imagesForAsteroid("golevka")); break;
+    case kleopatra: asteroid->addImages(asteroidColorizer_->imagesForAsteroid("kleopatra")); break;
+    case ky26:		asteroid->addImages(asteroidColorizer_->imagesForAsteroid("ky26")); break;
+    case toutatis:  asteroid->addImages(asteroidColorizer_->imagesForAsteroid("toutatis")); break;
 	default:
 		qDebug("GraphicsEngine::createAsteroidAt: invalid asteroidType");
 		return NULL;
@@ -313,7 +313,7 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 	asteroid->setScale(scale);
 	asteroid->setSize(asteroidSize);
 
-	QSize size = asteroid->pixmapAt(0).size()*scale;
+    QSize size = asteroid->imageAt(0).size()*scale;
 	// compute average side length
 
 	float side = (size.width() + size.height()) / 2.0f;
