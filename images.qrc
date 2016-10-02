@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="playerVehicle.svg">images/playerVehicle.svg</file>
+        <file>images/redBomb.svg</file>
+        <file>images/stars.png</file>
+        <file>images/exhaust.svg</file>
+        <file>images/shield.svg</file>
+        <file>images/purplePlayerVehicle.svg</file>
+        <file>images/purpleBomb.svg</file>
+        <file alias="playerVehicle1.svg">images/playerVehicle1.svg</file>
+        <file>images/purplePlayerVehicle1.svg</file>
+        <file>images/stars1.png</file>
+        <file alias="ufo.svg">images/ufo.svg</file>
+    </qresource>
+</RCC>

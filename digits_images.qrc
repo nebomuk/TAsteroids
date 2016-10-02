@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="train_digits.svg">digits_images/train_digits.svg</file>
+    </qresource>
+</RCC>

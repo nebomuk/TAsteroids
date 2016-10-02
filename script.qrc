@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="control.js">src/control.js</file>
+        <file alias="mainloop.js">src/mainloop.js</file>
+    </qresource>
+</RCC>

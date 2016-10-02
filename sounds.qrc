@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sounds/explosion.wav</file>
+        <file>sounds/fire.wav</file>
+        <file>sounds/vanish.wav</file>
+        <file>sounds/appear.wav</file>
+        <file>sounds/loop_shield.wav</file>
+        <file>sounds/loop_engine.wav</file>
+    </qresource>
+</RCC>

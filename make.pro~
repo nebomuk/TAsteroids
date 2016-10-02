@@ -1,0 +1,3 @@
+TEMPLATE = subdirs
+CONFIG += ordered
+SUBDIRS += Box2D tasteroids6 tasteroidsmenu3 app

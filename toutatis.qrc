@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>toutatis/toutatis0.png</file>
+        <file>toutatis/toutatis1.png</file>
+        <file>toutatis/toutatis2.png</file>
+        <file>toutatis/toutatis3.png</file>
+        <file>toutatis/toutatis4.png</file>
+        <file>toutatis/toutatis5.png</file>
+        <file>toutatis/toutatis6.png</file>
+        <file>toutatis/toutatis7.png</file>
+        <file>toutatis/toutatis8.png</file>
+        <file>toutatis/toutatis9.png</file>
+        <file>toutatis/toutatis10.png</file>
+        <file>toutatis/toutatis11.png</file>
+        <file>toutatis/toutatis12.png</file>
+        <file>toutatis/toutatis13.png</file>
+        <file>toutatis/toutatis14.png</file>
+        <file>toutatis/toutatis15.png</file>
+        <file>toutatis/toutatis16.png</file>
+        <file>toutatis/toutatis17.png</file>
+        <file>toutatis/toutatis18.png</file>
+        <file>toutatis/toutatis19.png</file>
+        <file>toutatis/toutatis20.png</file>
+        <file>toutatis/toutatis21.png</file>
+        <file>toutatis/toutatis22.png</file>
+        <file>toutatis/toutatis23.png</file>
+        <file>toutatis/toutatis24.png</file>
+        <file>toutatis/toutatis25.png</file>
+        <file>toutatis/toutatis26.png</file>
+        <file>toutatis/toutatis27.png</file>
+        <file>toutatis/toutatis28.png</file>
+        <file>toutatis/toutatis29.png</file>
+        <file>toutatis/toutatis30.png</file>
+        <file>toutatis/toutatis31.png</file>
+    </qresource>
+</RCC>

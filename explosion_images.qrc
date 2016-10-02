@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/" >
+	<!-- explosion14.png is the same as explosionBackground -->
+        <file>explosion_images/explosionBackground.png</file>
+	<file>explosion_images/explosion14.png</file>
+        <file>explosion_images/explosion0.png</file>
+        <file>explosion_images/explosion2.png</file>
+        <file>explosion_images/explosion4.png</file>
+        <file>explosion_images/explosion6.png</file>
+        <file>explosion_images/explosion8.png</file>
+        <file>explosion_images/explosion10.png</file>
+        <file>explosion_images/explosion11.png</file>
+        <file>explosion_images/explosion12.png</file>
+        <file>explosion_images/explosion13.png</file>
+        <file>explosion_images/explosion1.png</file>
+        <file>explosion_images/explosion3.png</file>
+        <file>explosion_images/explosion5.png</file>
+        <file>explosion_images/explosion7.png</file>
+        <file>explosion_images/explosion9.png</file>	
+    </qresource>
+</RCC>

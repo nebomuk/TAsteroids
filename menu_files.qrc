@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>menu_files/bacchus.obj</file>
+        <file>menu_files/golevka.obj</file>
+        <file>menu_files/kleopatra.obj</file>
+        <file>menu_files/ky26.obj</file>
+        <file>menu_files/toutatis.obj</file>
+        <file alias="OCRA.ttf">menu_files/OCRA.ttf</file>
+        <file alias="menu.png">menu_files/menu.png</file>
+        <file alias="icon.png">menu_files/icon.png</file>
+        <file alias="cursor.png">menu_files/cursor.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>golevka/golevka0.png</file>
+        <file>golevka/golevka1.png</file>
+        <file>golevka/golevka2.png</file>
+        <file>golevka/golevka3.png</file>
+        <file>golevka/golevka4.png</file>
+        <file>golevka/golevka5.png</file>
+        <file>golevka/golevka6.png</file>
+        <file>golevka/golevka7.png</file>
+        <file>golevka/golevka8.png</file>
+        <file>golevka/golevka9.png</file>
+        <file>golevka/golevka10.png</file>
+        <file>golevka/golevka11.png</file>
+        <file>golevka/golevka12.png</file>
+        <file>golevka/golevka13.png</file>
+        <file>golevka/golevka14.png</file>
+        <file>golevka/golevka15.png</file>
+        <file>golevka/golevka16.png</file>
+        <file>golevka/golevka17.png</file>
+        <file>golevka/golevka18.png</file>
+        <file>golevka/golevka19.png</file>
+        <file>golevka/golevka20.png</file>
+        <file>golevka/golevka21.png</file>
+        <file>golevka/golevka22.png</file>
+        <file>golevka/golevka23.png</file>
+        <file>golevka/golevka24.png</file>
+        <file>golevka/golevka25.png</file>
+        <file>golevka/golevka26.png</file>
+        <file>golevka/golevka27.png</file>
+        <file>golevka/golevka28.png</file>
+        <file>golevka/golevka29.png</file>
+        <file>golevka/golevka30.png</file>
+        <file>golevka/golevka31.png</file>
+    </qresource>
+</RCC>
