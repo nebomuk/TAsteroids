@@ -26,8 +26,6 @@ class GraphicsView : public QGraphicsView
 public:
 	GraphicsView(QWidget * parent = 0);
 	~GraphicsView();
-	void setPlayerCount(int playerCount){ gameState->setPlayerCount(playerCount); }
-	int playerCount() const { return gameState->playerCount(); }
 	int lastHighScore() const; // returns the value of the highScoreCounter item
 	// lastHighscore_ is updated when clear() is called (the window closes)
 
@@ -89,7 +87,7 @@ private:
 	MechanicalCounter * highScoreCounter_;
 
 	QPointer<ScriptProxy> scriptProxy;
-	GameState * gameState;
+
 
 	QPointF borderSceneRectDist_; // distance between the window borders and the scene rect
 	QList<QGraphicsBox2DPolygonItem*> bodyItems_;

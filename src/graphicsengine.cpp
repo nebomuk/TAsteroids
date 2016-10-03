@@ -6,6 +6,7 @@
 #include "contactlistener.h"
 #include "vehicle.h"
 #include "soundengine.h"
+#include "gamestate.h"
 
 GraphicsEngine::GraphicsEngine(QObject *parent) :
 	QObject(parent)
@@ -24,11 +25,11 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 
     QImage first = QImage(":explosion_images/explosionBackground.png");
 	int explosionWidth = first.width();
-    explosionImages_ << first.scaledToWidth(explosionWidth*3,Qt::SmoothTransformation);
+    explosionImages_ << first.scaledToWidth(qRound(explosionWidth*1.5f),Qt::SmoothTransformation);
 	for(int i = 0; i <15; ++i)
 	{
         QImage image(":explosion_images/explosion" + QString::number(i)+".png");
-        explosionImages_ << image.scaledToWidth(explosionWidth*3,Qt::SmoothTransformation);
+        explosionImages_ << image.scaledToWidth(qRound(explosionWidth*1.5f),Qt::SmoothTransformation);
 	}
 
 	QList<QSvgRenderer*> renderers;
@@ -44,6 +45,7 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 
 	destroyedAsteroidCount_ = 0;
 
+    gameState_ = new GameState(this);
 	soundEngine_ = new SoundEngine(this);
 	QStringList soundFiles = QDir(":sounds/").entryList();
 	for(int i = 0; i< soundFiles.size(); ++i)
@@ -57,7 +59,6 @@ GraphicsEngine::~GraphicsEngine()
 	delete contactListener_;
 	delete world_;
 	delete asteroidColorizer_;
-    delete soundEngine_;
 }
 
 void GraphicsEngine::initWorld()
@@ -75,9 +76,15 @@ void GraphicsEngine::initWorld()
 	world_->SetContactListener(contactListener_);
 }
 
+GameState *GraphicsEngine::gameState() const
+{
+    return gameState_;
+}
+
+
 void GraphicsEngine::processExplosions()
 {
-	for(int i = 0; i < explosions.size(); ++i)
+    for(int i = 0; i < explosions.size(); ++i)
 	{
 		AnimatedItem * explosion = explosions[i];
 
@@ -158,7 +165,10 @@ void GraphicsEngine::processUfos()
 			continue;
 		}
 		if(ufo->hitpoints() <= 0)
-                        createExplosionAt(ufo->pos())->setTransform(QTransform::fromScale(0.4,0.4));
+        {
+                        AnimatedItem * explosion = createExplosionAt(ufo->pos());
+                        explosion->setTransform(QTransform::fromScale(0.7,0.7));
+        }
 
 		if(ufo->hitpoints() <= 0 || ufo->wormholeState() == Vehicle::inside)
 		{
@@ -282,9 +292,9 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 
 	switch(asteroidSize)
 	{
-	case 2: scale = 1.0; break;
-	case 1: scale = 0.5; break;
-	case 0: scale = 0.25; break;
+    case 2: scale = 2.0; break;
+    case 1: scale = 1.0; break;
+    case 0: scale = 0.5; break;
 	default:;
 	}
 
@@ -301,7 +311,7 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
     case toutatis:  asteroid->addImages(asteroidColorizer_->imagesForAsteroid("toutatis")); break;
 	default:
 		qDebug("GraphicsEngine::createAsteroidAt: invalid asteroidType");
-		return NULL;
+        return Q_NULLPTR;
 	}
 	int startFrame = qrand() % 32;
 	asteroid->setFrame(startFrame);
@@ -310,7 +320,10 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 	asteroid->setOffset(Vehicle::center(asteroid)); // origin to center
 	asteroid->setPos(x,y);
 	asteroid->setDiplomacy(2);
-   // asteroid->setTintColor(this->colorList_.at(this->game));
+    if(gameState_->phase() > 0)
+    {
+        asteroid->setTintColor(colorList_.at(gameState()->phase() % (colorList_.size()-1)));
+    }
 	asteroid->setScale(scale);
 	asteroid->setSize(asteroidSize);
 

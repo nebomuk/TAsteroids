@@ -94,9 +94,11 @@ enum asteroidType
 	template<class T>
 	T * createTAt(const QPointF& position = QPointF(), const QString& svg = QString());
 
+    GameState *gameState() const;
+
 public slots:
 
-	// these slots create an item at the specified position with the vector graphic svg
+    // these slots create an item at the specified position with the vector graphic svg
 
 	Vehicle * createVehicleAt(const QPointF& position = QPointF(), const QString& svg = QString());
 	inline Vehicle *  createVehicleAt(  qreal xPos, qreal yPos, const QString& svg = QString());
@@ -143,6 +145,7 @@ private:
 	QTimer hideTextTimer_;
 
 	SoundEngine * soundEngine_;
+    GameState *gameState_;
 };
 
 void GraphicsEngine::appendProjectile(Vehicle* projectile)

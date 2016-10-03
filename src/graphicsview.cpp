@@ -39,8 +39,8 @@ GraphicsView::GraphicsView(QWidget * parent)
 	dataLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/tasteroids/";
 #endif
 
-	gameState = new GameState;
-	readSettings();
+
+
 
 	// disable scroll bars
 	this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -74,6 +74,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
 	graphicsEngine = new GraphicsEngine(this);
 	graphicsEngine->setScene(scene);
+    readSettings();
 
 	// creates all items
 	//restart();
@@ -83,7 +84,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
 GraphicsView::~GraphicsView()
 {
-	delete gameState;
+
 	clear();
 	delete graphicsEngine;
 }
@@ -104,6 +105,7 @@ void GraphicsView::clear()
 		lastHighScore_ = highScoreCounter_->value();
 
 	delete scriptProxy;
+    scriptProxy = Q_NULLPTR;
 
 	foreach(b2Body* body, groundBodies_)
 		graphicsEngine->world()->DestroyBody(body);
@@ -118,6 +120,7 @@ void GraphicsView::clear()
 
 	bodyItems_.clear();
 
+    //delete highScoreCounter_; // crashes
     highScoreCounter_ = Q_NULLPTR;
 
 	hitpointBars_.clear();
@@ -144,7 +147,7 @@ QGraphicsRectItem * GraphicsView::addRect(QPointF pos, QSizeF size)
 
 void GraphicsView::populate()
 {
-	gameState->setPhase(gameState->initialPhase());
+    graphicsEngine->gameState()->setPhase(graphicsEngine->gameState()->initialPhase());
 	graphicsEngine->setDestroyedAsteroidCount(0);
 	setupScript();
 
@@ -182,7 +185,7 @@ void GraphicsView::populate()
 
 	// since we can't set the polys inside the script we must retrieve the spaceship-objects from the script
 	// and do it here
-	for(int i = 0; i< gameState->playerCount(); ++i)
+    for(int i = 0; i< graphicsEngine->gameState()->playerCount(); ++i)
 	{
 	// object from script
 	QScriptValue playerVehicles = scriptProxy->engine()->globalObject().property("playerVehicles");
@@ -441,7 +444,7 @@ void GraphicsView::setupScript()
 	connect(this,SIGNAL(signalKeyRelease(int)),scriptProxy,SIGNAL(signalKeyRelease(int)));
 
 
-	scriptProxy->newQObjectByName(gameState,"gameState", QScriptEngine::QtOwnership,
+    scriptProxy->newQObjectByName(graphicsEngine->gameState(),"gameState", QScriptEngine::QtOwnership,
 									QScriptEngine::ExcludeSuperClassProperties |
 									QScriptEngine::ExcludeSuperClassMethods);
 	scriptProxy->newQObjectByName(graphicsEngine,"graphicsEngine", QScriptEngine::QtOwnership,
@@ -479,7 +482,7 @@ void GraphicsView::readSettings()
 	QSettings settings(dataLocation + "tasteroids.ini", QSettings::IniFormat,this);
 	QString className = this->metaObject()->className();
 	this->restoreGeometry(settings.value(className + "/geometry",QByteArray()).toByteArray());
-	gameState->setInitialPhase(settings.value("phase",0).toInt());
+    graphicsEngine->gameState()->setInitialPhase(settings.value("phase",0).toInt());
 }
 
 // save window geometry

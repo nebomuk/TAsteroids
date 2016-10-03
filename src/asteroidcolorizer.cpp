@@ -28,9 +28,10 @@ void AsteroidColorizer::loadDefault()
                         QImage image(":" + name + "/" + name + QString::number(i) + ".png");
                         image = image.convertToFormat(QImage::Format_Indexed8);
                             image.setColor(image.pixelIndex(0,0),QColor(Qt::transparent).rgba()); // cut out pink background
-			int newWidth = image.width() * 2;
-			QImage scaledImage = image.scaledToWidth(newWidth,Qt::SmoothTransformation).convertToFormat(QImage::Format_ARGB32);
-			images << scaledImage;
+//			int newWidth = image.width() * 2;
+//			QImage scaledImage = image.scaledToWidth(newWidth,Qt::SmoothTransformation).convertToFormat(QImage::Format_ARGB32);
+//			images << scaledImage;
+            images << image;
 		}
 		defaultImages_.insert(name,images);
 		asteroidImages_ = defaultImages_;

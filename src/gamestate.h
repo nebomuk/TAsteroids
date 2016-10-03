@@ -12,7 +12,7 @@ class GameState : public QObject
 	Q_PROPERTY(int playerCount READ playerCount WRITE setPlayerCount)
 
 public:
-	GameState() : phase_(0), initialPhase_(0), playerCount_(1) {}
+    GameState(QObject * parent = Q_NULLPTR) : QObject(parent), phase_(0), initialPhase_(0), playerCount_(1) {}
 	void setPhase(int phase){phase_ = phase; emit signalPhaseChanged(phase);}
 	int phase() const { return phase_;}
 	void setInitialPhase(int b){initialPhase_ = b;}
