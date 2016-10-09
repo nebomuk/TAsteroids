@@ -4,6 +4,8 @@
 #include <QDir>
 #include <QScriptValue>
 #include <QMessageBox>
+#include <QEvent>
+#include <QGestureEvent>
 #include "graphicsview.h"
 #include "globalvariables.h"
 #include "vehicle.h"
@@ -42,6 +44,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
 
 
+
 	// disable scroll bars
 	this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
 	this->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -61,6 +64,15 @@ GraphicsView::GraphicsView(QWidget * parent)
 										|QGraphicsView::DontSavePainterState
 										|QGraphicsView::DontAdjustForAntialiasing);
 	//*/
+
+    // pan and swipe gestures only work with 2 fingers
+    QList<Qt::GestureType> gestures;
+    gestures << Qt::TapGesture << Qt::TapAndHoldGesture;
+    foreach(Qt::GestureType gesture, gestures)
+    {
+         this->viewport()->grabGesture(gesture);
+    }
+    viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
 
 	this->setRenderHint(QPainter::Antialiasing,false);
 
@@ -87,6 +99,53 @@ GraphicsView::~GraphicsView()
 
 	clear();
 	delete graphicsEngine;
+}
+
+/*virtual*/ bool GraphicsView::viewportEvent(QEvent *event)
+{
+    if (event->type() == QEvent::Gesture)
+    {
+        QGestureEvent* e = static_cast<QGestureEvent*>(event);
+        //QGesture* gesture = e->gesture(Qt::TapGesture);
+        QList<QGesture*> gestures = e->gestures();
+        foreach(QGesture* gesture, gestures)
+        {
+            Qt::GestureType type = gesture->gestureType();
+            if(type == Qt::TapGesture)
+            {
+                if(gesture->state() == Qt::GestureStarted)
+                {
+                    qDebug() << "Tap Gesture started";
+                    emit signalKeyPress(Qt::Key_Space);
+                }
+                else if(gesture->state() == Qt::GestureFinished)
+                {
+                    qDebug() << "Tap Gesture stopped";
+                    emit signalKeyRelease(Qt::Key_Space);
+                }
+            }
+//            else if(type == Qt::TapAndHoldGesture)
+//            {
+//                if(gesture->state() == Qt::GestureStarted)
+//                {
+//                    qDebug() << "Tap and hold Gesture started";
+//                    emit signalKeyPress(Qt::Key_Up);
+//                }
+//                else if(gesture->state() == Qt::GestureFinished)
+//                {
+//                    qDebug() << "Tap and hold Gesture stopped";
+//                    emit signalKeyRelease(Qt::Key_Up);
+//                }
+//            }
+        }
+
+        return true;
+    }
+//    else if (event->type() == QEvent::TouchBegin)
+//    {
+//      return false;
+//    }
+    else return QGraphicsView::viewportEvent(event);
 }
 
 void GraphicsView::restart()

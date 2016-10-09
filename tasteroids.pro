@@ -7,6 +7,11 @@ win32:{
 	INCLUDEPATH += SDL/include
 	QMAKE_LIBDIR += SDL
 }
+android {
+    QT += androidextras
+    SOURCES += src/androidhelper.cpp #my android specific cpp file
+    HEADERS += src/androidhelper.h   #my android specific header file
+}
 #CONFIG += c++11
 CONFIG += create_prl
 CONFIG += warn_on

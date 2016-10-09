@@ -2,6 +2,9 @@
 ScriptProxy.signalKeyPress.connect(onKeyPress);
 ScriptProxy.signalKeyRelease.connect(onKeyRelease);
 
+ScriptProxy.signalGestureStarted.connect(onGestureStarted);
+ScriptProxy.signalGestureFinished.connect(onGestureFinished);
+
 //coordinate system 0,0 of playerVehicles[1] is in topleft corner
 // angles are degree by default
 
@@ -86,13 +89,29 @@ function startWormholeTravel(/*Vehicle* */ vehicle)
 	soundEngine.play('vanish.wav');
 }
 
+function onGestureStarted(gesture)
+{
+    if(gesture === Qt.TapGesture)
+    {
+        startAcceleration(playerVehicles[0]);
+    }
+}
+
+function onGestureFinished(gesture)
+{
+    if(gesture === Qt.TapGesture)
+    {
+        stopAcceleration(playerVehicles[0]);
+    }
+}
+
 function onKeyPress(key)
 	{
 
 	if(!isNullQObject(playerVehicles[0])
 		&& playerVehicles[0].control == true && playerVehicles[0].wormholeState == Vehicle.outside)
 	switch(key)
-	{
+	{      
 		case Qt.Key_Up:
 		{
 			startAcceleration(playerVehicles[0]);

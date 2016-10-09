@@ -29,6 +29,8 @@ public:
 signals:
 	void signalKeyPress(int);
 	void signalKeyRelease(int);
+    void signalGestureStarted(int);
+    void signalGestureFinished(int);
 	void signalTimerEvent();
 
 private:

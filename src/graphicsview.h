@@ -54,10 +54,11 @@ protected:
 	QGraphicsRectItem * addRect(QPointF pos, QSizeF size);
 
 	// events
-	virtual void timerEvent(QTimerEvent* event);
-	void resizeEvent(QResizeEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void keyReleaseEvent(QKeyEvent *event);
+    virtual void timerEvent(QTimerEvent* event) Q_DECL_OVERRIDE;
+    virtual void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    virtual void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    virtual void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    virtual bool viewportEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 	// save window geometry
 	void closeEvent(QCloseEvent *event);
