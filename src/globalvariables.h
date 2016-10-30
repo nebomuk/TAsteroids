@@ -35,6 +35,7 @@ class GameState;
 class ContactListener;
 class AsteroidColorizer;
 class SoundEngine;
+class GraphicsSoftButton;
 
 typedef QList<QImage> ImageList;
 typedef QList<QPixmap> PixmapList;

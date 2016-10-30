@@ -4,34 +4,35 @@
 #include <QGraphicsView>
 #include <QResizeEvent>
 #include <QDir>
-#include <QGLWidget>
-#include "openglscene.h"
 
 class View : public QGraphicsView
 {
 	Q_OBJECT
 public:
-	View(QWidget * parent = NULL) : QGraphicsView(parent)
+        View(QWidget * parent = Q_NULLPTR) : QGraphicsView(parent)
 	{
-		setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
-		setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-		setScene(new OpenGLScene);
+//            QGLFormat format(QGL::SampleBuffers);
+//            format.setVersion(1,1);
+//            setViewport(new QGLWidget(format));
+//         //setViewport(new QOpenGLWidget(this));
+//		setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+//		setScene(new OpenGLScene);
 	}
 
 public slots:
 	void loadRandomModel(int unused = 0)
 	{
-		Q_UNUSED(unused);
-		QStringList asteroidModels = QDir(":menu_files/").entryList();
+//		Q_UNUSED(unused);
+//		QStringList asteroidModels = QDir(":menu_files/").entryList();
 
-		if(!asteroidModels.empty())
-		{
-			int randomIndex =  qrand() % asteroidModels.size();
+//		if(!asteroidModels.empty())
+//		{
+//			int randomIndex =  qrand() % asteroidModels.size();
 
-			OpenGLScene * glscene = qobject_cast<OpenGLScene*>(scene());
-			if(glscene)
-				glscene->loadModel(":menu_files/" + asteroidModels[randomIndex]);
-		}
+//			OpenGLScene * glscene = qobject_cast<OpenGLScene*>(scene());
+//			if(glscene)
+//				glscene->loadModel(":menu_files/" + asteroidModels[randomIndex]);
+//		}
 	}
 
 protected:

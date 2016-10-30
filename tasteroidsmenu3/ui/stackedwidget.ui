@@ -515,7 +515,7 @@
    <bool>false</bool>
   </property>
   <property name="currentIndex">
-   <number>4</number>
+   <number>2</number>
   </property>
   <widget class="QWidget" name="page">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -628,14 +628,14 @@
       <x>30</x>
       <y>50</y>
       <width>450</width>
-      <height>276</height>
+      <height>289</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>TAsteroids 0.6</string>
+        <string>TAsteroids 0.7</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -645,7 +645,7 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Copyright © 2010</string>
+        <string>Copyright © 2016</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -665,7 +665,7 @@
      <item>
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Alexej Cerepanov</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -804,12 +804,6 @@
        <attribute name="verticalHeaderHighlightSections">
         <bool>false</bool>
        </attribute>
-       <attribute name="horizontalHeaderHighlightSections">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="verticalHeaderHighlightSections">
-        <bool>false</bool>
-       </attribute>
       </widget>
      </item>
      <item>
@@ -830,7 +824,7 @@
   <customwidget>
    <class>HighScoreView</class>
    <extends>QTableView</extends>
-   <header>highscoreview.h</header>
+   <header>src/highscoreview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

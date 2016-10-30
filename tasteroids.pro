@@ -79,7 +79,8 @@ HEADERS += src/vehicle.h \
     src/Box2D/Dynamics/b2WorldCallbacks.h \
     src/Box2D/Box2D.h \
     src/mocksound.h \
-    src/sound.h
+    src/sound.h \
+    src/graphicssoftbutton.h
 SOURCES += src/vehicle.cpp \
 	src/movingitem.cpp \
 	src/graphicsview.cpp \
@@ -124,7 +125,8 @@ SOURCES += src/vehicle.cpp \
     src/Box2D/Dynamics/b2World.cpp \
     src/Box2D/Dynamics/b2WorldCallbacks.cpp \
     src/mocksound.cpp \
-    src/sound.cpp
+    src/sound.cpp \
+    src/graphicssoftbutton.cpp
 RESOURCES = hitpointsBar_images.qrc \
 	digits_images.qrc \
 	images.qrc \

@@ -14,8 +14,11 @@
 #include "graphicsengine.h"
 #include "mechanicalcounter.h"
 #include "soundengine.h"
+#include "graphicssoftbutton.h"
 //#include "qgl.h"
 
+#include <QGraphicsColorizeEffect>
+#include <QGraphicsSvgItem>
 #include <QtDebug>
 
 // note internal resolution is 1600*1200 for positions of items
@@ -265,6 +268,26 @@ void GraphicsView::populate()
 
 	scene->addItem(highScoreCounter_);
 
+
+#ifdef Q_OS_ANDROID
+    QList<GraphicsSoftButton*> buttons;
+    buttons << new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
+    buttons << new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
+    buttons << new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
+    for(int i = 0; i< buttons.size(); ++i)
+    {
+        GraphicsSoftButton * item = buttons[i];
+        item->setZValue(100.0);
+        item->setPos(QPointF(1600.0 + borderSceneRectDist_.x() -128-i*256,-128.0));
+        item->scaleToWidth(128.0);
+        scene->addItem(item);
+        softButtons_ << item;
+    }
+#endif
+
+
+
+
 	// TimeoutInterval is a global variable and controls the framerate 
 	timer->start(TimeoutInterval,this); // starting global timer here
 }
@@ -398,7 +421,7 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 			}
 			else
 			{
-                                graphicsEngine->createExplosionAt(playerVehicles_[i]->pos())->setTransform(QTransform::fromScale(0.4, 0.4));
+                graphicsEngine->createExplosionAt(playerVehicles_[i]->pos())->setTransform(QTransform::fromScale(0.4, 0.4));
 				hitpointBars_[i]->setFrame(0);
 				delete playerVehicles_[i]; // playerVehicle is automatically set to NULL
 				playerVehicles_[i] = NULL;

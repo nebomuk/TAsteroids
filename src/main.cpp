@@ -20,6 +20,7 @@ int main(int argc, char ** argv)
 	//									   1,1,2);
 
 
+
     // background image and tap gesture only work in landscape
 #ifdef Q_OS_ANDROID
     AndroidHelper helper;

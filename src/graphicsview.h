@@ -87,6 +87,8 @@ private:
 	QList<AnimatedItem*> hitpointBars_;
 	MechanicalCounter * highScoreCounter_;
 
+    QList<GraphicsSoftButton* > softButtons_;
+
 	QPointer<ScriptProxy> scriptProxy;
 
 

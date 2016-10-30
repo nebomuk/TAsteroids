@@ -11,5 +11,9 @@
         <file>images/purplePlayerVehicle1.svg</file>
         <file>images/stars1.png</file>
         <file alias="ufo.svg">images/ufo.svg</file>
+        <file>images/ic_filter_tilt_shift_48px.svg</file>
+        <file>images/ic_rotate_left_48px.svg</file>
+        <file>images/ic_rotate_right_48px.svg</file>
+        <file>images/black_hole.svg</file>
     </qresource>
 </RCC>

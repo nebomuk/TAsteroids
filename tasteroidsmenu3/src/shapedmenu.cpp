@@ -14,7 +14,7 @@ ShapedMenu::ShapedMenu(QWidget *parent)
 	: QWidget(parent, Qt::FramelessWindowHint),
 	background_(":menu.png")
 {
-	gameView_ = NULL;
+        gameView_ = Q_NULLPTR;
 	playerCount_ = 1;
 
 	QAction *quitAction = new QAction(tr("E&xit"), this);
@@ -44,19 +44,19 @@ ShapedMenu::ShapedMenu(QWidget *parent)
 void  ShapedMenu::startGame()
 {
 
-	if(!gameView_)
-	{
-		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-		gameView_ = new GraphicsView; // processes lots of images
-		// must connect only once!
-		connect(gameView_,SIGNAL(signalClose()),this,SLOT(showHighscore()),Qt::QueuedConnection);
-		QApplication::restoreOverrideCursor();
-	}
-	gameView_->setPlayerCount(playerCount_);
-	gameView_->restart();
+//	if(!gameView_)
+//	{
+//		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+//		gameView_ = new GraphicsView; // processes lots of images
+//		// must connect only once!
+//		connect(gameView_,SIGNAL(signalClose()),this,SLOT(showHighscore()),Qt::QueuedConnection);
+//		QApplication::restoreOverrideCursor();
+//	}
+//        //gameView_->setPlayerCount(playerCount_);
+//	gameView_->restart();
 
-	gameView_->show();
-	this->hide();
+//	gameView_->show();
+//	this->hide();
 }
 
 // todo: remove this and use QueuedConnection
@@ -110,7 +110,7 @@ void ShapedMenu::showHighscore()
 	return;
 
 	int highScore;
-	highScore = gameView_->lastHighScore();
+        //highScore = gameView_->lastHighScore();
 
 	stackedWidget_->highScoreView()->appendHighScore(tr("Please enter your name"),highScore);
 	stackedWidget_->highScoreView()->editLastInsertedName();
