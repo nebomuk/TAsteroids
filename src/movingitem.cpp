@@ -58,6 +58,8 @@ void MovingItem::setupBody()
 	// cast to base class, because we don't want to cast polymorph pointers to void*
 	QGraphicsItem * basePointer = static_cast<QGraphicsItem*>(this);
 	body_->SetUserData(static_cast<void*>(basePointer)); // body saves pointer to this item
+    body_->WakeUp();
+    body_->AllowSleeping(false);
 }
 
 void MovingItem::applyPhysics(b2World *world, const QPolygonF &poly)

@@ -1,7 +1,6 @@
 TEMPLATE = app
 TARGET = tasteroids
-#TEMPLATE = lib
-CONFIG += staticlib
+CONFIG += c++11
 win32:{
 	LIBS += -lSDL.dll
 	INCLUDEPATH += SDL/include

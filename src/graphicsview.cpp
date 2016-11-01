@@ -207,6 +207,22 @@ QGraphicsRectItem * GraphicsView::addRect(QPointF pos, QSizeF size)
 	return groundItem;
 }
 
+void GraphicsView::addPolygons()
+{
+    QPolygonF poly;
+    poly << QPointF(0, -10)*5 << QPointF(-5, 0)*5 << QPointF(5, 0)*5;
+    for (int i = 0; i < 3; ++i) {
+        QGraphicsBox2DPolygonItem *polygon = new QGraphicsBox2DPolygonItem(graphicsEngine->world());
+        polygon->setPos(600, -400);
+        polygon->setRotation(qrand() % 360);
+        polygon->setPolygon(poly);
+        polygon->setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
+        polygon->setup();
+        bodyItems_ << polygon;
+        scene->addItem(polygon);
+    }
+}
+
 void GraphicsView::populate()
 {
     graphicsEngine->gameState()->setPhase(graphicsEngine->gameState()->initialPhase());
@@ -219,19 +235,7 @@ void GraphicsView::populate()
 //	rect->setZValue(-1);
 
 	
-	// create some colored fun polygons that you can push around
-	QPolygonF poly;
-	poly << QPointF(0, -10)*5 << QPointF(-5, 0)*5 << QPointF(5, 0)*5;
-	for (int i = 0; i < 3; ++i) {
-		QGraphicsBox2DPolygonItem *polygon = new QGraphicsBox2DPolygonItem(graphicsEngine->world());
-		polygon->setPos(600, -400);
-		polygon->setRotation(qrand() % 360);
-		polygon->setPolygon(poly);
-		polygon->setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
-		polygon->setup();
-		bodyItems_ << polygon;
-		scene->addItem(polygon);
-	}
+    //addPolygons();
 
 	/*
 	addRect(QPointF(800.0,-100.0),QSizeF(1600.0,200.0)); // bottom
@@ -269,11 +273,13 @@ void GraphicsView::populate()
 	scene->addItem(highScoreCounter_);
 
 
-#ifdef Q_OS_ANDROID
-    QList<GraphicsSoftButton*> buttons;
-    buttons << new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
-    buttons << new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
-    buttons << new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
+//#ifdef Q_OS_ANDROID
+
+    GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
+    GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
+    GraphicsSoftButton * rotateLeftButton = new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
+
+    QList<GraphicsSoftButton*> buttons = QList<GraphicsSoftButton*>() << shieldButton << rotateLeftButton << rotateRightButton;
     for(int i = 0; i< buttons.size(); ++i)
     {
         GraphicsSoftButton * item = buttons[i];
@@ -283,7 +289,28 @@ void GraphicsView::populate()
         scene->addItem(item);
         softButtons_ << item;
     }
-#endif
+
+    connect(shieldButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Delete);
+    });
+    connect(shieldButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Delete);
+    });
+
+    connect(rotateRightButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Right);
+    });
+    connect(rotateRightButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Right);
+    });
+
+    connect(rotateLeftButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Left);
+    });
+    connect(rotateLeftButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Left);
+    });
+//#endif
 
 
 

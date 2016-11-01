@@ -23,10 +23,12 @@ public:
 
 
 protected:
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
 
 signals:
     void pressed();
+    void released();
 };
 
 #endif // GRAPHICSSOFTBUTTON_H

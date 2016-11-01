@@ -96,6 +96,9 @@ private:
 	QList<QGraphicsBox2DPolygonItem*> bodyItems_;
 	QList<b2Body*> groundBodies_;
 	int lastHighScore_;
+
+    // create some colored fun polygons that you can push around
+    void addPolygons();
 };
 #endif
 
