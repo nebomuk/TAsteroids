@@ -14,7 +14,7 @@ void GraphicsSoftButton::scaleToWidth(qreal width)
 void GraphicsSoftButton::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    qDebug() << "emit released()";
+   // qDebug() << "emit released()";
     emit released();
 }
 
@@ -22,7 +22,15 @@ void GraphicsSoftButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
 
-    qDebug() << "emit pressed()";
+   // qDebug() << "emit pressed()";
 
     emit pressed();
 }
+
+QPainterPath GraphicsSoftButton::shape() const
+{
+    QPainterPath path;
+  path.addEllipse(boundingRect());
+  return path;
+}
+

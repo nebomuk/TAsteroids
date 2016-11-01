@@ -20,6 +20,7 @@ enum itemType
     TYPE_ANIMATEDITEM = 2,
 	TYPE_MOVINGITEM = 3,
 	TYPE_VEHICLE = 4,
+    TYPE_GRAPHICS_SOFT_BUTTON = 5
 };
 
 // forward declarations, this allows headers that include globalvariables.h to store pointers to this classes

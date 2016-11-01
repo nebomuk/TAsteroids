@@ -3,6 +3,7 @@
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsSceneMouseEvent>
+#include "globalvariables.h"
 
 
 ///
@@ -21,10 +22,14 @@ public:
     ///
     void scaleToWidth(qreal width);
 
+    enum { Type = UserType+TYPE_GRAPHICS_SOFT_BUTTON};
+    int type() const {return Type;} // Enable the use of qgraphicsitem_cast with this item.
+
 
 protected:
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
+    virtual QPainterPath shape() const Q_DECL_OVERRIDE;
 
 signals:
     void pressed();

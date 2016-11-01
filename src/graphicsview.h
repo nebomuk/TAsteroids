@@ -79,7 +79,6 @@ signals:
 	void signalKeyRelease(int);
 
 private:
-	QGraphicsScene *  scene;
 	GraphicsEngine * graphicsEngine;
 	QBasicTimer *timer;
 	QString dataLocation;

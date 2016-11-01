@@ -15,6 +15,7 @@
 #include "mechanicalcounter.h"
 #include "soundengine.h"
 #include "graphicssoftbutton.h"
+#include "globalvariables.h"
 //#include "qgl.h"
 
 #include <QGraphicsColorizeEffect>
@@ -70,7 +71,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
     // pan and swipe gestures only work with 2 fingers
     QList<Qt::GestureType> gestures;
-    gestures << Qt::TapGesture << Qt::TapAndHoldGesture;
+    gestures << Qt::TapGesture;
     foreach(Qt::GestureType gesture, gestures)
     {
          this->viewport()->grabGesture(gesture);
@@ -81,7 +82,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
 	setStyleSheet("QGraphicsView { border: none }");
 
-	scene = new QGraphicsScene(0.0,-1200.0,1600.0,1200.0,this);
+    QGraphicsScene * scene = new QGraphicsScene(0.0,-1200.0,1600.0,1200.0,this);
 	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 	scene->setBackgroundBrush(QPixmap(":images/stars1.png"));
 	setSceneRect(scene->sceneRect());
@@ -109,23 +110,38 @@ GraphicsView::~GraphicsView()
     if (event->type() == QEvent::Gesture)
     {
         QGestureEvent* e = static_cast<QGestureEvent*>(event);
-        //QGesture* gesture = e->gesture(Qt::TapGesture);
         QList<QGesture*> gestures = e->gestures();
         foreach(QGesture* gesture, gestures)
         {
             Qt::GestureType type = gesture->gestureType();
             if(type == Qt::TapGesture)
             {
-                if(gesture->state() == Qt::GestureStarted)
+                QTapGesture* tapGesture = static_cast<QTapGesture*>(gesture);
+                QPointF scenePos = mapToScene(tapGesture->position().toPoint());
+                bool buttonUnderGesture = false;
+                foreach(QGraphicsItem * button, softButtons_)
                 {
-                    qDebug() << "Tap Gesture started";
-                    emit signalKeyPress(Qt::Key_Space);
+                    if(button->sceneBoundingRect().contains(scenePos)) // itemAt not working
+                    {
+                        buttonUnderGesture = true;
+                        break;
+                    }
                 }
-                else if(gesture->state() == Qt::GestureFinished)
+                if(!buttonUnderGesture)
                 {
-                    qDebug() << "Tap Gesture stopped";
-                    emit signalKeyRelease(Qt::Key_Space);
+                    if(gesture->state() == Qt::GestureStarted)
+                    {
+                        //qDebug() << "Tap Gesture started";
+                        emit signalKeyPress(Qt::Key_Up);
+                    }
+                    else if(gesture->state() == Qt::GestureFinished)
+                    {
+                        //qDebug() << "Tap Gesture stopped";
+                        emit signalKeyRelease(Qt::Key_Up);
+                    }
                 }
+
+
             }
 //            else if(type == Qt::TapAndHoldGesture)
 //            {
@@ -178,7 +194,7 @@ void GraphicsView::clear()
 	if(graphicsEngine)
 		graphicsEngine->clear(); // clear all item lists
 
-	scene->clear(); // delete all items
+    scene()->clear(); // delete all items
 
 	bodyItems_.clear();
 
@@ -194,7 +210,7 @@ QGraphicsRectItem * GraphicsView::addRect(QPointF pos, QSizeF size)
 {
 	b2BodyDef bodyDef;
 	b2PolygonDef shapeDef;
-	QGraphicsRectItem *groundItem = scene->addRect(-size.width()/2, -size.height()/2,size.width(),size.height());
+    QGraphicsRectItem *groundItem = scene()->addRect(-size.width()/2, -size.height()/2,size.width(),size.height());
 	groundItem->setBrush(QColor(178, 192, 160));
 	groundItem->setPos(pos);
 	groundItem->setPen(Qt::NoPen);
@@ -219,7 +235,7 @@ void GraphicsView::addPolygons()
         polygon->setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
         polygon->setup();
         bodyItems_ << polygon;
-        scene->addItem(polygon);
+        scene()->addItem(polygon);
     }
 }
 
@@ -270,7 +286,7 @@ void GraphicsView::populate()
 	highScoreCounter_->setZValue(100.0);
 	highScoreCounter_->setPos(0.0 - borderSceneRectDist_.x() +64.0, -1200+32.0);
 
-	scene->addItem(highScoreCounter_);
+    scene()->addItem(highScoreCounter_);
 
 
 //#ifdef Q_OS_ANDROID
@@ -286,7 +302,7 @@ void GraphicsView::populate()
         item->setZValue(100.0);
         item->setPos(QPointF(1600.0 + borderSceneRectDist_.x() -128-i*256,-128.0));
         item->scaleToWidth(128.0);
-        scene->addItem(item);
+        scene()->addItem(item);
         softButtons_ << item;
     }
 
@@ -333,12 +349,12 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
 	// adjust the viewport to contain the interesting parts
 	if(!this->isFullScreen())
 	{
-		fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+        fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
 		this->unsetCursor(); // show cursor
 	}
 	else
 	{
-		fitInView(scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
+        fitInView(scene()->sceneRect(), Qt::KeepAspectRatioByExpanding);
 		this->setCursor(Qt::BlankCursor); // hide cursor
 	}
 	// borderSceneRectDist_.y() should always be zero
@@ -394,10 +410,10 @@ void GraphicsView::wrapSprite(MovingItem * item)
 		item->setPPos(1600.0f + borderSceneRectDist_.x() - distance,item->y());
 	}
 
-   if ( itemY < -scene->height())
+   if ( itemY < -scene()->height())
 	item->setPPos( item->x(), 0.0f);
    else if ( itemY > 0)
-   item->setPPos( item->x(), -scene->height()+ item->y() );
+   item->setPPos( item->x(), -scene()->height()+ item->y() );
 }
 
 void GraphicsView::timerEvent(QTimerEvent* event)
@@ -464,7 +480,7 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 			graphicsEngine->showText("Game Over! \n Press ESC to return to menu");
 		}
 	}
-	scene->advance(); // move items and advance animations
+    scene()->advance(); // move items and advance animations
 
 	if(highScoreCounter_ && highScoreCounter_->value() != graphicsEngine->destroyedAsteroidCount())
 		highScoreCounter_->setValue(graphicsEngine->destroyedAsteroidCount());
