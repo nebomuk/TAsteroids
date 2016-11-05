@@ -245,7 +245,6 @@ AnimatedItem* GraphicsEngine::createExplosionAt(const QPointF& position)
 AnimatedItem* GraphicsEngine::createHitpointsBarAt(const QPointF& position)
 {
 	AnimatedItem * hitpointsBar = new AnimatedItem;
-    hitpointsBar->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 	hitpointsBar->setAdvancing(false);
     hitpointsBar->addImages(hitpointsBarImages_);
 	hitpointsBar->setZValue(100.0);

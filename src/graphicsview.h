@@ -33,11 +33,13 @@ public slots:
 
 	// (re) starts the game
 	void restart(); // calls clear and populate after events have been processed
+    void onApplicationStateChanged(Qt::ApplicationState state);
 
 private slots:
 
-	// pauses the game
-	void togglePause(); // Pause key
+    // pauses the game when true, resumes when false
+    void setPaused(bool b); // Pause key
+    bool isPaused();
 	void toggleFullScreen(); // F11 key
 
 	// after clear, events have to be processed before populate e.g. QTimer(0,...)
@@ -86,18 +88,23 @@ private:
 	QList<AnimatedItem*> hitpointBars_;
 	MechanicalCounter * highScoreCounter_;
 
-    QList<GraphicsSoftButton* > softButtons_;
+    QList<GraphicsSoftButton* > leftSoftButtons_;
+    QList<GraphicsSoftButton* > rightSoftButtons_;
 
 	QPointer<ScriptProxy> scriptProxy;
 
 
-	QPointF borderSceneRectDist_; // distance between the window borders and the scene rect
+    // distance between the window borders (than can be resized, without keeping aspect ratio)
+    //and the scene rect, which has a constant size
+    QPointF borderSceneRectDist_;
+
 	QList<QGraphicsBox2DPolygonItem*> bodyItems_;
 	QList<b2Body*> groundBodies_;
 	int lastHighScore_;
 
     // create some colored fun polygons that you can push around
     void addPolygons();
+    void adjustSoftButtonPositions();
 };
 #endif
 

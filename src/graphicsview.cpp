@@ -119,7 +119,9 @@ GraphicsView::~GraphicsView()
                 QTapGesture* tapGesture = static_cast<QTapGesture*>(gesture);
                 QPointF scenePos = mapToScene(tapGesture->position().toPoint());
                 bool buttonUnderGesture = false;
-                foreach(QGraphicsItem * button, softButtons_)
+                QList<GraphicsSoftButton*> softButtons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
+
+                foreach(GraphicsSoftButton * button, softButtons)
                 {
                     if(button->sceneBoundingRect().contains(scenePos)) // itemAt not working
                     {
@@ -127,14 +129,12 @@ GraphicsView::~GraphicsView()
                         break;
                     }
                 }
-                if(!buttonUnderGesture)
-                {
-                    if(gesture->state() == Qt::GestureStarted)
+                    if(gesture->state() == Qt::GestureStarted && !buttonUnderGesture)
                     {
                         //qDebug() << "Tap Gesture started";
                         emit signalKeyPress(Qt::Key_Up);
                     }
-                    else if(gesture->state() == Qt::GestureFinished)
+                    else if(gesture->state() == Qt::GestureFinished) // allow button under gesture when gesture finished
                     {
                         //qDebug() << "Tap Gesture stopped";
                         emit signalKeyRelease(Qt::Key_Up);
@@ -172,7 +172,21 @@ void GraphicsView::restart()
 	// clears the screen
 	clear();
 	// process events
-	QTimer::singleShot(0,this,SLOT(populate()));
+    QTimer::singleShot(0,this,SLOT(populate()));
+}
+
+void GraphicsView::onApplicationStateChanged(Qt::ApplicationState state)
+{
+    switch (state) {
+    case Qt::ApplicationActive:
+        setPaused(false);
+        break;
+    case Qt::ApplicationHidden:
+    case Qt::ApplicationInactive:
+    case Qt::ApplicationSuspended:
+        setPaused(true);
+        break;
+    }
 }
 
 void GraphicsView::clear()
@@ -203,6 +217,9 @@ void GraphicsView::clear()
 
 	hitpointBars_.clear();
 	playerVehicles_.clear();
+
+    leftSoftButtons_.clear();
+    rightSoftButtons_.clear();
 }
 
 // for testing purposes only, adds a physics aware rectangle
@@ -294,17 +311,20 @@ void GraphicsView::populate()
     GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
     GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
     GraphicsSoftButton * rotateLeftButton = new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
+    GraphicsSoftButton * shootButton = new GraphicsSoftButton(":images/crosshairs.svg");
 
-    QList<GraphicsSoftButton*> buttons = QList<GraphicsSoftButton*>() << shieldButton << rotateLeftButton << rotateRightButton;
-    for(int i = 0; i< buttons.size(); ++i)
+    leftSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateLeftButton << shieldButton;
+    rightSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateRightButton << shootButton;
+    QList<GraphicsSoftButton*> buttons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
+
+    foreach(GraphicsSoftButton * item, buttons)
     {
-        GraphicsSoftButton * item = buttons[i];
         item->setZValue(100.0);
-        item->setPos(QPointF(1600.0 + borderSceneRectDist_.x() -128-i*256,-128.0));
-        item->scaleToWidth(128.0);
+        item->scaleToWidth(256.0);
         scene()->addItem(item);
-        softButtons_ << item;
     }
+
+    adjustSoftButtonPositions();
 
     connect(shieldButton,&GraphicsSoftButton::pressed,[this](){
         emit signalKeyPress(Qt::Key_Delete);
@@ -326,6 +346,13 @@ void GraphicsView::populate()
     connect(rotateLeftButton,&GraphicsSoftButton::released, [this](){
         emit signalKeyRelease(Qt::Key_Left);
     });
+
+    connect(shootButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Space);
+    });
+    connect(shootButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Space);
+    });
 //#endif
 
 
@@ -335,6 +362,22 @@ void GraphicsView::populate()
 	timer->start(TimeoutInterval,this); // starting global timer here
 }
 
+
+void GraphicsView::adjustSoftButtonPositions()
+{
+
+    for(int i = 0; i< leftSoftButtons_.size(); ++i)
+    {
+        GraphicsSoftButton *item = leftSoftButtons_[i];
+        item->setPos(QPointF(0.0 - borderSceneRectDist_.x() +128+i*256,-256.0));
+    }
+
+    for(int i = 0; i< rightSoftButtons_.size(); ++i)
+    {
+        GraphicsSoftButton *item = rightSoftButtons_[i];
+        item->setPos(QPointF(1600.0 + borderSceneRectDist_.x() -384-i*256,-256.0));
+    }
+}
 
 void GraphicsView::resizeEvent(QResizeEvent *event)
 {
@@ -365,8 +408,9 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
 
 	// sceneRect's size is 1600x1200
 
-	// calculate the distance between the border in scene coordinates and the right border scene
-	// because borderSceneRectDist_.x() is used by wrapSprite
+    // calculate the distance between the window border in scene coordinates and
+    //the right border of the graphics scene's scene rect
+    // borderSceneRectDist_.x() is used by wrapSprite
 	qreal widthSceneCoords = width* (1200.0/height);
 	borderSceneRectDist_.setX( (widthSceneCoords -1600)/2.0 );
 
@@ -379,7 +423,10 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
 	{
 		highScoreCounter_->setPos(QPointF(0.0 - borderSceneRectDist_.x() +64.0,-(1200.0 - 32.0)));
 	}
+
+    adjustSoftButtonPositions();
 }
+
 
 void GraphicsView::closeEvent(QCloseEvent *event)
 {
@@ -477,7 +524,13 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 		if(destroyedPlayerCount == playerVehicles_.size())
 		{
 			// if all players are destroyed
-			graphicsEngine->showText("Game Over! \n Press ESC to return to menu");
+
+            QString message  = tr("Game Over! \n Press ESC to return to menu");;
+#ifdef Q_OS_ANDROID
+            QString androidMessage = tr("Game Over! \n Press BACK to return to menu");
+            message = androidMessage;
+#endif
+            graphicsEngine->showText(message);
 		}
 	}
     scene()->advance(); // move items and advance animations
@@ -486,22 +539,27 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 		highScoreCounter_->setValue(graphicsEngine->destroyedAsteroidCount());
 }
 
-void GraphicsView::togglePause()
+void GraphicsView::setPaused(bool b)
 {
-	if(!timer || !graphicsEngine)
+    if(!timer || !graphicsEngine || b == isPaused())
 		return;
 
-		if(!timer->isActive())
+        if(isPaused())
 		{
 		// TimeoutInterval is a global variable
 			timer->start(TimeoutInterval,this);
 			graphicsEngine->hideText();
 		}
-		else if(timer->isActive())
+        else
 		{
 			timer->stop();
 			graphicsEngine->showText(tr("Pause"));
-		}
+        }
+}
+
+bool GraphicsView::isPaused()
+{
+    return !timer->isActive();
 }
 
 void GraphicsView::toggleFullScreen()
@@ -526,7 +584,7 @@ void GraphicsView::keyPressEvent(QKeyEvent *event)
 	{
 	case Qt::Key_Pause: // pause game
 	{
-		togglePause();
+        setPaused(!isPaused());
 		break;
 	}
 	case Qt::Key_F4:

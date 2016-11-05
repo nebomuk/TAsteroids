@@ -6,9 +6,6 @@
 
 int main(int argc, char ** argv)
 {
-
-
-
 	QApplication app( argc, argv );
 	app.setApplicationName("tasteroids");
 	app.setOrganizationName("Taiko");
@@ -20,15 +17,15 @@ int main(int argc, char ** argv)
 	//									   1,1,2);
 
 
-
+    GraphicsView view;
     // background image and tap gesture only work in landscape
 #ifdef Q_OS_ANDROID
     AndroidHelper helper;
     const int SCREEN_ORIENTATION_SENSOR_LANDSCAPE = 6;
     helper.setScreenOrientation(SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    QObject::connect(&app,&QApplication::applicationStateChanged,&view,&GraphicsView::onApplicationStateChanged);
 #endif
 
-    GraphicsView view;
 	//view.setPlayerCount(playerCount);
 	view.restart();
 	view.show();
