@@ -8,15 +8,9 @@
 #include <QFuture>
 #include "globalvariables.h"
 
-/*
-  AsteroidColorizer loads the asteroid images from the resources and caches them into pixmaps and images.
-  It can colorize (tint) the images concurrently (asynchronously) via startConcurrentTint and load the tintedImages into the pixmaps via
-   imageIntoPixmaps.
-
-   asteroidImages_ acts as a buffer to store the tinted images that get converted into asteroidPixmaps_
-   defaultImages_ are the images that are loaded from the resources
-   note that image tinting can only be used on QImages because QPixmaps can not be used outside the Gui-Thread
- */
+///
+/// \brief The AsteroidColorizer class loads asteroid images and colorizes them
+///
 
 class AsteroidColorizer
 {

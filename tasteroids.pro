@@ -12,7 +12,6 @@ android {
     HEADERS += src/androidhelper.h   #my android specific header file
 }
 #CONFIG += c++11
-CONFIG += create_prl
 CONFIG += warn_on
 CONFIG -= debug_and_release \
 	debug_and_release_target

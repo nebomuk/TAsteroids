@@ -9,6 +9,7 @@ MechanicalCounter::MechanicalCounter(QGraphicsItem * parent): QGraphicsItem(pare
     digits_ = 4;
     value_ = 0;
     svgRenderer_ = NULL;
+    setCacheMode(QGraphicsItem::ItemCoordinateCache);
 }
 
 int MechanicalCounter::digits() const

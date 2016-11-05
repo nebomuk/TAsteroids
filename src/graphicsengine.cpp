@@ -245,6 +245,7 @@ AnimatedItem* GraphicsEngine::createExplosionAt(const QPointF& position)
 AnimatedItem* GraphicsEngine::createHitpointsBarAt(const QPointF& position)
 {
 	AnimatedItem * hitpointsBar = new AnimatedItem;
+    hitpointsBar->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 	hitpointsBar->setAdvancing(false);
     hitpointsBar->addImages(hitpointsBarImages_);
 	hitpointsBar->setZValue(100.0);
@@ -258,7 +259,9 @@ AnimatedItem* GraphicsEngine::createHitpointsBarAt(const QPointF& position)
 Vehicle * GraphicsEngine::createVehicleAt(const QPointF& position /*=QPointF()*/,
 									 const QString& svg /* = QString() */)
 {
-		return createTAt<Vehicle>(position,svg);
+    Vehicle * vehicle = createTAt<Vehicle>(position,svg);
+    vehicle->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+    return vehicle;
 }
 
 Vehicle * GraphicsEngine::createCircleVehicleAt(qreal x, qreal y, float radius)

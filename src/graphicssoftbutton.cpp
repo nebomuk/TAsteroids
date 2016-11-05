@@ -3,6 +3,7 @@
 
 GraphicsSoftButton::GraphicsSoftButton(const QString &svgFilePath) : QGraphicsSvgItem(svgFilePath)
 {
+    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
 }
 
