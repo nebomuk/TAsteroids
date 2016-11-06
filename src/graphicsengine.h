@@ -118,7 +118,7 @@ public slots:
 	// show text for msec miliseconds, by default, text is shown untill hideText is called
 	void showText(const QString& text, int msec = 0);
 
-	void hideText() { if(textSprite) textSprite->hide();}
+	void hideText();
 
 protected:
 
@@ -146,6 +146,8 @@ private:
 
 	SoundEngine * soundEngine_;
     GameState *gameState_;
+
+    QString activeText_; // text currently displayed
 };
 
 void GraphicsEngine::appendProjectile(Vehicle* projectile)

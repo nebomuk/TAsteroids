@@ -19,7 +19,7 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 	asteroidColorizer_ = new AsteroidColorizer();
 
     colorList_ << QColor(120,0,0) << QColor(0,0,150) << QColor(0,100,0)
-			<< QColor(50,0,150) << QColor(50,150,0)  << QColor(0,50,150)
+                        << QColor(50,0,150) << QColor(50,150,0)  << QColor(0,75,150)
 			<< QColor(150,50,0) << QColor(150,0,50) << QColor(0,150,50)
 			<< QColor(150,150,0) << QColor(0,150,150) << QColor(150,0,150);
 
@@ -187,6 +187,10 @@ void GraphicsEngine::processWorld()
 
 void GraphicsEngine::showText( const QString &text, int msec /* = 0 */)
 {
+    if(text == activeText_ && msec == 0)
+        return;
+
+    activeText_ = text;
 	if(!textSprite)
 	{
 		textSprite = new QGraphicsSimpleTextItem;
@@ -217,10 +221,19 @@ void GraphicsEngine::showText( const QString &text, int msec /* = 0 */)
 	textSprite->show();
 }
 
+void GraphicsEngine::hideText() {
+
+    activeText_.clear();
+    if(textSprite)
+    {
+        textSprite->hide();
+    }
+}
+
 void GraphicsEngine::clear()
 {
-	textSprite = NULL;
-	explosions.clear();
+    textSprite = NULL;
+    explosions.clear();
 	projectiles_.clear();
 	asteroids_.clear();
 	ufos_.clear();

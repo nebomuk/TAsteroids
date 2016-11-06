@@ -103,7 +103,7 @@ function mainLoop()
 			projectile.applyImpulse(impulseX,impulseY);
 			projectile.diplomacy = 1; // diplomacy of player
 			projectile.isProjectile = true;
-			playerVehicles[i].reloadCooldown += 7;
+            playerVehicles[i].reloadCooldown += 6;
 			playerVehicles[i].shootCooldown
 			= playerVehicles[i].reloadCooldown >= 14 ? playerVehicles[i].reloadCooldown : 4;
 		}

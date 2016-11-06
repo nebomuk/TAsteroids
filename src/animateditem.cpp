@@ -134,7 +134,7 @@ void AnimatedItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * 
         QImage img = imageAt(currentFrame_);
         if(tintColor_.isValid())
         {
-            img = AsteroidColorizer::tinted(img,QColor(Qt::red),QPainter::CompositionMode_Overlay);
+            img = AsteroidColorizer::tinted(img,tintColor_,QPainter::CompositionMode_Overlay);
         }
         painter->drawImage(offset_,img);
     }

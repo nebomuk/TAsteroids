@@ -26,7 +26,8 @@ QT += gui \
 	script \
         svg \
         concurrent \
-        multimedia
+        multimedia \
+
 HEADERS += src/vehicle.h \
 	src/sdlsound.h \
 	src/globalvariables.h \

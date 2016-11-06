@@ -33,6 +33,8 @@ GraphicsView::GraphicsView(QWidget * parent)
     graphicsEngine = Q_NULLPTR;
     highScoreCounter_ = Q_NULLPTR;
 	lastHighScore_ = 0;
+    gameOver_ = false;
+    doubleBackToExitPressedOnce_ = false;
 
 	this->setWindowTitle("TAsteroids");
 
@@ -121,25 +123,36 @@ GraphicsView::~GraphicsView()
                 bool buttonUnderGesture = false;
                 QList<GraphicsSoftButton*> softButtons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
 
-                foreach(GraphicsSoftButton * button, softButtons)
-                {
-                    if(button->sceneBoundingRect().contains(scenePos)) // itemAt not working
+                    foreach(GraphicsSoftButton * button, softButtons)
                     {
-                        buttonUnderGesture = true;
-                        break;
+                        if(button->sceneBoundingRect().contains(scenePos)) // itemAt not working
+                        {
+                            buttonUnderGesture = true;
+                            if(gesture->state() == Qt::GestureStarted)
+                            {
+                                emit button->pressed();
+                            }
+                            else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled)
+                            {
+                                emit button->released();;
+                            }
+
+                            break;
+                        }
                     }
-                }
                     if(gesture->state() == Qt::GestureStarted && !buttonUnderGesture)
                     {
                         //qDebug() << "Tap Gesture started";
-                        emit signalKeyPress(Qt::Key_Up);
+                        emit scriptProxy->signalGestureStarted(Qt::TapGesture);
+                        //emit signalKeyPress(Qt::Key_Up);
                     }
-                    else if(gesture->state() == Qt::GestureFinished) // allow button under gesture when gesture finished
+                    else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled) // allow button under gesture when gesture finished
                     {
                         //qDebug() << "Tap Gesture stopped";
-                        emit signalKeyRelease(Qt::Key_Up);
+                        emit scriptProxy->signalGestureFinished(Qt::TapGesture);
+                        //emit signalKeyRelease(Qt::Key_Up);
                     }
-                }
+
 
 
             }
@@ -521,7 +534,8 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 			}
 		}
 
-		if(destroyedPlayerCount == playerVehicles_.size())
+        gameOver_ = destroyedPlayerCount == playerVehicles_.size();
+        if(gameOver_)
 		{
 			// if all players are destroyed
 
@@ -531,6 +545,7 @@ void GraphicsView::timerEvent(QTimerEvent* event)
             message = androidMessage;
 #endif
             graphicsEngine->showText(message);
+
 		}
 	}
     scene()->advance(); // move items and advance animations
@@ -572,6 +587,8 @@ void GraphicsView::toggleFullScreen()
 	this->setWindowState(this->windowState() ^ Qt::WindowFullScreen);
 }
 
+
+
 void GraphicsView::keyPressEvent(QKeyEvent *event)
 {
 	if(event->isAutoRepeat())
@@ -597,6 +614,27 @@ void GraphicsView::keyPressEvent(QKeyEvent *event)
 		this->toggleFullScreen();
 		break;
 	}
+
+    #ifdef Q_OS_ANDROID
+    case Qt::Key_Back:
+    {
+        if(gameOver_ || doubleBackToExitPressedOnce_)
+        {
+            qApp->exit();
+           // this->close();
+        }
+
+        graphicsEngine->showText(tr("Please click BACK again to exit"));
+        doubleBackToExitPressedOnce_ = true;
+        QTimer::singleShot(2000,[this](){
+            graphicsEngine->hideText();
+            doubleBackToExitPressedOnce_ = false;
+        });
+
+
+        break;
+    }
+    #endif
 	default:
 		{
 				emit signalKeyPress(event->key());
