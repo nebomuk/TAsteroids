@@ -103,6 +103,10 @@ function onGestureFinished(gesture)
     {
         stopAcceleration(playerVehicles[0]);
     }
+    else if(gesture === Qt.PinchGesture)
+    {
+        startWormholeTravel(playerVehicles[0]);
+    }
 }
 
 function onKeyPress(key)

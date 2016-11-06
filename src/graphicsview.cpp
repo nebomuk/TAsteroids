@@ -73,7 +73,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
     // pan and swipe gestures only work with 2 fingers
     QList<Qt::GestureType> gestures;
-    gestures << Qt::TapGesture;
+    gestures << Qt::TapGesture << Qt::PinchGesture;
     foreach(Qt::GestureType gesture, gestures)
     {
          this->viewport()->grabGesture(gesture);
@@ -116,59 +116,61 @@ GraphicsView::~GraphicsView()
         foreach(QGesture* gesture, gestures)
         {
             Qt::GestureType type = gesture->gestureType();
+
+
             if(type == Qt::TapGesture)
             {
                 QTapGesture* tapGesture = static_cast<QTapGesture*>(gesture);
                 QPointF scenePos = mapToScene(tapGesture->position().toPoint());
-                bool buttonUnderGesture = false;
                 QList<GraphicsSoftButton*> softButtons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
-
-                    foreach(GraphicsSoftButton * button, softButtons)
+                bool buttonUnderGesture = false;
+                foreach(GraphicsSoftButton * button, softButtons)
+                {
+                    if(button->sceneBoundingRect().contains(scenePos)) // itemAt not working
                     {
-                        if(button->sceneBoundingRect().contains(scenePos)) // itemAt not working
+                        buttonUnderGesture = true;
+                        if(gesture->state() == Qt::GestureStarted)
                         {
-                            buttonUnderGesture = true;
-                            if(gesture->state() == Qt::GestureStarted)
-                            {
-                                emit button->pressed();
-                            }
-                            else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled)
-                            {
-                                emit button->released();;
-                            }
-
-                            break;
+                            emit button->pressed();
                         }
-                    }
-                    if(gesture->state() == Qt::GestureStarted && !buttonUnderGesture)
-                    {
-                        //qDebug() << "Tap Gesture started";
-                        emit scriptProxy->signalGestureStarted(Qt::TapGesture);
-                        //emit signalKeyPress(Qt::Key_Up);
-                    }
-                    else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled) // allow button under gesture when gesture finished
-                    {
-                        //qDebug() << "Tap Gesture stopped";
-                        emit scriptProxy->signalGestureFinished(Qt::TapGesture);
-                        //emit signalKeyRelease(Qt::Key_Up);
-                    }
+                        else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled)
+                        {
+                            emit button->released();;
+                        }
 
+                        break;
+                    }
+                }
+                if(gesture->state() == Qt::GestureStarted && !buttonUnderGesture)
+                {
+                    emit scriptProxy->signalGestureStarted(gesture->gestureType());
+                }
+                else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled) // allow button under gesture when gesture finished
+                {
+                    emit scriptProxy->signalGestureFinished(gesture->gestureType());
+                }
+            }
+            else if(type == Qt::PinchGesture)
+            {
+                QPinchGesture* pinchGesture = static_cast<QPinchGesture*>(gesture);
+                bool isPinch = pinchGesture->totalScaleFactor() < 0.7;
+                qDebug() << "total" << pinchGesture->totalScaleFactor();
+                qDebug() << "scale" << pinchGesture->scaleFactor();
+                qDebug() << "last" << pinchGesture->lastScaleFactor();
 
+                if(gesture->state() == Qt::GestureStarted && isPinch)
+                {
+                    emit scriptProxy->signalGestureStarted(gesture->gestureType());
+                }
+                else if(gesture->state() == Qt::GestureFinished  && isPinch) // allow button under gesture when gesture finished
+                {
+                    emit scriptProxy->signalGestureFinished(gesture->gestureType());
+                }
 
             }
-//            else if(type == Qt::TapAndHoldGesture)
-//            {
-//                if(gesture->state() == Qt::GestureStarted)
-//                {
-//                    qDebug() << "Tap and hold Gesture started";
-//                    emit signalKeyPress(Qt::Key_Up);
-//                }
-//                else if(gesture->state() == Qt::GestureFinished)
-//                {
-//                    qDebug() << "Tap and hold Gesture stopped";
-//                    emit signalKeyRelease(Qt::Key_Up);
-//                }
-//            }
+
+
+
         }
 
         return true;
