@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>SimpleModelSingleton.qml</file>
+        <file>HighScoreModelSingleton.qml</file>
+        <file>menu.png</file>
+    </qresource>
+</RCC>
