@@ -5,5 +5,6 @@
         <file>SimpleModelSingleton.qml</file>
         <file>HighScoreModelSingleton.qml</file>
         <file>menu.png</file>
+        <file>MainMenu.qml</file>
     </qresource>
 </RCC>
