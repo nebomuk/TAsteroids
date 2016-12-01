@@ -3,7 +3,6 @@ import QtQuick.Controls 1.4
 //import my.highscoremodel.singleton 1.0
 
 Rectangle {
-    property alias highScoreListView: highScoreListView
     color: "transparent"
 
     width: 1020
@@ -12,56 +11,11 @@ Rectangle {
     id : rootRectangle
 
 
-
-
-        ListView {
-            id: highScoreListView
-            x: 714
-            y: 166
-            width: 207
-            height: 155
-            z: 1
-            delegate: Item {
-                x: 5
-                width: 80
-                height: 40
-                Row {
-                    id: row1
-//                    Rectangle {
-//                        width: 40
-//                        height: 40
-//                        color: colorCode
-//                    }
-
-                    Text {
-                        text: player
-                        color: "white"
-                        font.bold: true
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    Text {
-                        text: score
-                        color: "white"
-                        font.bold: true
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    spacing: 10
-                }
-            }
-
-            //model : HighScoreModel
-
-
-        }
-
-
-
         BorderImage {
             id: borderImage1
             x: 0
             y: 0
-            width: 1020
-            height: 567
+
             z: -1
             antialiasing: false
             anchors.fill: parent
@@ -84,6 +38,10 @@ Rectangle {
 
             MainMenu
             {
+                anchors.rightMargin: 0
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+                anchors.topMargin: 0
 
             }
 

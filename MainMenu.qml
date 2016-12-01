@@ -1,74 +1,148 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.4
 
-ListView {
+StackView
+{
+    id : stackView
+    z: 1
+    anchors.fill: parent
+
+    // empty transitions
+    delegate: StackViewDelegate {
+    }
+
+    property Component about :
+    Column
+    {
+
+    anchors.fill: parent
+
+    Text
+    {
+        color : aboutRect.border.color
+        text : "TAsteroids 0.7 \n Copyright © 2016 \n  Taiko000"
+        font.pointSize: 32
+        horizontalAlignment: Text.AlignHCenter
+
+    }
+
+    MainMenuRectangle
+    {
+        title1 : backToMainMenuStr
+
+        id : aboutRect
+
+        MouseArea
+        {
+
+            anchors.fill: parent
+            onPressed: {
+                stackView.pop();
+            }
+
+
+        }
+    }
+
+    }
+
+property Component newGame : Item
+{
+
+}
+
+property Component highScores : Item
+{
+    HighScoreView
+    {
+
+    }
+}
+
+property var newGameStr: qsTr("New Game")
+property var aboutStr : qsTr("About")
+property var highScoreStr : qsTr("High Scores")
+property var exitStr : qsTr("Exit")
+property var backToMainMenuStr : qsTr("Main Menu")
+
+
+property var componentMap: {
+    newGameStr : newGame
+    aboutStr : about
+
+}
+
+property Component listDelegate1 : Item {
+
+    id: item1
+    width: parent.width
+    height: 62
+
+    MainMenuRectangle
+    {
+        id : rectangle2
+    }
+
+
+
+    MouseArea
+    {
+
+        anchors.fill: parent
+        onPressed: {
+            if(name === exitStr)
+            {
+                Qt.quit()
+            }
+            if (stackView.depth === 1) {
+                if(name === aboutStr)
+                {
+                    stackView.push({item: about, properties:{title1:"Main Menu"}});
+
+                }
+                else if(name === highScoreStr)
+                {
+                    stackView.push({item : highScores});
+                }
+
+            }
+
+        }
+
+
+    }
+}
+
+
+initialItem : ListView {
+
+
+
     id : menuLevel0ListView
-    anchors.rightMargin: 0
-    anchors.bottomMargin: 0
-           anchors.leftMargin: 0
-           anchors.topMargin: 0
-           z: 1
-           anchors.fill: parent
-           spacing : 10
-           model: ListModel {
-               id: listModel1
-               ListElement {
-                   title: qsTr("New Game")
-               }
-               ListElement {
-                   title: qsTr("High Scores")
-               }
-               ListElement {
-                   title: qsTr("About")
-               }
-               ListElement {
-                   title: qsTr("Exit")
-               }
-           }
 
-           delegate: Item {
+    anchors.fill: parent
+    spacing : 10
+    model: ListModel {
+        id: listModel1
+        ListElement {
+            name: qsTr("New Game")
+        }
+        ListElement {
+            name: qsTr("High Scores")
+        }
+        ListElement {
+            name: qsTr("About")
+        }
+        ListElement {
+            name: qsTr("Exit")
 
-               id: item1
-               x: 0
-               y: 0
-               width: parent.width
-               height: 62
+        }
+    }
+
+    delegate: listDelegate1
 
 
 
-               Rectangle {
-                   id: rectangle2
-                   x: 0
-                   y: 0
-                   width: parent.width
-                   height: 58
-                   color: "#00000000"
-                   radius: 0
-                   border.color: "#0095a6"
-                   border.width: 2
-
-                   Text {
-                       text: title
-                       font.pointSize: 20
-                       color: "#01375D"
-                       anchors.verticalCenter: parent.verticalCenter
-                       anchors.horizontalCenter:  parent.horizontalCenter
-                   }
-               }
-
-
-
-               MouseArea {
-
-                      anchors.fill: parent
-                      hoverEnabled: true
-                      onEntered:  rectangle2.color = rectangle2.border.color
-                      onExited: rectangle2.color = "#00000000"
-
-
-               }
-
-
-
-           }
+    }
 
 }

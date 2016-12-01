@@ -29,26 +29,20 @@ Window {
 
         property variant clickPos: "1,1"
 
+        // context menu
         onPressed: {
             clickPos  = Qt.point(mouse.x,mouse.y)
+            if (mouse.button == Qt.RightButton)
+            {
+
+                console.log("right click");
+                ctxMenu.popup();
+
+            }
         }
 
-        onPositionChanged: {
-            var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
-            rootWindow.x += delta.x;
-            rootWindow.y += delta.y;
-        }
+        // context menu
 
-        onClicked: {
-                      if (mouse.button == Qt.RightButton)
-                      {
-
-                          console.log("right click");
-                          ctxMenu.popup();
-
-                      }
-
-                  }
         Menu {
                 id: ctxMenu
                 MenuItem {
@@ -57,6 +51,15 @@ Window {
 
                 }
             }
+
+        // window dragging
+        onPositionChanged: {
+            var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
+            rootWindow.x += delta.x;
+            rootWindow.y += delta.y;
+        }
+
+
 
 
     MainForm {
