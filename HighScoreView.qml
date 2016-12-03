@@ -6,33 +6,27 @@ ListView {
     width: 207
     height: 155
     z: 1
-    delegate: Item {
-        x: 5
-        width: 80
-        height: 40
+    delegate:
         Row {
-            id: row1
-//                    Rectangle {
-//                        width: 40
-//                        height: 40
-//                        color: colorCode
-//                    }
+            id: row1               
 
             Text {
                 text: player
-                color: "white"
+                font.pointSize: 20
+                color: "#01375D"
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
             }
             Text {
                 text: score
-                color: "white"
+                font.pointSize: 20
+                color: "#01375D"
                 font.bold: true
                 anchors.verticalCenter: parent.verticalCenter
             }
             spacing: 10
         }
-    }
+
 
     model : HighScoreModel
 

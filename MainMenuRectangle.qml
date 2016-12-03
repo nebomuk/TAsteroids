@@ -22,7 +22,7 @@ Rectangle {
     MouseArea {
 
         anchors.fill: parent
-        hoverEnabled: true
+        hoverEnabled: Qt.platform.os != "android" && Qt.platform.os != "ios"
         onEntered:  parent.color = parent.border.color
         onExited: parent.color = "#00000000"
     }

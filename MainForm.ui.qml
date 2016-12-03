@@ -9,6 +9,7 @@ Rectangle {
     height: 567
     anchors.fill: parent
     id : rootRectangle
+    property alias mainMenu : mainMenu
 
 
         BorderImage {
@@ -38,6 +39,7 @@ Rectangle {
 
             MainMenu
             {
+                id : mainMenu
                 anchors.rightMargin: 0
                 anchors.bottomMargin: 0
                 anchors.leftMargin: 0

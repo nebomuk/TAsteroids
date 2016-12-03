@@ -64,9 +64,7 @@ ListModel {
     }
 
     Component.onCompleted: {
-         savePlayerScore("yalan",2)
         fillModel()
-        console.log("OnCompleted")
 
     }
 }

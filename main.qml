@@ -7,7 +7,7 @@ import my.highscoremodel.singleton 1.0
 Window {
     id : rootWindow
     visible: true
-    flags: Qt.platform.os != "android" && Qt.platform.os != "ios"  ? Qt.FramelessWindowHint | Qt.ToolTip | Qt.WA_TranslucentBackground : parent.flags
+    flags: Qt.platform.os != "android" && Qt.platform.os != "ios"  ? Qt.FramelessWindowHint | Qt.ToolTip | Qt.WA_TranslucentBackground : flags
     width: 1020
     height: 567
     title: qsTr("Hello World")
@@ -63,19 +63,29 @@ Window {
 
 
     MainForm {
+        id : mainForm
         anchors.fill: parent
 
-//        mouseArea.onClicked: {
-
-//            console.log(qsTr('Clicked on background'));
-
-//           HighScoreModel.savePlayerScore("taik",386);
-
-//        }
-
     }
 
     }
+
+
+    onClosing: {
+        var stack = mainForm.mainMenu
+
+            if(stack.depth > 1){
+                close.accepted = false
+                stack.pop();
+            }else{
+                return;
+            }
+        }
+
+    Component.onCompleted: {
+//            var dateString = new Date().toLocaleDateString();
+//            print(dateString);
+        }
 
 
 }

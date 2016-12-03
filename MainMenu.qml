@@ -7,6 +7,7 @@ StackView
     z: 1
     anchors.fill: parent
 
+
     // empty transitions
     delegate: StackViewDelegate {
     }
@@ -15,7 +16,6 @@ StackView
     Column
     {
 
-    anchors.fill: parent
 
     Text
     {
@@ -29,6 +29,9 @@ StackView
     MainMenuRectangle
     {
         title1 : backToMainMenuStr
+
+        height: Qt.platform.os == "android" ? 0 : height
+        visible:  Qt.platform.os != "android"
 
         id : aboutRect
 
@@ -53,8 +56,34 @@ property Component newGame : Item
 
 property Component highScores : Item
 {
+    Column
+    {
+
+
+
     HighScoreView
     {
+
+    }
+
+        MainMenuRectangle
+        {
+            title1 : backToMainMenuStr
+
+            height: Qt.platform.os == "android" ? 0 : height
+            visible:  Qt.platform.os != "android"
+
+            MouseArea
+            {
+
+                anchors.fill: parent
+                onPressed: {
+                    stackView.pop();
+                }
+
+
+            }
+        }
 
     }
 }
@@ -120,7 +149,6 @@ initialItem : ListView {
 
     id : menuLevel0ListView
 
-    anchors.fill: parent
     spacing : 10
     model: ListModel {
         id: listModel1
