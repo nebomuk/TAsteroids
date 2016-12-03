@@ -30,7 +30,11 @@ ListModel {
                     topPlayer = rs.rows.item(0).player
                     for (var i=0; i<rs.rows.length; ++i) {
                         if (i < maxScores)
-                            highScoreModel.append(rs.rows.item(i))
+                        {
+                            var rowItem = rs.rows.item(i);
+                            rowItem["place"] = i
+                            highScoreModel.append(rowItem)
+                        }
                     }
                     if (rs.rows.length > maxScores)
                         tx.executeSql("DELETE FROM HighScores WHERE score <= ?",

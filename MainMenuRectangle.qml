@@ -6,7 +6,7 @@ Rectangle {
     width: parent.width
     height: 58
     color: "#00000000"
-    radius: 0
+    radius: 2
     border.color: "#0095a6"
     border.width: 2
 
