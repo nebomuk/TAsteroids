@@ -13,8 +13,13 @@ StackView
     }
 
     property Component about :
-    Column
-    {
+        Item
+        {
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.top : parent.top
 
 
     Text
@@ -32,6 +37,8 @@ StackView
 
         height: Qt.platform.os == "android" ? 0 : height
         visible:  Qt.platform.os != "android"
+
+        anchors.bottom: parent.bottom
 
         id : aboutRect
 
@@ -56,19 +63,28 @@ property Component newGame : Item
 
 property Component highScores : Item
 {
-    Column
+    Item
     {
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.top : parent.top
 
 
 
     HighScoreView
     {
-
+            anchors.top : parent.top
+            anchors.bottom: highScoresBack.top
     }
 
         MainMenuRectangle
         {
+            id : highScoresBack
+
             title1 : backToMainMenuStr
+            anchors.bottom: parent.bottom
 
             height: Qt.platform.os == "android" ? 0 : height
             visible:  Qt.platform.os != "android"
