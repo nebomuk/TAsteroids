@@ -5,24 +5,26 @@ import QtQuick.Controls 1.4
 Rectangle {
     color: "transparent"
 
+    // width height only set for correct display in design mode, the main form is stretched to the window size
     width: 1020
     height: 567
     anchors.fill: parent
     id : rootRectangle
     property alias mainMenu : mainMenu
+    property alias asteroidModelViewMouseArea : asteroidModelViewMouseArea
+    property alias asteroidModelView : asteroidModelView
 
 
         BorderImage {
             id: borderImage1
             x: 0
             y: 0
-
+            cache : false
             z: -1
             antialiasing: false
             anchors.fill: parent
-            scale: 1
             verticalTileMode: BorderImage.Stretch
-            horizontalTileMode: BorderImage.Round
+            horizontalTileMode: BorderImage.Stretch
             border.bottom: 190
             border.top: 145
             border.right: 560
@@ -54,14 +56,23 @@ Rectangle {
         }
 
         AsteroidModelView {
-            x: 638
-            width: 315
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 110
-            anchors.top: parent.top
-            anchors.topMargin: 144
+            id: asteroidModelView
+            x: 614
+            width: 366
             anchors.right: parent.right
-            anchors.rightMargin: 67
+            anchors.rightMargin: 40
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 67
+            anchors.top: parent.top
+            anchors.topMargin: 115
+
         }
 
+        // called from outside because javascript not allowed here
+        MouseArea
+        {
+            id : asteroidModelViewMouseArea
+            anchors.fill: asteroidModelView
+            acceptedButtons: Qt.LeftButton
+        }
 }

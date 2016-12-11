@@ -61,6 +61,7 @@ Entity {
     property real theta: 0.0
     property real phi: 0.0
     property Material material
+    property string meshSource: "qrc:/models/toutatis.obj"
 
     components: [ transform, mesh, root.material ]
 
@@ -74,6 +75,6 @@ Entity {
 
     Mesh {
         id: mesh
-        source: "qrc:/models/bacchus.obj"
+        source: meshSource
     }
 }

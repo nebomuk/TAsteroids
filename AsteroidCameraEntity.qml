@@ -11,6 +11,9 @@ Entity {
     id: root
     objectName: "root"
 
+    property alias meshSource : asteroid.meshSource
+    property alias asteroidScale : asteroid.scale
+
     // Use the renderer configuration specified in ForwardRenderer.qml
     // and render from the mainCamera
     components: [
@@ -30,35 +33,33 @@ Entity {
         viewCenter: Qt.vector3d( 0.0, 3.5, 0.0 )
     }
 
-    FirstPersonCameraController { camera: mainCamera }
-
 
     PhongMaterial {
         id: redAdsMaterial
-        ambient: Qt.rgba( 0.02, 0.02, 0.1, 1.0 )
-        diffuse: Qt.rgba( 0.0, 0.0, 0.8, 1.0 )
+        ambient: "#002D33"
+        diffuse: "#00B9CE"
     }
 
 
-    TrefoilKnot {
-        id: trefoilKnot
+    Asteroid {
+        id: asteroid
         material: redAdsMaterial
         y: 3.5
-        scale: 0.5
+        scale: 0.3
 
         ParallelAnimation {
             loops: Animation.Infinite
             running: true
 
             NumberAnimation {
-                target: trefoilKnot
+                target: asteroid
                 property: "theta"
                 from: 0; to: 360
                 duration: 2000
             }
 
             NumberAnimation {
-                target: trefoilKnot
+                target: asteroid
                 property: "phi"
                 from: 0; to: 360
                 duration: 2000
