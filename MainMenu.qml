@@ -117,18 +117,13 @@ property var componentMap: {
 
 }
 
-property Component listDelegate1 : Item {
 
-    id: item1
-    width: parent.width
-    height: 62
+property Component listDelegate1 :
 
     MainMenuRectangle
     {
         id : rectangle2
-    }
-
-
+        height: stackView.height / 4 - menuLevel0ListView.spacing
 
     MouseArea
     {
@@ -156,7 +151,8 @@ property Component listDelegate1 : Item {
 
 
     }
-}
+
+    }
 
 
 initialItem : ListView {
@@ -165,7 +161,7 @@ initialItem : ListView {
 
     id : menuLevel0ListView
 
-    spacing : 10
+    spacing : 16
     model: ListModel {
         id: listModel1
         ListElement {

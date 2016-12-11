@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>models/bacchus.obj</file>
+        <file>models/golevka.obj</file>
+        <file>models/kleopatra.obj</file>
+        <file>models/ky26.obj</file>
+        <file>models/toutatis.obj</file>
+    </qresource>
+</RCC>

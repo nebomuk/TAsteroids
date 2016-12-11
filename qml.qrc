@@ -8,5 +8,12 @@
         <file>MainMenu.qml</file>
         <file>MainMenuRectangle.qml</file>
         <file>HighScoreView.qml</file>
+        <file>Tabletest.qml</file>
+        <file>TabletestForm.ui.qml</file>
+        <file>AsteroidCameraEntity.qml</file>
+        <file>Asteroid.qml</file>
+        <file>AsteroidModelView.qml</file>
+        <file>BasicCamera.qml</file>
+        <file>SortedForwardRenderer.qml</file>
     </qresource>
 </RCC>

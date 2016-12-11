@@ -32,10 +32,14 @@ Rectangle {
 
         Item {
             id: mainMenuArea
-            x: 96
-            y: 125
-            width: 430
-            height: 292
+            anchors.right: parent.right
+            anchors.rightMargin: 512
+            anchors.left: parent.left
+            anchors.leftMargin: 63
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 150
+            anchors.top: parent.top
+            anchors.topMargin: 125
 
             MainMenu
             {
@@ -47,6 +51,17 @@ Rectangle {
 
             }
 
+        }
+
+        AsteroidModelView {
+            x: 638
+            width: 315
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 110
+            anchors.top: parent.top
+            anchors.topMargin: 144
+            anchors.right: parent.right
+            anchors.rightMargin: 67
         }
 
 }
