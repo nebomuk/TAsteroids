@@ -1,4 +1,5 @@
 #include "androidhelper.h"
+#include "backgroundimageprovider.h"
 #include "widgetinteraction.h"
 
 #include <QApplication>
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("widgetInteraction",new WidgetInteraction());
+    engine.addImageProvider(QLatin1String("backgroundimageprovider"), new BackgroundImageProvider);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

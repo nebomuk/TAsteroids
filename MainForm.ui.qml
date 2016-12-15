@@ -21,6 +21,7 @@ Rectangle {
             y: 0
             cache : false
             z: -1
+            asynchronous: true
             antialiasing: false
             anchors.fill: parent
             verticalTileMode: BorderImage.Stretch
@@ -29,7 +30,7 @@ Rectangle {
             border.top: 145
             border.right: 560
             border.left: 262
-            source: "qrc:/menu.png"
+            source: Qt.platform.os != "android" && Qt.platform.os != "ios" ? "qrc:/menu.png" :"image://backgroundimageprovider/menu"
         }
 
         Item {
