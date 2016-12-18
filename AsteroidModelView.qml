@@ -5,10 +5,13 @@ import Qt3D.Extras 2.0
 import QtQuick.Scene3D 2.0
 import QtQuick 2.5
 
+Item
+{
+
 
 Scene3D {
             id: scene3d
-            anchors.margins: 10
+            anchors.fill:  parent
             focus: true
             aspects: ["input", "logic"]
             cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
@@ -68,5 +71,16 @@ Scene3D {
 
         }
 
+MouseArea
+{
+    id : asteroidModelViewMouseArea
+    anchors.fill: parent
+    acceptedButtons: Qt.LeftButton
+    onClicked: scene3d.nextAsteroid()
+}
+
+
+
+}
 
 

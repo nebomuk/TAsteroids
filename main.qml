@@ -62,26 +62,12 @@ Window {
 
 
 
-//    MainForm {
-//        id : mainForm
-//        anchors.fill: parent
-//        asteroidModelViewMouseArea.onClicked: asteroidModelView.nextAsteroid()
-
-//    }
         Loader {
-            id : myLoader
+            id : mainFormLoader
             readonly property MainForm mainForm: item
             anchors.fill: parent
             source: "MainForm.ui.qml";
         }
-
-        Connections {
-                  target: myLoader.item.asteroidModelViewMouseArea
-                  onClicked: myLoader.item.asteroidModelView.nextAsteroid()
-              }
-
-
-
 
     }
 

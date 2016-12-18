@@ -77,6 +77,8 @@ property Component highScores : Item
     {
             anchors.top : parent.top
             anchors.bottom: highScoresBack.top
+            anchors.left: parent.left
+            anchors.right: parent.right
     }
 
         MainMenuRectangle

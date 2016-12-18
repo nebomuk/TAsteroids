@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.7
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import my.highscoremodel.singleton 1.0
@@ -7,8 +7,7 @@ import my.highscoremodel.singleton 1.0
 TableView {
 
     id : tableView
-    anchors.left: parent.left
-    anchors.right: parent.right
+
     backgroundVisible: false
     alternatingRowColors: false
 
@@ -44,9 +43,14 @@ TableView {
                      color : "transparent"
                  }
 
+          FontMetrics {
+              id: fontMetrics
+              font.pointSize: 20
+          }
+
           rowDelegate: Rectangle {
                   color: "transparent"
-                  height: 32
+                  height: fontMetrics.height
               }
 
           itemDelegate: Item {
@@ -76,7 +80,7 @@ TableView {
                          //horizontalAlignment: styleData.column === 2 ? Text.AlignRight : styleData.textAlignment
                          anchors.leftMargin: 12
                          text: styleData.value
-                         font.pointSize: 20
+                         font.pointSize:  20
                          elide: Text.ElideRight
                          color: "#01375D"
                          renderType: Text.QtRendering
@@ -97,32 +101,5 @@ TableView {
       {
           tableView.resizeColumnsToContents()
       }
-  }
-
-//ListView {
-//    id: highScoreListView
-
-//    delegate:
-//        Row {
-//            id: row1
-
-//            Text {
-//                text: player
-//                font.pointSize: 20
-//                color: "#01375D"
-//                font.bold: true
-//                anchors.verticalCenter: parent.verticalCenter
-//            }
-//            Text {
-//                text: score
-//                font.pointSize: 20
-//                color: "#01375D"
-//                font.bold: true
-//                anchors.verticalCenter: parent.verticalCenter
-//            }
-//            spacing: 10
-//        }
-
-//    model : HighScoreModel
-//}
+}
 

@@ -11,8 +11,6 @@ Rectangle {
     anchors.fill: parent
     id : rootRectangle
     property alias mainMenu : mainMenu
-    property alias asteroidModelViewMouseArea : asteroidModelViewMouseArea
-    property alias asteroidModelView : asteroidModelView
 
 
         BorderImage {
@@ -69,11 +67,4 @@ Rectangle {
 
         }
 
-        // called from outside because javascript not allowed here
-        MouseArea
-        {
-            id : asteroidModelViewMouseArea
-            anchors.fill: asteroidModelView
-            acceptedButtons: Qt.LeftButton
-        }
 }

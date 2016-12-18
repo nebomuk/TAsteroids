@@ -7,6 +7,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QtQml>
+#include <QScreen>
 
 int main(int argc, char *argv[])
 {
@@ -24,9 +25,11 @@ int main(int argc, char *argv[])
 #endif
 
     QQmlApplicationEngine engine;
+    engine.rootContext()
+            ->setContextProperty("screenPixelDensity", QGuiApplication::primaryScreen()->physicalDotsPerInch() * QGuiApplication::primaryScreen()->devicePixelRatio());
     engine.rootContext()->setContextProperty("widgetInteraction",new WidgetInteraction());
     engine.addImageProvider(QLatin1String("backgroundimageprovider"), new BackgroundImageProvider);
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/mainTouch.qml")));
 
     return app.exec();
 }

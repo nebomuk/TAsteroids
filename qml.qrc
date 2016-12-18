@@ -15,5 +15,12 @@
         <file>AsteroidModelView.qml</file>
         <file>BasicCamera.qml</file>
         <file>SortedForwardRenderer.qml</file>
+        <file>MainFormTouch.ui.qml</file>
+        <file>mainTouch.qml</file>
+        <file>HighScoreView2.qml</file>
+        <file>Style.js</file>
+        <file>menu0.png</file>
+        <file>menu1.png</file>
+        <file>menu2.png</file>
     </qresource>
 </RCC>
