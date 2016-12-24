@@ -86,17 +86,23 @@ Item {
         }
 
 
-        AsteroidModelView {
-            id: asteroidModelView1
-            width: rootWindow.height / 2
-            height: rootWindow.height / 2
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 
-        }
+
+    }
+
+    // TODO anchor to image2 and add margins
+    AsteroidModelView {
+        id: asteroidModelView1
+        anchors.fill: image2
+        anchors.topMargin: image2.height * 0.3
+        anchors.bottomMargin: image2.height * 0.3
+        anchors.leftMargin: image2.width * 0.4
+        anchors.rightMargin: image2.width * 0.2
 
     }
 
     Image {
+        z : -1
         id: image0
         x: 0
         y: 0
@@ -114,6 +120,7 @@ Item {
         source: "menu1.png"
     }
     Image {
+        z : -1
         id: image2
         anchors.right: parent.right
         anchors.top: parent.top
