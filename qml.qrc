@@ -22,5 +22,6 @@
         <file>menu0.png</file>
         <file>menu1.png</file>
         <file>menu2.png</file>
+        <file>PlayerInput.qml</file>
     </qresource>
 </RCC>

@@ -67,8 +67,21 @@ ListModel {
         )
     }
 
+    function dropTable()
+    {
+        __db().transaction(
+            function(tx) {
+                tx.executeSql("DROP TABLE HighScores");
+            }
+            )
+    }
+
     Component.onCompleted: {
+
         fillModel()
+
+//        for(var i = 0; i< 10; ++i)
+//        savePlayerScore("mister T",i*5+i)
 
     }
 }

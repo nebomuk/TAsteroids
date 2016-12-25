@@ -57,7 +57,6 @@ Camera {
 
     projectionType: CameraLens.PerspectiveProjection
     fieldOfView: 22.5
-    onAspectRatioChanged: console.log( "aspectRatio = " + aspectRatio )
     nearPlane:   0.01
     farPlane:    1000.0
     viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )

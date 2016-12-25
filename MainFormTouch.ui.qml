@@ -10,94 +10,109 @@ Item {
 //    width: 800
 //    height: 384
 
-    RowLayout
+
+    Item
     {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-//        anchors {
+        id: item2
 
-//                 centerIn: parent
-//             }
+        anchors.left: image0.left
+        anchors.right: image1.right // must be right because image1 (middle) gets stretched
+        anchors.top: image0.top
+        anchors.bottom: image0.bottom
+
+        anchors.topMargin: image0.height * 0.3
+        anchors.bottomMargin: image0.height * 0.3
+        anchors.leftMargin: image0.width * 0.3
+        anchors.rightMargin: -image2.width * 0.1
 
 
-
-
-        StackLayout
+        Column
         {
-            id : stack
-            height: rootWindow.height / 2
-            currentIndex: 0
+            id : column
+            anchors.fill: parent
+            spacing: parent.height / 10
+            //height: parent.height / 2
 
 
-            Item
+            MainMenuRectangle
             {
+                height: parent.height / 4
+                title1: qsTr("New Game")
 
-
-                Column
+                MouseArea
                 {
-                    id : column
+                    onClicked:  playerInput.visible = true, column.visible = false
+                    anchors.fill: parent
 
-                    anchors.leftMargin: parent.width * 0.1
-                    anchors.rightMargin: parent.width * 0.1
-
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: parent.height / 10
-                    anchors.left:  parent.left
-                    anchors.right:  parent.right
-                    //height: parent.height / 2
-
-
-                    MainMenuRectangle
-                    {
-                        height: stack.height / 4
-                        title1: qsTr("New Game")
-
-                        MouseArea
-                        {
-                            onClicked:  stack.currentIndex = 1
-                            anchors.fill: parent
-
-                        }
-                    }
-                    MainMenuRectangle
-                    {
-                        height: stack.height / 4
-                        title1: qsTr("High Scores")
-
-
-
-                        MouseArea
-                        {
-                            onClicked:  stack.currentIndex = 1
-                            anchors.fill: parent
-
-                        }
-                    }
                 }
-
             }
-
-            HighScoreView2
+            MainMenuRectangle
             {
-                id : container
+                height: parent.height / 4
+                title1: qsTr("High Scores")
 
+
+
+                MouseArea
+                {
+                    onClicked:  highScoreContainer.visible = true, column.visible = false
+                    anchors.fill: parent
+
+                }
             }
+        }
 
+        Connections
+        {
+            target: rootWindow
+            onClosing : column.visible ? close.accepted = true :
+                                         close.accepted = false,
+                                         column.visible = true,
+                                         highScoreContainer.visible = false,
+                                         playerInput.visible =  false
         }
 
 
+        PlayerInput
+        {
+            id : playerInput
+            anchors.fill: parent
+            visible: false
 
+            onFinished:  column.visible = true, playerInput.visible = false
+        }
+
+        Item
+        {
+            id : highScoreContainer
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            width : parent.width *0.9
+            height: parent.height *0.9
+
+            visible: false
+
+
+            HighScoreView2
+            {
+                id : highscore
+                anchors.centerIn : parent
+
+
+            }
+        }
 
     }
 
-    // TODO anchor to image2 and add margins
+
     AsteroidModelView {
         id: asteroidModelView1
         anchors.fill: image2
-        anchors.topMargin: image2.height * 0.3
-        anchors.bottomMargin: image2.height * 0.3
-        anchors.leftMargin: image2.width * 0.4
-        anchors.rightMargin: image2.width * 0.2
+        anchors.topMargin: image2.height * 0.21
+        anchors.bottomMargin: image2.height * 0.15
+        anchors.leftMargin: image2.width * 0.3
+        anchors.rightMargin: image2.width * 0.1
 
     }
 
