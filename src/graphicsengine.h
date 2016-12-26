@@ -67,7 +67,7 @@ enum asteroidType
 
 	SoundEngine * soundEngine() const { return soundEngine_;}
 
-	// returns a list of all submarines tha are handled by the collision detection
+    // returns a list of all Vehicles that are handled by the collision detection
 	Q_INVOKABLE QList<Vehicle*> asteroids() const { return asteroids_;}
 	Q_INVOKABLE QList<Vehicle*> projectiles() const { return projectiles_;}
 	Q_INVOKABLE QList<Vehicle*> ufos() const { return ufos_;}
@@ -80,7 +80,7 @@ enum asteroidType
 	// projectiles_
 	Q_INVOKABLE inline void appendProjectile(Vehicle* projectile);
 
-	// number of submarines that have been destroyed by projectiles, used for displaying highscore
+    // number of asteroids that have been destroyed by projectiles, used for displaying highscore
 	Q_INVOKABLE int destroyedAsteroidCount() const { return destroyedAsteroidCount_;}
 	void setDestroyedAsteroidCount(int destroyedAsteroidCount){ destroyedAsteroidCount_ = destroyedAsteroidCount; }
 

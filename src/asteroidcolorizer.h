@@ -27,23 +27,23 @@ public:
 	static QImage tinted(const QImage &image, const QColor &color, QPainter::CompositionMode mode = QPainter::CompositionMode_Overlay);
 
 	// get the pixmaps for a particular asteroid
-    inline ImageList imagesForAsteroid(const QString asteroidName);
+    ImageList imagesForAsteroid(const QString asteroidName, QColor color);
 
 	// loads resource images and pixmaps into asteroidImages_ and asteroidPixmaps_
-	void loadDefault();
 
 private:
+    void loadDefault();
+    ImageList coloredImageList(QString key);
+
 	QStringList asteroidNames_;
 	QHash< QString, ImageList> defaultImages_;
 	QHash< QString, ImageList> asteroidImages_;
+    QColor cacheColor_;  // the color of the cached asteroid images
 };
 
 
 
-ImageList AsteroidColorizer::imagesForAsteroid(const QString asteroidName)
-{
-    return asteroidImages_.value(asteroidName);
-}
+
 
 
 #endif // ASTEROIDCOLORIZER_H

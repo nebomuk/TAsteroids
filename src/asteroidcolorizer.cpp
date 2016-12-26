@@ -14,11 +14,7 @@ AsteroidColorizer::~AsteroidColorizer()
 
 void AsteroidColorizer::loadDefault()
 {
-	if(!defaultImages_.isEmpty()) // then reuse old defaultImages
-	{
-		asteroidImages_ = defaultImages_;
-		return;
-	}
+
 	foreach(QString name, asteroidNames_)
 	{
 		ImageList images;
@@ -35,8 +31,10 @@ void AsteroidColorizer::loadDefault()
 		}
 		defaultImages_.insert(name,images);
 		asteroidImages_ = defaultImages_;
-	}
+    }
 }
+
+
 
 /*static*/ QImage AsteroidColorizer::tinted(const QImage &image, const QColor &color, QPainter::CompositionMode mode)
 {
@@ -50,4 +48,56 @@ void AsteroidColorizer::loadDefault()
 
 	return resultImage;
 }
+
+
+ImageList AsteroidColorizer::imagesForAsteroid(const QString asteroidName, QColor color)
+{
+    Q_ASSERT(defaultImages_.contains(asteroidName));
+
+    if(!color.isValid())
+    {
+         return defaultImages_.value(asteroidName);
+    }
+    else
+    {
+        if(cacheColor_ != color)
+        {
+
+            // clear cache, cause we cache only 1 color at a time
+            asteroidImages_.clear();
+            cacheColor_ = color;
+
+            ImageList colored = coloredImageList(asteroidName);
+            asteroidImages_.insert(asteroidName,colored);
+            return colored;
+        }
+        else
+        {
+            if(asteroidImages_.contains(asteroidName))
+            {
+                return asteroidImages_[asteroidName];
+            }
+            else
+            {
+                ImageList colored = coloredImageList(asteroidName);
+                asteroidImages_.insert(asteroidName,colored);
+                return colored;
+            }
+
+        }
+
+    }
+}
+
+ImageList AsteroidColorizer::coloredImageList(QString key)
+{
+     ImageList uncolored = defaultImages_[key];
+    ImageList colored;
+    foreach(QImage image, uncolored)
+    {
+        colored.append(tinted(image,cacheColor_));
+    }
+    return colored;
+}
+
 

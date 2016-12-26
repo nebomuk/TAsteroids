@@ -318,12 +318,17 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 
 	asteroidType type = static_cast<asteroidType>(qrand() % 4);
 
+    QColor tintColor;
+    if(gameState_->phase() > 0)
+    {
+        tintColor = colorList_.at(gameState()->phase() % (colorList_.size()-1));
+    }
 	switch(type)
 	{
-    case golevka:	asteroid->addImages(asteroidColorizer_->imagesForAsteroid("golevka")); break;
-    case kleopatra: asteroid->addImages(asteroidColorizer_->imagesForAsteroid("kleopatra")); break;
-    case ky26:		asteroid->addImages(asteroidColorizer_->imagesForAsteroid("ky26")); break;
-    case toutatis:  asteroid->addImages(asteroidColorizer_->imagesForAsteroid("toutatis")); break;
+    case golevka:	asteroid->addImages(asteroidColorizer_->imagesForAsteroid("golevka",tintColor)); break;
+    case kleopatra: asteroid->addImages(asteroidColorizer_->imagesForAsteroid("kleopatra",tintColor)); break;
+    case ky26:		asteroid->addImages(asteroidColorizer_->imagesForAsteroid("ky26",tintColor)); break;
+    case toutatis:  asteroid->addImages(asteroidColorizer_->imagesForAsteroid("toutatis",tintColor)); break;
 	default:
 		qDebug("GraphicsEngine::createAsteroidAt: invalid asteroidType");
         return Q_NULLPTR;
@@ -335,10 +340,7 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 	asteroid->setOffset(Vehicle::center(asteroid)); // origin to center
 	asteroid->setPos(x,y);
 	asteroid->setDiplomacy(2);
-    if(gameState_->phase() > 0)
-    {
-        asteroid->setTintColor(colorList_.at(gameState()->phase() % (colorList_.size()-1)));
-    }
+
 	asteroid->setScale(scale);
 	asteroid->setSize(asteroidSize);
 
