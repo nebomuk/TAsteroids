@@ -23,12 +23,12 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 			<< QColor(150,50,0) << QColor(150,0,50) << QColor(0,150,50)
 			<< QColor(150,150,0) << QColor(0,150,150) << QColor(150,0,150);
 
-    QImage first = QImage(":explosion_images/explosionBackground.png");
+    QImage first = QImage(":images/explosion/explosionBackground.png");
 	int explosionWidth = first.width();
     explosionImages_ << first.scaledToWidth(qRound(explosionWidth*1.5f),Qt::SmoothTransformation);
 	for(int i = 0; i <15; ++i)
 	{
-        QImage image(":explosion_images/explosion" + QString::number(i)+".png");
+        QImage image(":images/explosion/explosion" + QString::number(i)+".png");
         explosionImages_ << image.scaledToWidth(qRound(explosionWidth*1.5f),Qt::SmoothTransformation);
 	}
 

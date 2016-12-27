@@ -1,21 +1,21 @@
 <RCC>
     <qresource prefix="/" >
 	<!-- explosion14.png is the same as explosionBackground -->
-        <file>explosion_images/explosionBackground.png</file>
-	<file>explosion_images/explosion14.png</file>
-        <file>explosion_images/explosion0.png</file>
-        <file>explosion_images/explosion2.png</file>
-        <file>explosion_images/explosion4.png</file>
-        <file>explosion_images/explosion6.png</file>
-        <file>explosion_images/explosion8.png</file>
-        <file>explosion_images/explosion10.png</file>
-        <file>explosion_images/explosion11.png</file>
-        <file>explosion_images/explosion12.png</file>
-        <file>explosion_images/explosion13.png</file>
-        <file>explosion_images/explosion1.png</file>
-        <file>explosion_images/explosion3.png</file>
-        <file>explosion_images/explosion5.png</file>
-        <file>explosion_images/explosion7.png</file>
-        <file>explosion_images/explosion9.png</file>	
+        <file>images/explosion/explosionBackground.png</file>
+	<file>images/explosion/explosion14.png</file>
+        <file>images/explosion/explosion0.png</file>
+        <file>images/explosion/explosion2.png</file>
+        <file>images/explosion/explosion4.png</file>
+        <file>images/explosion/explosion6.png</file>
+        <file>images/explosion/explosion8.png</file>
+        <file>images/explosion/explosion10.png</file>
+        <file>images/explosion/explosion11.png</file>
+        <file>images/explosion/explosion12.png</file>
+        <file>images/explosion/explosion13.png</file>
+        <file>images/explosion/explosion1.png</file>
+        <file>images/explosion/explosion3.png</file>
+        <file>images/explosion/explosion5.png</file>
+        <file>images/explosion/explosion7.png</file>
+        <file>images/explosion/explosion9.png</file>	
     </qresource>
 </RCC>

@@ -11,16 +11,8 @@ android {
     SOURCES += src/androidhelper.cpp #my android specific cpp file
     HEADERS += src/androidhelper.h   #my android specific header file
 }
-#CONFIG += c++11
-CONFIG += warn_on
-CONFIG -= debug_and_release \
-	debug_and_release_target
-DESTDIR = .
+
 TRANSLATIONS=ta_ger.ts
-RCC_DIR = build
-MOC_DIR = build
-OBJECTS_DIR = build
-UI_DIR = build
 QT += gui \
 	core \
 	script \

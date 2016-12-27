@@ -154,9 +154,6 @@ GraphicsView::~GraphicsView()
             {
                 QPinchGesture* pinchGesture = static_cast<QPinchGesture*>(gesture);
                 bool isPinch = pinchGesture->totalScaleFactor() < 0.7;
-                qDebug() << "total" << pinchGesture->totalScaleFactor();
-                qDebug() << "scale" << pinchGesture->scaleFactor();
-                qDebug() << "last" << pinchGesture->lastScaleFactor();
 
                 if(gesture->state() == Qt::GestureStarted && isPinch)
                 {
