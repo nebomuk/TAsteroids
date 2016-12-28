@@ -21,7 +21,6 @@ QT += opengl \
 RESOURCES = ../menu_files.qrc
 HEADERS += src/stackedwidget.h \
 	src/shapedmenu.h \
-	src/point3d.h \
 	src/view.h \
 	src/highscoreview.h
 SOURCES += src/stackedwidget.cpp \
