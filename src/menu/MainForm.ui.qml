@@ -28,7 +28,7 @@ Rectangle {
             border.top: 145
             border.right: 560
             border.left: 262
-            source: Qt.platform.os != "android" && Qt.platform.os != "ios" ? "qrc:/menu.png" :"image://backgroundimageprovider/menu"
+            source: "qrc:/menu_full.png"
         }
 
         Item {

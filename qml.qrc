@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/menu/main.qml</file>
+        <file>src/menu/MainForm.ui.qml</file>
+        <file>src/menu/HighScoreModelSingleton.qml</file>
+        <file>src/menu/MainMenu.qml</file>
+        <file>src/menu/MainMenuRectangle.qml</file>
+        <file>src/menu/HighScoreView.qml</file>
+        <file>src/menu/AsteroidCameraEntity.qml</file>
+        <file>src/menu/Asteroid.qml</file>
+        <file>src/menu/AsteroidModelView.qml</file>
+        <file>src/menu/BasicCamera.qml</file>
+        <file>src/menu/SortedForwardRenderer.qml</file>
+        <file>src/menu/MainFormTouch.ui.qml</file>
+        <file>src/menu/mainTouch.qml</file>
+        <file>src/menu/HighScoreView2.qml</file>
+        <file>src/menu/Style.js</file>
+        <file>src/menu/PlayerInput.qml</file>
+        <file alias="menu_full.png">menu_files/menu_full.png</file>
+        <file alias="menu0.png">menu_files/menu0.png</file>
+        <file alias="menu1.png">menu_files/menu1.png</file>
+        <file alias="menu2.png">menu_files/menu2.png</file>
+    </qresource>
+</RCC>

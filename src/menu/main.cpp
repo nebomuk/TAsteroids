@@ -1,4 +1,4 @@
-#include "androidhelper.h"
+#include "../androidhelper.h"
 #include "widgetinteraction.h"
 
 #include <QApplication>
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     engine.rootContext()
             ->setContextProperty("screenPixelDensity", QGuiApplication::primaryScreen()->physicalDotsPerInch() * QGuiApplication::primaryScreen()->devicePixelRatio());
     engine.rootContext()->setContextProperty("widgetInteraction",new WidgetInteraction());
-    engine.load(QUrl(QStringLiteral("qrc:/mainTouch.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/src/menu/mainTouch.qml")));
 
 
 

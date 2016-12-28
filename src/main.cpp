@@ -1,35 +1,38 @@
 #include <QApplication>
 #include <QTime>
-#include <QInputDialog>
-#include "androidhelper.h"
-#include "graphicsview.h"
+#include <QPlastiqueStyle>
+#include <QFontDatabase>
+#include "shapedmenu.h"
 
 int main(int argc, char ** argv)
 {
 	QApplication app( argc, argv );
+
+	// init resources that are contained in the static library (the actual game)
+	Q_INIT_RESOURCE(bacchus);
+	Q_INIT_RESOURCE(digits_images);
+	Q_INIT_RESOURCE(explosion_images);
+	Q_INIT_RESOURCE(golevka);
+	Q_INIT_RESOURCE(hitpointsBar_images);
+	Q_INIT_RESOURCE(images);
+	Q_INIT_RESOURCE(ky26);
+	Q_INIT_RESOURCE(kleopatra);
+	Q_INIT_RESOURCE(script);
+	Q_INIT_RESOURCE(toutatis);
+	Q_INIT_RESOURCE(sounds);
+	Q_INIT_RESOURCE(menu_files);
+
+
 	app.setApplicationName("tasteroids");
 	app.setOrganizationName("Taiko");
-#if QT_VERSION > 0x040600 && QT_VERSION < 0x050000
-	app.setGraphicsSystem("raster");
-#endif
 	qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));  // seed the random number generator
-	//int playerCount = QInputDialog::getInt(NULL,QObject::tr("Player Count"),QObject::tr("Enter number of players"),
-	//									   1,1,2);
+	app.setWindowIcon(QIcon(":icon.png"));
+	app.setOverrideCursor(QCursor(QPixmap(":cursor.png"),2,2));
+	QApplication::setStyle(new QPlastiqueStyle);
+	QFontDatabase::addApplicationFont(":OCRA.ttf");
+	
+	ShapedMenu menu;
+	menu.show();
 
-
-    GraphicsView view;
-    // background image and tap gesture only work in landscape
-#ifdef Q_OS_ANDROID
-    AndroidHelper helper;
-    const int SCREEN_ORIENTATION_SENSOR_LANDSCAPE = 6;
-    helper.setScreenOrientation(SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-    QObject::connect(&app,&QApplication::applicationStateChanged,&view,&GraphicsView::onApplicationStateChanged);
-#endif
-
-	//view.setPlayerCount(playerCount);
-	view.restart();
-	view.show();
-
-	app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
 	return app.exec();
 }

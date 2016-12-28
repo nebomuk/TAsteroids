@@ -10,8 +10,8 @@ QT += 3dcore 3drender 3dinput 3dquick qml quick 3dquickextras
 
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    widgetinteraction.cpp
+SOURCES += src/menu/main.cpp \
+    src/menu/widgetinteraction.cpp
 
 RESOURCES += qml.qrc
 
@@ -22,11 +22,11 @@ QML_IMPORT_PATH =
 
 android {
     QT += androidextras
-    SOURCES += androidhelper.cpp #my android specific cpp file
-    HEADERS += androidhelper.h   #my android specific header file
+    SOURCES += src/androidhelper.cpp #my android specific cpp file
+    HEADERS += src/androidhelper.h   #my android specific header file
 }
 
 HEADERS += \
-    widgetinteraction.h
+    src/menu/widgetinteraction.h
 
 FORMS +=

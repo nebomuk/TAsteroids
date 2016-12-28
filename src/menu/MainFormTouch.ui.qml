@@ -123,7 +123,7 @@ Item {
         y: 0
         height: parent.height
         width: sourceSize.width * item1.height / sourceSize.height
-        source: "menu0.png"
+        source: "qrc:/menu0.png"
     }
     Image {
         z : -1
@@ -132,7 +132,7 @@ Item {
         anchors.right: image2.left
         height: parent.height
         fillMode: Image.TileHorizontally
-        source: "menu1.png"
+        source: "qrc:/menu1.png"
     }
     Image {
         z : -1
@@ -142,7 +142,7 @@ Item {
         anchors.bottom: parent.bottom
         height: parent.height
         width: sourceSize.width * item1.height / sourceSize.height
-        source: "menu2.png"
+        source: "qrc:/menu2.png"
     }
 
 }

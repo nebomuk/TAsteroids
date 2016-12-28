@@ -1,11 +1,6 @@
 TEMPLATE = app
 TARGET = tasteroids
 CONFIG += c++11
-win32:{
-	LIBS += -lSDL.dll
-	INCLUDEPATH += SDL/include
-	QMAKE_LIBDIR += SDL
-}
 android {
     QT += androidextras
     SOURCES += src/androidhelper.cpp #my android specific cpp file
@@ -78,7 +73,7 @@ SOURCES += src/vehicle.cpp \
 	src/scriptproxy.cpp \
 	src/graphicsengine.cpp \
 	src/sdlsound.cpp  \
-	src/main.cpp \
+	src/main_tasteroids.cpp \
 	src/svgcache.cpp \
 	src/asteroidcolorizer.cpp \
 	src/animateditem.cpp \
@@ -130,6 +125,4 @@ RESOURCES = hitpointsBar_images.qrc \
 	script.qrc \
 	sounds.qrc
 OTHER_FILES += src/mainloop.js \
-	src/control.js \
-    bin/SDL_mixer.dll \
-    bin/SDL.dll
+	src/control.js 
