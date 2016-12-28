@@ -1,5 +1,4 @@
 #include "androidhelper.h"
-#include "backgroundimageprovider.h"
 #include "widgetinteraction.h"
 
 #include <QApplication>
@@ -13,9 +12,6 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QUrl simpleResourceUrl(QStringLiteral("qrc:/SimpleModelSingleton.qml"));
-    qmlRegisterSingletonType(simpleResourceUrl, "my.simplemodel.singleton", 1, 0, "SimpleModel");
-
     QUrl highScoreResourceUrl(QStringLiteral("qrc:/HighScoreModelSingleton.qml"));
     qmlRegisterSingletonType(highScoreResourceUrl, "my.highscoremodel.singleton", 1, 0, "HighScoreModel");
 
@@ -28,8 +24,9 @@ int main(int argc, char *argv[])
     engine.rootContext()
             ->setContextProperty("screenPixelDensity", QGuiApplication::primaryScreen()->physicalDotsPerInch() * QGuiApplication::primaryScreen()->devicePixelRatio());
     engine.rootContext()->setContextProperty("widgetInteraction",new WidgetInteraction());
-    engine.addImageProvider(QLatin1String("backgroundimageprovider"), new BackgroundImageProvider);
     engine.load(QUrl(QStringLiteral("qrc:/mainTouch.qml")));
+
+
 
     return app.exec();
 }
