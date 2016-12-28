@@ -2,14 +2,11 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainForm.ui.qml</file>
-        <file>SimpleModelSingleton.qml</file>
         <file>HighScoreModelSingleton.qml</file>
         <file>menu.png</file>
         <file>MainMenu.qml</file>
         <file>MainMenuRectangle.qml</file>
         <file>HighScoreView.qml</file>
-        <file>Tabletest.qml</file>
-        <file>TabletestForm.ui.qml</file>
         <file>AsteroidCameraEntity.qml</file>
         <file>Asteroid.qml</file>
         <file>AsteroidModelView.qml</file>
