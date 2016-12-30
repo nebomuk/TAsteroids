@@ -29,7 +29,7 @@ class AnimatedItem;
 class MovingItem;
 class Vehicle;
 class GraphicsEngine;
-class ScriptProxy;
+class JSProxy;
 class MechanicalCounter;
 class SvgCache;
 class GameState;

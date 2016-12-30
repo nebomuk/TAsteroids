@@ -91,7 +91,7 @@ private:
     QList<GraphicsSoftButton* > leftSoftButtons_;
     QList<GraphicsSoftButton* > rightSoftButtons_;
 
-    QPointer<ScriptProxy> scriptProxy;
+    JSProxy* scriptProxy;
 
 
     // distance between the window borders (than can be resized, without keeping aspect ratio)

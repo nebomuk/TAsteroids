@@ -109,7 +109,7 @@ function mainLoop()
 		}
 	}
 
-	if(!isNullQObject(ufo) && ufo.wormholeState == Vehicle.outside)
+    if(!isNullQObject(ufo) && ufo.wormholeState == Vehicle.OUTSIDE)
 	{
 		var cosAngle = Math.cos(ufo.angle*Math.PI/180.0);
 		var sinAngle = Math.sin(ufo.angle*Math.PI/180.0);

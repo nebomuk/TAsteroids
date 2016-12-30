@@ -32,7 +32,7 @@ public:
 	enum { Type = UserType+TYPE_VEHICLE};
 	int type() const {return Type;} // Enable the use of qgraphicsitem_cast with this item.
 
-	enum WormholeState {outside, vanish, inside, appear};
+    enum WormholeState {OUTSIDE, VANISH, INSIDE, APPEAR};
 
 	Vehicle(QGraphicsItem * parent = 0);
 	~Vehicle() { delete [] shape;}

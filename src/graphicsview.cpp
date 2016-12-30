@@ -10,12 +10,12 @@
 #include "globalvariables.h"
 #include "vehicle.h"
 #include "svgcache.h"
-#include "scriptproxy.h"
 #include "graphicsengine.h"
 #include "mechanicalcounter.h"
 #include "soundengine.h"
 #include "graphicssoftbutton.h"
 #include "globalvariables.h"
+#include "jsproxy.h"
 //#include "qgl.h"
 
 #include <QGraphicsColorizeEffect>
@@ -299,7 +299,8 @@ void GraphicsView::populate()
     for(int i = 0; i< graphicsEngine->gameState()->playerCount(); ++i)
 	{
 	// object from script
-	QScriptValue playerVehicles = scriptProxy->engine()->globalObject().property("playerVehicles");
+        // TODO use player1 and player2 and put them into the array instead of using qobject list
+    QJSValue playerVehicles = scriptProxy->engine()->globalObject().property("playerVehicles");
 
 	// copy script objects into playerVehicles_ array
 	playerVehicles_ << qobject_cast<Vehicle*>(playerVehicles.property(i).toQObject());
@@ -659,21 +660,15 @@ void GraphicsView::keyReleaseEvent(QKeyEvent *event)
 
 void GraphicsView::setupScript()
 {
-	scriptProxy = new ScriptProxy(this);
+    scriptProxy = new JSProxy(this);
 	connect(this,SIGNAL(signalKeyPress(int)),scriptProxy,SIGNAL(signalKeyPress(int)));
 	connect(this,SIGNAL(signalKeyRelease(int)),scriptProxy,SIGNAL(signalKeyRelease(int)));
 
 
-    scriptProxy->newQObjectByName(graphicsEngine->gameState(),"gameState", QScriptEngine::QtOwnership,
-									QScriptEngine::ExcludeSuperClassProperties |
-									QScriptEngine::ExcludeSuperClassMethods);
-	scriptProxy->newQObjectByName(graphicsEngine,"graphicsEngine", QScriptEngine::QtOwnership,
-									QScriptEngine::ExcludeSuperClassProperties |
-									QScriptEngine::ExcludeSuperClassMethods);
+    scriptProxy->newQObjectWithName(graphicsEngine->gameState(),"gameState");
+    scriptProxy->newQObjectWithName(graphicsEngine,"graphicsEngine");
 
-	scriptProxy->newQObjectByName(graphicsEngine->soundEngine(),"soundEngine", QScriptEngine::QtOwnership,
-									QScriptEngine::ExcludeSuperClassProperties |
-									QScriptEngine::ExcludeSuperClassMethods);
+    scriptProxy->newQObjectWithName(graphicsEngine->soundEngine(),"soundEngine");
 
 
 	QString srcPath = QApplication::applicationDirPath().remove("bin").append("/src/");

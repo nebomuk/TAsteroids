@@ -170,7 +170,7 @@ void GraphicsEngine::processUfos()
                         explosion->setTransform(QTransform::fromScale(0.7,0.7));
         }
 
-		if(ufo->hitpoints() <= 0 || ufo->wormholeState() == Vehicle::inside)
+        if(ufo->hitpoints() <= 0 || ufo->wormholeState() == Vehicle::INSIDE)
 		{
 			++destroyedAsteroidCount_;
 			ufos_.removeAt(i);

@@ -11,7 +11,7 @@ Vehicle::Vehicle(QGraphicsItem * parent)
 	size_(2),
 	shape(NULL),
 	wormholeFrame_(0),
-	wormholeState_(outside),
+    wormholeState_(OUTSIDE),
 	isProjectile_(false),
 	isPlayer_(false),
 	isAsteroid_(false)
@@ -22,21 +22,21 @@ void Vehicle::advance(int phase)
 {
 	if(phase == 1 && isAdvancing())
 	{
-			if(wormholeState_ == vanish && wormholeFrame_ < 255) // vanish effect, "get sucked in by wormhole"
+            if(wormholeState_ == VANISH && wormholeFrame_ < 255) // vanish effect, "get sucked in by wormhole"
 			{
 				setWormholeFrame(wormholeFrame_+5);
 			}
-			else if(wormholeState_ == vanish && wormholeFrame_ >= 255)
+            else if(wormholeState_ == VANISH && wormholeFrame_ >= 255)
 			{
-				wormholeState_ = inside;
+                wormholeState_ = INSIDE;
 			}
-			else if(wormholeState_ == appear && wormholeFrame_ > 0) // appear effect, "get out of wormhole"
+            else if(wormholeState_ == APPEAR && wormholeFrame_ > 0) // appear effect, "get out of wormhole"
 			{
 				setWormholeFrame(wormholeFrame_-5);
 			}
-			else if(wormholeState_ == appear && wormholeFrame_ <= 0)
+            else if(wormholeState_ == APPEAR && wormholeFrame_ <= 0)
 			{
-				wormholeState_ = outside;
+                wormholeState_ = OUTSIDE;
 			}
 		else
 			AnimatedItem::advance(phase);
@@ -50,9 +50,9 @@ void Vehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem* option, Q
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 
-	if(wormholeState_ == appear || wormholeState_ == vanish)
+    if(wormholeState_ == APPEAR || wormholeState_ == VANISH)
 		painter->drawImage(offset(), effectImage);
-	else if(wormholeState_ == inside)
+    else if(wormholeState_ == INSIDE)
 		return;
 
 	else
@@ -71,7 +71,7 @@ void Vehicle::setWormholeFrame(int frame)
 
 void Vehicle::setHitpoints(int hitpoints)
 {
-	if(indestructible_ || wormholeState_ !=outside ) // indestructible vehicles only gain, but never loose hitpoints
+    if(indestructible_ || wormholeState_ !=OUTSIDE ) // indestructible vehicles only gain, but never loose hitpoints
 	{
 		hitpoints_ = hitpoints > hitpoints_ ? hitpoints : hitpoints_;
 	}
@@ -82,14 +82,14 @@ void Vehicle::setHitpoints(int hitpoints)
 void Vehicle::beginWormholeTravel()
 {
 	setWormholeFrame(0);
-	wormholeState_ = vanish;
+    wormholeState_ = VANISH;
 }
 
 void Vehicle::endWormholeTravel()
 {
 	body()->SetLinearVelocity(b2Vec2(0.0f,0.0f)); // stop movement
 	setWormholeFrame(255);
-	wormholeState_ = appear;
+    wormholeState_ = APPEAR;
 }
 
 /*virtual*/ void Vehicle::fileChanged()

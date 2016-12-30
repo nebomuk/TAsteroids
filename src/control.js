@@ -14,6 +14,13 @@ ScriptProxy.signalGestureFinished.connect(onGestureFinished);
 // ALTERING THIS FILE MAY NOT HAVE ANY EFFECT
 // check setupScript in graphicsview.cpp for this issue
 
+
+function isNullQObject(obj)
+    {
+      return obj === null || obj === undefined
+    }
+
+
 var playerVehicles = [];
 
 for(var i = 0; i< gameState.playerCount; ++i)
@@ -79,7 +86,7 @@ function disableShield(/*Vehicle* */ vehicle)
 
 function startWormholeTravel(/*Vehicle* */ vehicle)
 {
-	if(vehicle.wormholeState != Vehicle.outside)
+    if(vehicle.wormholeState != Vehicle.OUTSIDE)
 		return;
 
 	vehicle.control = false; // disable user control
@@ -113,7 +120,7 @@ function onKeyPress(key)
 	{
 
 	if(!isNullQObject(playerVehicles[0])
-		&& playerVehicles[0].control == true && playerVehicles[0].wormholeState == Vehicle.outside)
+        && playerVehicles[0].control == true && playerVehicles[0].wormholeState == Vehicle.OUTSIDE)
 	switch(key)
 	{      
 		case Qt.Key_Up:
@@ -133,7 +140,7 @@ function onKeyPress(key)
 		}
 		case Qt.Key_Space:
 		{
-			playerVehicles[0].shooting = true;
+            playerVehicles[0].shooting = true;
 			break;
 		}
 		// Key_Enter didn't work
@@ -151,14 +158,14 @@ function onKeyPress(key)
 	}
 
 	if(!isNullQObject(playerVehicles[1])
-		&& playerVehicles[1].control == true && playerVehicles[1].wormholeState == Vehicle.outside)
+        && playerVehicles[1].control == true && playerVehicles[1].wormholeState == Vehicle.OUTSIDE)
 	switch(key)
 	{
 		case Qt.Key_W:
 		{
 			startAcceleration(playerVehicles[1]);
 			break;
-		}
+        }
 		case Qt.Key_A:
 		{
 			playerVehicles[1].angularVelocity = -250.0;

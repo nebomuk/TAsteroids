@@ -10,7 +10,6 @@ android {
 TRANSLATIONS=ta_ger.ts
 QT += gui \
 	core \
-	script \
         svg \
         concurrent \
         multimedia 
@@ -25,7 +24,6 @@ HEADERS += src/vehicle.h \
 	src/movingitem.h \
 	src/centerrectinrect.h \
 	src/graphicsview.h \
-	src/scriptproxy.h \
 	src/graphicsengine.h \
 	src/gamestate.h \
 	src/svgcache.h \
@@ -70,11 +68,11 @@ HEADERS += src/vehicle.h \
     src/Box2D/Box2D.h \
     src/mocksound.h \
     src/sound.h \
-    src/graphicssoftbutton.h
+    src/graphicssoftbutton.h \
+    src/jsproxy.h
 SOURCES += src/vehicle.cpp \
 	src/movingitem.cpp \
 	src/graphicsview.cpp \
-	src/scriptproxy.cpp \
 	src/graphicsengine.cpp \
 	src/sdlsound.cpp  \
 	src/main.cpp \
@@ -116,7 +114,8 @@ SOURCES += src/vehicle.cpp \
     src/Box2D/Dynamics/b2WorldCallbacks.cpp \
     src/mocksound.cpp \
     src/sound.cpp \
-    src/graphicssoftbutton.cpp
+    src/graphicssoftbutton.cpp \
+    src/jsproxy.cpp
 RESOURCES = hitpointsBar_images.qrc \
 	digits_images.qrc \
 	images.qrc \
