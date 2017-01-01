@@ -10,16 +10,18 @@ Item {
 //    width: 800
 //    height: 384
 
-    property alias exitMouseArea : exitMouseArea
-    property alias newGameMouseArea : newGameMouseArea // mouse event handler outside, starts new game
-    property alias playerCount1MouseArea: playerCount1MouseArea
-    property alias playerCount2MouseArea: playerCount2MouseArea
-    property alias playerInputVisible : playerInput.visible // can be set when instancing this component to display the player name input
-    property int playerInputHighScore : 0
     property alias menuLevelMain : column
     property alias menuLevelPlayerCount : columnPlayerCount
-    property alias menulevelHighScore : highScoreContainer
+    property alias menuLevelHighScore : highScoreContainer
     property alias menuLevelPlayerInput : playerInput // uses onFinished
+    property alias btnConfirm: btnConfirm
+    property alias btnBackPlayerCount: btnBackPlayerCount
+    property alias btnBackHighScore: btnBackHighScore
+    property alias btnHighScore : btnHighScore
+    property alias btnExit : btnExit
+    property alias btnNewGame : btnNewGame // mouse event handler outside, starts new game
+    property alias btnPlayerCount1: btnPlayerCount1
+    property alias btnPlayerCount2: btnPlayerCount2
 
 
     property var buttonHeight : image0.height * 0.1
@@ -44,7 +46,6 @@ Item {
         Column
         {
             id : column
-            visible: !playerInputVisible && !highScoreContainer.visible
             anchors.fill: parent
             anchors.topMargin : buttonHeight
             spacing: buttonSpacing
@@ -57,8 +58,7 @@ Item {
 
                 MouseArea
                 {
-                    id : newGameMouseArea
-                    //onClicked:  playerInput.visible = true, column.visible = false
+                    id : btnNewGame
                     anchors.fill: parent
 
                 }
@@ -68,11 +68,9 @@ Item {
                 height: buttonHeight
                 title1: qsTr("High Scores")
 
-
-
                 MouseArea
                 {
-                    onClicked:  highScoreContainer.visible = true, column.visible = false
+                    id : btnHighScore
                     anchors.fill: parent
 
                 }
@@ -86,7 +84,7 @@ Item {
 
                 MouseArea
                 {
-                    id : exitMouseArea
+                    id : btnExit
                     anchors.fill: parent
 
                 }
@@ -109,7 +107,7 @@ Item {
 
                 MouseArea
                 {
-                    id : playerCount1MouseArea
+                    id : btnPlayerCount1
                     anchors.fill: parent
                 }
             }
@@ -120,7 +118,7 @@ Item {
 
                 MouseArea
                 {
-                    id : playerCount2MouseArea
+                    id : btnPlayerCount2
                     anchors.fill: parent
                 }
             }
@@ -133,22 +131,11 @@ Item {
 
                 MouseArea
                 {
-                    onClicked:  column.visible = true, highScoreContainer.visible = false
+                    id : btnBackPlayerCount
                     anchors.fill: parent
                 }
             }
         }
-
-        Connections
-        {
-            target: rootWindow
-            onClosing : column.visible ? close.accepted = true :
-                                         close.accepted = false,
-                                         column.visible = true,
-                                         highScoreContainer.visible = false,
-                                         playerInput.visible =  false
-        }
-
 
         PlayerInput
         {
@@ -159,9 +146,6 @@ Item {
             anchors.right: parent.right
             height: parent.height / 4
             visible: false
-            highScore: playerInputHighScore
-
-            onFinished:  column.visible = true, playerInput.visible = false
         }
 
         // confirm button
@@ -174,9 +158,8 @@ Item {
 
             MouseArea
             {
-                onClicked:  column.visible = true, playerInput.visible = false
+                id : btnConfirm
                 anchors.fill: parent
-
             }
         }
 
@@ -188,7 +171,6 @@ Item {
 
             width : parent.width *0.9
             height: parent.height * 0.9
-
             visible: false
 
             HighScoreView2
@@ -209,12 +191,10 @@ Item {
 
             MouseArea
             {
-                onClicked:  column.visible = true, highScoreContainer.visible = false
+                id : btnBackHighScore
                 anchors.fill: parent
-
             }
         }
-
     }
 
 

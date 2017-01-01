@@ -10,21 +10,84 @@ Window {
 
     flags: Qt.platform.os != "android" && Qt.platform.os != "ios"  ? Qt.FramelessWindowHint | Qt.ToolTip | Qt.WA_TranslucentBackground : ""
 
-
-    // used for testing on desktop platforms, should be fullscreen anyways
     width:  Qt.platform.os == "android" || Qt.platform.os == "ios" ? Screen.width : 1020
     height: Qt.platform.os == "android" || Qt.platform.os == "ios" ? Screen.height : 567
 
 
     MainFormTouch
     {
+            id : mainForm
             anchors.fill: parent
-            exitMouseArea.onClicked: Qt.quit();
-            newGameMouseArea.onClicked: menuGameInteraction.showGame()
-            playerCount1MouseArea.onClicked: menuGameInteraction.playerCount = 1;
-            playerCount2MouseArea.onClicked: menuGameInteraction.playerCount = 2;
-            playerInputVisible: menuGameInteraction.highScore > 0 // when > 0, automatically shows the high score input field
-            playerInputHighScore : menuGameInteraction.highScore
+
+            // show player high score input when a game has finished
+            Component.onCompleted:
+            {
+                menuLevelPlayerInput.highScore =  menuGameInteraction.highScore
+                var highScoreVisible = menuGameInteraction.highScore  > 0;
+                menuLevelPlayerInput.visible = highScoreVisible
+                menuLevelMain.visible = !highScoreVisible
+            }
+
+            // android back button handling
+            Connections
+            {
+                target: rootWindow
+                onClosing : {
+                    if(mainForm.menuLevelMain.visible)
+                    {
+                        close.accepted = true;
+                    }
+                    else
+                    {
+                        showMenuLevelMain();
+                    }
+                }
+            }
+
+            btnBackHighScore.onClicked: showMenuLevelMain();
+            btnBackPlayerCount.onClicked: showMenuLevelMain();
+
+            // player high score input
+            btnConfirm.onClicked: showMenuLevelMain();
+            menuLevelPlayerInput.onFinished: showMenuLevelMain();
+
+            btnExit.onClicked: Qt.quit();
+            btnNewGame.onClicked:
+            {
+                if(Qt.platform.os == "android") // only singleplayer on android
+                {
+                    menuGameInteraction.showGame();
+                }
+                else
+                {
+                    mainForm.menuLevelMain.visible = false;
+                    mainForm.menuLevelPlayerCount.visible = true;
+                }
+            }
+
+            btnHighScore.onClicked: {
+                mainForm.menuLevelMain.visible = false;
+                mainForm.menuLevelHighScore.visible = true;
+            }
+
+
+            btnPlayerCount1.onClicked: {
+                menuGameInteraction.playerCount = 1;
+                menuGameInteraction.showGame();
+            }
+            btnPlayerCount2.onClicked: {
+                menuGameInteraction.playerCount = 2;
+                menuGameInteraction.showGame();
+            }
+
+            function showMenuLevelMain()
+            {
+                mainForm.menuLevelMain.visible = true;
+                mainForm.menuLevelPlayerCount.visible = false;
+                mainForm.menuLevelPlayerInput.visible = false;
+                mainForm.menuLevelHighScore.visible = false;
+            }
+
 
     }
 
