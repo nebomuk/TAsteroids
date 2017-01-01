@@ -1,4 +1,4 @@
 Asteroids inspired 2D arcade game written in C++ and the Qt Framework. 
 
-Requires Qt 4 or Qt 5 to compile.
+Requires Qt 5.8 to compile.
 

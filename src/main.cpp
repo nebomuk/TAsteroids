@@ -1,9 +1,11 @@
 #include "graphicsview.h"
+#include "menugameinteraction.h"
 
 #include <QApplication>
 #include <QTime>
 #include <QFontDatabase>
 #include <QIcon>
+
 
 #ifdef Q_OS_ANDROID
 #include "androidhelper.h"
@@ -14,9 +16,7 @@
 int main(int argc, char ** argv)
 {
 	QApplication app( argc, argv );
-
-	// init resources that are contained in the static library (the actual game)
-
+    app.setQuitOnLastWindowClosed(false);
 
 	app.setApplicationName("tasteroids");
 	app.setOrganizationName("Taiko");
@@ -25,7 +25,6 @@ int main(int argc, char ** argv)
 	app.setOverrideCursor(QCursor(QPixmap(":cursor.png"),2,2));
 	QFontDatabase::addApplicationFont(":OCRA.ttf");
 
-    GraphicsView view;
     // background image and tap gesture only work in landscape
 #ifdef Q_OS_ANDROID
     AndroidHelper helper;
@@ -34,11 +33,21 @@ int main(int argc, char ** argv)
     QObject::connect(&app,&QApplication::applicationStateChanged,&view,&GraphicsView::onApplicationStateChanged);
 #endif
 
-    //view.setPlayerCount(playerCount);
-    view.restart();
-    view.show();
 
-    app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
+
+
+
+  #ifdef Q_OS_ANDROID
+     AndroidHelper helper;
+     helper.setScreenOrientation(6);
+  #endif
+
+     MenuGameInteraction menuGameInteraction;
+     menuGameInteraction.showMainMenu();
+
+
+
+    //app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
 	
 
 	return app.exec();

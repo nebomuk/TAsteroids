@@ -11,7 +11,6 @@ TRANSLATIONS=ta_ger.ts
 QT += gui \
 	core \
         svg \
-        concurrent \
         multimedia 
 	
 QT += qml quick widgets
@@ -69,7 +68,8 @@ HEADERS += src/vehicle.h \
     src/mocksound.h \
     src/sound.h \
     src/graphicssoftbutton.h \
-    src/jsproxy.h
+    src/jsproxy.h \
+    src/menugameinteraction.h
 SOURCES += src/vehicle.cpp \
 	src/movingitem.cpp \
 	src/graphicsview.cpp \
@@ -115,7 +115,8 @@ SOURCES += src/vehicle.cpp \
     src/mocksound.cpp \
     src/sound.cpp \
     src/graphicssoftbutton.cpp \
-    src/jsproxy.cpp
+    src/jsproxy.cpp \
+    src/menugameinteraction.cpp
 RESOURCES = hitpointsBar_images.qrc \
 	digits_images.qrc \
 	images.qrc \

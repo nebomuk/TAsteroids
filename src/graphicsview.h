@@ -29,6 +29,9 @@ public:
     int lastHighScore() const; // returns the value of the highScoreCounter item
     // lastHighscore_ is updated when clear() is called (the window closes)
 
+    int playerCount() const;
+    void setPlayerCount(int playerCount);
+
 public slots:
 
     // (re) starts the game

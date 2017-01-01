@@ -2,7 +2,6 @@
 #include <QApplication>
 #include <QSettings>
 #include <QDir>
-#include <QScriptValue>
 #include <QMessageBox>
 #include <QEvent>
 #include <QGestureEvent>
@@ -708,4 +707,14 @@ void GraphicsView::writeSettings()
 	settings.setValue(className + "/geometry",saveGeometry());
 	if(!settings.contains("phase"))
 		settings.setValue("phase",0);
+}
+
+int GraphicsView::playerCount() const
+{
+    return graphicsEngine->gameState()->playerCount();
+}
+
+void GraphicsView::setPlayerCount(int playerCount)
+{
+    return graphicsEngine->gameState()->setPlayerCount(playerCount);
 }

@@ -16,5 +16,6 @@ Window {
     MainFormTouch
     {
             anchors.fill: parent
+            newGameMouseArea.onClicked: menuGameInteraction.showGame()
     }
 }

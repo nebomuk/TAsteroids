@@ -10,6 +10,7 @@ Item {
 //    width: 800
 //    height: 384
 
+    property alias newGameMouseArea : newGameMouseArea
 
     Item
     {
@@ -41,7 +42,8 @@ Item {
 
                 MouseArea
                 {
-                    onClicked:  playerInput.visible = true, column.visible = false
+                    id : newGameMouseArea
+                    //onClicked:  playerInput.visible = true, column.visible = false
                     anchors.fill: parent
 
                 }

@@ -1,5 +1,4 @@
 #include "asteroidcolorizer.h"
-#include <QtConcurrentMap>
 
 AsteroidColorizer::AsteroidColorizer()
 {
