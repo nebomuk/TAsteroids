@@ -61,6 +61,10 @@ void MenuGameInteraction::showGame()
         gameGraphicsView_->setPlayerCount(playerCount_);
         gameGraphicsView_->restart();
         gameGraphicsView_->show();
+#ifdef Q_OS_ANDROID
+        connect(static_cast<QGuiApplication*>(QGuiApplication::instance()),&QGuiApplication::applicationStateChanged,gameGraphicsView_,&GraphicsView::onApplicationStateChanged);
+#endif
+
         connect(gameGraphicsView_,&GraphicsView::signalClose,this,&MenuGameInteraction::showMainMenu);
     }
 

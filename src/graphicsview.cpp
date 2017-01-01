@@ -371,8 +371,10 @@ void GraphicsView::populate()
 
 
 	// TimeoutInterval is a global variable and controls the framerate 
-	timer->start(TimeoutInterval,this); // starting global timer here
+    timer->start(TimeoutInterval,this); // starting global timer here
 }
+
+
 
 
 void GraphicsView::adjustSoftButtonPositions()
@@ -619,17 +621,12 @@ void GraphicsView::keyPressEvent(QKeyEvent *event)
     {
         if(gameOver_ || doubleBackToExitPressedOnce_)
         {
-            qApp->exit();
-           // this->close();
+           this->close(); // back to menu
         }
 
-        graphicsEngine->showText(tr("Please click BACK again to exit"));
+        graphicsEngine->showText(tr("Please click BACK again to return to the menu"));
         doubleBackToExitPressedOnce_ = true;
-        QTimer::singleShot(2000,[this](){
-            graphicsEngine->hideText();
-            doubleBackToExitPressedOnce_ = false;
-        });
-
+        QTimer::singleShot(2000,this,&GraphicsView::hideDoublePressToExit);
 
         break;
     }
@@ -640,6 +637,15 @@ void GraphicsView::keyPressEvent(QKeyEvent *event)
 		}
 	}
 }
+
+
+#ifdef Q_OS_ANDROID
+void GraphicsView::hideDoublePressToExit()
+{
+    graphicsEngine->hideText();
+    doubleBackToExitPressedOnce_ = false;
+}
+#endif
 
 void GraphicsView::keyReleaseEvent(QKeyEvent *event)
 {

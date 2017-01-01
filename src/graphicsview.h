@@ -49,6 +49,10 @@ private slots:
     void clear(); // clears the scene
     void populate(); // fills the scene with items
 
+#ifdef Q_OS_ANDROID
+    void hideDoublePressToExit();
+#endif
+
 signals:
     // this signal is emitted when closeEvent() is called
     void signalClose();

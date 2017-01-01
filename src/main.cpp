@@ -30,17 +30,7 @@ int main(int argc, char ** argv)
     AndroidHelper helper;
     const int SCREEN_ORIENTATION_SENSOR_LANDSCAPE = 6;
     helper.setScreenOrientation(SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-    QObject::connect(&app,&QApplication::applicationStateChanged,&view,&GraphicsView::onApplicationStateChanged);
 #endif
-
-
-
-
-
-  #ifdef Q_OS_ANDROID
-     AndroidHelper helper;
-     helper.setScreenOrientation(6);
-  #endif
 
      MenuGameInteraction menuGameInteraction;
      menuGameInteraction.showMainMenu();
