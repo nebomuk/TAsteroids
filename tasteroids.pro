@@ -130,10 +130,9 @@ RESOURCES = hitpointsBar_images.qrc \
         sounds.qrc \
         menu_files.qrc
 	
-SOURCES += src/menu/widgetinteraction.cpp
+SOURCES +=
 
-HEADERS += \
-    src/menu/widgetinteraction.h
+HEADERS +=
 
 RESOURCES += qml.qrc
 

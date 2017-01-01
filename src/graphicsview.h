@@ -26,8 +26,6 @@ class GraphicsView : public QGraphicsView
 public:
     GraphicsView(QWidget * parent = 0);
     ~GraphicsView();
-    int lastHighScore() const; // returns the value of the highScoreCounter item
-    // lastHighscore_ is updated when clear() is called (the window closes)
 
     int playerCount() const;
     void setPlayerCount(int playerCount);
@@ -56,6 +54,13 @@ private slots:
 signals:
     // this signal is emitted when closeEvent() is called
     void signalClose();
+
+    ///
+    /// \brief signalHighScore is emmitted when the window is closed and before signalClose()
+    /// \return the value of the highScoreCounter item, only valid after restart() has been called
+    ///
+    int signalHighScore(int score);
+
 
 protected:
 
@@ -107,7 +112,6 @@ private:
 
     QList<QGraphicsBox2DPolygonItem*> bodyItems_;
     QList<b2Body*> groundBodies_;
-    int lastHighScore_;
     bool gameOver_; // set to true when game over
 
     bool doubleBackToExitPressedOnce_;

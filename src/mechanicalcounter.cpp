@@ -29,8 +29,11 @@ const QString MechanicalCounter::digitsFile() const
 
 void MechanicalCounter::setValue(int i)
 {
+    if(i != value_)
+    {
     value_ = i;
     update();
+    }
 }
 
 void MechanicalCounter::setDigits(int i)

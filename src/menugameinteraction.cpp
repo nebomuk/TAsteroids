@@ -8,13 +8,13 @@
 
 MenuGameInteraction::MenuGameInteraction(QObject *parent) : QObject(parent)
 {
-    QUrl highScoreResourceUrl(QStringLiteral("qrc:/HighScoreModelSingleton.qml"));
-    qmlRegisterSingletonType(highScoreResourceUrl, "my.highscoremodel.singleton", 1, 0, "HighScoreModel");
 
+    QUrl highScoreResourceUrl(QStringLiteral("qrc:/src/menu/HighScoreModelSingleton.qml"));
+    qmlRegisterSingletonType(highScoreResourceUrl, "my.highscoremodel.singleton", 1, 0, "HighScoreModel");
     gameGraphicsView_ = Q_NULLPTR;
     engine_ = Q_NULLPTR;
     playerCount_ = 1;
-
+    highScore_ = 0;
 }
 
 MenuGameInteraction::~MenuGameInteraction()
@@ -37,8 +37,11 @@ void MenuGameInteraction::showMainMenu()
 //        disconnect(engine_, SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
 //        disconnect(engine_, &QQmlApplicationEngine::exit,QCoreApplication::instance(),nullptr);
 
+
+
+        qreal density = QGuiApplication::primaryScreen()->physicalDotsPerInch() * QGuiApplication::primaryScreen()->devicePixelRatio();
         engine_->rootContext()
-                ->setContextProperty("screenPixelDensity", QGuiApplication::primaryScreen()->physicalDotsPerInch() * QGuiApplication::primaryScreen()->devicePixelRatio());
+                ->setContextProperty("screenPixelDensity",density);
         engine_->rootContext()->setContextProperty("menuGameInteraction",this);
         engine_->load(QUrl(QStringLiteral("qrc:/src/menu/mainTouch.qml")));
         QGuiApplication::setQuitOnLastWindowClosed(true);
@@ -57,6 +60,7 @@ void MenuGameInteraction::showGame()
             engine_ = Q_NULLPTR;
         }
 
+        highScore_ = 0;
         gameGraphicsView_ = new GraphicsView();
         gameGraphicsView_->setPlayerCount(playerCount_);
         gameGraphicsView_->restart();
@@ -65,7 +69,13 @@ void MenuGameInteraction::showGame()
         connect(static_cast<QGuiApplication*>(QGuiApplication::instance()),&QGuiApplication::applicationStateChanged,gameGraphicsView_,&GraphicsView::onApplicationStateChanged);
 #endif
 
+        connect(gameGraphicsView_,&GraphicsView::signalHighScore,this,&MenuGameInteraction::slotHighScore);
         connect(gameGraphicsView_,&GraphicsView::signalClose,this,&MenuGameInteraction::showMainMenu);
     }
 
+}
+
+void MenuGameInteraction::slotHighScore(int score)
+{
+    highScore_ =  score;
 }

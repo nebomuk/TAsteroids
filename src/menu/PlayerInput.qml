@@ -8,6 +8,7 @@ import my.highscoremodel.singleton 1.0
 Item
 {
     id : playerInput
+    property int highScore : 0
     signal  finished(); // when enter is pressed
 
     Text {
@@ -36,10 +37,10 @@ Item
         onAccepted:  {
 
             finished();
-            if(text.length > 0)
+            if(text.length > 0 && highScore > 0)
             {
                 // save to database
-                HighScoreModel.savePlayerScore(text,56);
+                HighScoreModel.savePlayerScore(text,highScore);
                 text = "";
             }
 

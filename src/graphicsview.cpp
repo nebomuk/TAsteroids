@@ -31,7 +31,6 @@ GraphicsView::GraphicsView(QWidget * parent)
     scriptProxy = Q_NULLPTR;
     graphicsEngine = Q_NULLPTR;
     highScoreCounter_ = Q_NULLPTR;
-	lastHighScore_ = 0;
     gameOver_ = false;
     doubleBackToExitPressedOnce_ = false;
 
@@ -103,8 +102,9 @@ GraphicsView::~GraphicsView()
 {
 
 	clear();
-	delete graphicsEngine;
+    delete graphicsEngine;
 }
+
 
 /*virtual*/ bool GraphicsView::viewportEvent(QEvent *event)
 {
@@ -204,9 +204,6 @@ void GraphicsView::clear()
 {
 	timer->stop();
 
-	if(highScoreCounter_)
-		lastHighScore_ = highScoreCounter_->value();
-
 	delete scriptProxy;
     scriptProxy = Q_NULLPTR;
 
@@ -223,7 +220,7 @@ void GraphicsView::clear()
 
 	bodyItems_.clear();
 
-    //delete highScoreCounter_; // crashes
+    // high score counter is child of scene
     highScoreCounter_ = Q_NULLPTR;
 
 	hitpointBars_.clear();
@@ -445,6 +442,11 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
 void GraphicsView::closeEvent(QCloseEvent *event)
 {
 	writeSettings();
+
+    if(highScoreCounter_ != Q_NULLPTR)
+    {
+        emit signalHighScore(highScoreCounter_->value());
+    }
 	clear();
 	emit signalClose();
 	QGraphicsView::closeEvent(event);
@@ -551,7 +553,7 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 	}
     scene()->advance(); // move items and advance animations
 
-	if(highScoreCounter_ && highScoreCounter_->value() != graphicsEngine->destroyedAsteroidCount())
+    if(highScoreCounter_)
 		highScoreCounter_->setValue(graphicsEngine->destroyedAsteroidCount());
 }
 
@@ -689,11 +691,6 @@ void GraphicsView::setupScript()
 
 	scriptProxy->evaluateFile( srcPath + "control.js");
 	scriptProxy->evaluateFile(srcPath +  "mainloop.js");
-}
-
-int GraphicsView::lastHighScore() const
-{
-	return lastHighScore_;
 }
 
 // read window geometry

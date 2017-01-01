@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QUrl highScoreResourceUrl(QStringLiteral("qrc:/HighScoreModelSingleton.qml"));
+    QUrl highScoreResourceUrl(QStringLiteral("qrc:/src/menu/HighScoreModelSingleton.qml"));
     qmlRegisterSingletonType(highScoreResourceUrl, "my.highscoremodel.singleton", 1, 0, "HighScoreModel");
 
 #ifdef Q_OS_ANDROID

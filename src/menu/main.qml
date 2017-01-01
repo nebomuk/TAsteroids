@@ -10,7 +10,7 @@ Window {
     flags: Qt.platform.os != "android" && Qt.platform.os != "ios"  ? Qt.FramelessWindowHint | Qt.ToolTip | Qt.WA_TranslucentBackground : {}
     width: 1020
     height: 567
-    title: qsTr("Hello World")
+    title: qsTr("TAsteroids")
     color: "transparent"
     visibility: Qt.platform.os == "android" || Qt.platform.os == "ios" ?  Window.Maximized : Window.AutomaticVisibility;
 
