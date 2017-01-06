@@ -3,6 +3,7 @@
 #include <QStyleOptionGraphicsItem>
 #include "svgcache.h"
 #include "asteroidcolorizer.h"
+#include <QQmlEngine>
 
 AnimatedItem::AnimatedItem(QGraphicsItem * parent)
 	: QObject(), QGraphicsItem(parent)
@@ -23,6 +24,7 @@ void AnimatedItem::init()
     renderer_ = Q_NULLPTR;
 
 	this->setCacheMode(QGraphicsItem::NoCache);
+    QQmlEngine::setObjectOwnership(this,QQmlEngine::CppOwnership);
 }
 
 

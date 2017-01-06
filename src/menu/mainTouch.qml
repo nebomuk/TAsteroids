@@ -35,10 +35,11 @@ Window {
                 onClosing : {
                     if(mainForm.menuLevelMain.visible)
                     {
-                        close.accepted = true;
+                        close.accepted = true; // quit app
                     }
                     else
                     {
+                        close.accepted = false;
                         showMenuLevelMain();
                     }
                 }
