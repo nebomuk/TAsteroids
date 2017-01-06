@@ -31,7 +31,6 @@ GraphicsView::GraphicsView(QWidget * parent)
     scriptProxy = Q_NULLPTR;
     graphicsEngine = Q_NULLPTR;
     highScoreCounter_ = Q_NULLPTR;
-    gameOver_ = false;
     doubleBackToExitPressedOnce_ = false;
 
 	this->setWindowTitle("TAsteroids");
@@ -537,8 +536,12 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 			}
 		}
 
-        gameOver_ = destroyedPlayerCount == playerVehicles_.size();
-        if(gameOver_)
+        if(destroyedPlayerCount == playerVehicles_.size()) // set game over to true but dont set it to false when not true
+        {
+            graphicsEngine->gameState()->setGameOver(true);
+        }
+
+        if(destroyedPlayerCount == playerVehicles_.size())
 		{
 			// if all players are destroyed
 

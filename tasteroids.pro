@@ -116,7 +116,8 @@ SOURCES += src/vehicle.cpp \
     src/sound.cpp \
     src/graphicssoftbutton.cpp \
     src/jsproxy.cpp \
-    src/menugameinteraction.cpp
+    src/menugameinteraction.cpp \
+    src/gamestate.cpp
 RESOURCES = hitpointsBar_images.qrc \
 	digits_images.qrc \
 	images.qrc \

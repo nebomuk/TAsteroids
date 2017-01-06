@@ -19,9 +19,8 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 	asteroidColorizer_ = new AsteroidColorizer();
 
     colorList_ << QColor(120,0,0) << QColor(0,0,150) << QColor(0,100,0)
-                        << QColor(50,0,150) << QColor(50,150,0)  << QColor(0,75,150)
-			<< QColor(150,50,0) << QColor(150,0,50) << QColor(0,150,50)
-			<< QColor(150,150,0) << QColor(0,150,150) << QColor(150,0,150);
+               << QColor(150,150,0)	<< QColor(150,0,150) << QColor(150,50,0) << QColor(150,0,50) << QColor(0,150,50)
+             << QColor(0,150,150) << QColor(0,75,150);
 
     QImage first = QImage(":images/explosion/explosionBackground.png");
 	int explosionWidth = first.width();

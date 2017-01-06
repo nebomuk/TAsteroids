@@ -7,7 +7,9 @@
 ScriptProxy.signalTimerEvent.connect(mainLoop);
 gameState.signalPhaseChanged.connect(phaseChange);
 
-// initial phase
+var finalPhase = 5 // the number of levels
+
+// call callback for asteroid initialization
 phaseChange(0);
 
 var ufo;
@@ -103,7 +105,7 @@ function mainLoop()
 			projectile.applyImpulse(impulseX,impulseY);
 			projectile.diplomacy = 1; // diplomacy of player
 			projectile.isProjectile = true;
-            playerVehicles[i].reloadCooldown += 6;
+            playerVehicles[i].reloadCooldown += 5;
 			playerVehicles[i].shootCooldown
 			= playerVehicles[i].reloadCooldown >= 14 ? playerVehicles[i].reloadCooldown : 4;
 		}
@@ -143,7 +145,7 @@ function mainLoop()
 	else // isNullQObject(ufo)
 	{
 		--ufoAppearCountdown;
-		if(ufoAppearCountdown <= 0)
+        if(ufoAppearCountdown <= 0  && !gameState.gameOver)
 		{
 			ufoAppearCountdown = 1000; // appear approximately every 40s
 			appearUfo();
@@ -151,8 +153,10 @@ function mainLoop()
 	}
 
 	// uncomment this if no asteroids are spawned, else cpu load --> 100%
-	if(graphicsEngine.asteroidCount == 0)
+    if(graphicsEngine.asteroidCount === 0 && !gameState.gameOver)
+    {
 		gameState.phase += 1;
+    }
 }
 
 function appearUfo()
@@ -186,9 +190,42 @@ function isNearPlayers(px,py)
 
 function phaseChange(newPhase)
 {
-		graphicsEngine.showText('Level ' + (newPhase+1),3000);
+    if(newPhase === finalPhase)
+    {
+        // make players indestructible
 
-		for(i = 0; i< 3; ++i)
+        for(var i = 0; i < playerVehicles.length; ++i)
+        {
+            if(isNullQObject(playerVehicles[i]) === true) // check for wrapped NULL pointer
+                continue;
+
+            playerVehicles[i].indestructible = true
+
+        }
+
+        gameState.gameOver = true;
+        // todo set single press to exit on android
+        // TODO use 5 different colors
+
+
+        if(ScriptProxy.os === "android")
+        {
+            graphicsEngine.showText('Congratulations! You Finished the Game! \n Press BACK to return to menu')
+        }
+        else if(ScriptProxy.os === "ios")
+        {
+            graphicsEngine.showText('Congratulations! You Finished the Game!')
+        }
+        else
+        {
+            graphicsEngine.showText('Congratulations! You Finished the Game! \n Press ESC to return to menu')
+        }
+    }
+    else
+       {
+        graphicsEngine.showText('Level ' + (newPhase+1),3000);
+
+        for(i = 0; i< 3; ++i)
 		{
 			do
 			{
@@ -206,5 +243,6 @@ function phaseChange(newPhase)
 			for(i= 0; i< playerVehicles.length; ++i)
 				playerVehicles[i].hitpoints = 10;
 		}
+    }
 }
 

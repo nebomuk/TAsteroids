@@ -9,6 +9,9 @@
 /// replacement for ScriptProxy
 class JSProxy : public QObject
 {
+
+    Q_PROPERTY(QString os READ osName CONSTANT)     // returns the os name similar to Qt.platform.os from QML
+
     Q_OBJECT
 public:
     explicit JSProxy(QObject *parent = 0);
@@ -19,6 +22,9 @@ public:
 
     // emits signalTimerEvent
     void timerEvent ( QTimerEvent * event );
+
+    static QString osName();
+
 
 
 
@@ -41,6 +47,9 @@ private:
     static void printError(const QJSValue & result);
 
     QJSEngine * engine_;
+
+    // gets the os name
+
 
 };
 

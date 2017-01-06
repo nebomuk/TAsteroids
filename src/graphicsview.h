@@ -112,7 +112,6 @@ private:
 
     QList<QGraphicsBox2DPolygonItem*> bodyItems_;
     QList<b2Body*> groundBodies_;
-    bool gameOver_; // set to true when game over
 
     bool doubleBackToExitPressedOnce_;
 

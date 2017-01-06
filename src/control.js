@@ -98,6 +98,11 @@ function startWormholeTravel(/*Vehicle* */ vehicle)
 
 function onGestureStarted(gesture)
 {
+    if(gameState.gameOver)
+    {
+        return;
+    }
+
     if(gesture === Qt.TapGesture)
     {
         startAcceleration(playerVehicles[0]);
@@ -106,6 +111,11 @@ function onGestureStarted(gesture)
 
 function onGestureFinished(gesture)
 {
+    if(gameState.gameOver)
+    {
+        return;
+    }
+
     if(gesture === Qt.TapGesture)
     {
         stopAcceleration(playerVehicles[0]);
@@ -118,6 +128,11 @@ function onGestureFinished(gesture)
 
 function onKeyPress(key)
 	{
+
+    if(gameState.gameOver)
+    {
+        return;
+    }
 
 	if(!isNullQObject(playerVehicles[0])
         && playerVehicles[0].control == true && playerVehicles[0].wormholeState == Vehicle.OUTSIDE)
@@ -197,6 +212,11 @@ function onKeyPress(key)
 
 function onKeyRelease(key)
 {
+
+    if(gameState.gameOver)
+    {
+        return;
+    }
 
 if(!isNullQObject(playerVehicles[0]))
 switch (key)
