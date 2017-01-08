@@ -1,11 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>src/menu/main.qml</file>
-        <file>src/menu/MainForm.ui.qml</file>
         <file>src/menu/HighScoreModelSingleton.qml</file>
-        <file>src/menu/MainMenu.qml</file>
         <file>src/menu/MainMenuRectangle.qml</file>
-        <file>src/menu/HighScoreView.qml</file>
         <file>src/menu/AsteroidCameraEntity.qml</file>
         <file>src/menu/Asteroid.qml</file>
         <file>src/menu/AsteroidModelView.qml</file>

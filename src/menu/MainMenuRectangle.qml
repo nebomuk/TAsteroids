@@ -12,7 +12,7 @@ Rectangle {
 
     Text {
         id : buttonText
-        text: name
+        text: title1
         font.pointSize: 24
         font.family: "OCR A Extended"
         color: "#01375D"
@@ -26,14 +26,6 @@ Rectangle {
         hoverEnabled: Qt.platform.os != "android" && Qt.platform.os != "ios"
         onEntered:  parent.color = parent.border.color
         onExited: parent.color = "#00000000"
-    }
-
-    Component.onCompleted: {
-        // using title as property did not work as it is already the list delegate's role
-        if(buttonText.text === null || buttonText.text === "")
-        {
-            buttonText.text = title1
-        }
     }
 }
 
