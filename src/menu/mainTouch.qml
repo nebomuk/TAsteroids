@@ -40,7 +40,7 @@ Window {
                     else
                     {
                         close.accepted = false;
-                        showMenuLevelMain();
+                        mainForm.showMenuLevelMain();
                     }
                 }
             }

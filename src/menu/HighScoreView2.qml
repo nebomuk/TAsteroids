@@ -20,12 +20,13 @@ ListView
         Row
     {
 
-    spacing: Style.dp(20)
+    spacing: Style.dp(30)
 
     Text {
 
         color: "#01375D"
         font.pointSize: 20
+        font.family: "OCR A Extended"
         text: qsTr("place");
         horizontalAlignment: Text.AlignHCenter
     }
@@ -33,11 +34,13 @@ ListView
 
         color: "#01375D"
         font.pointSize: 20
+        font.family: "OCR A Extended"
         text: qsTr("player");
         horizontalAlignment: Text.AlignHCenter
     }
     Text {
         color: "#01375D"
+        font.family: "OCR A Extended"
         font.pointSize: 20
         text: qsTr("score");
         horizontalAlignment: Text.AlignHCenter
@@ -48,12 +51,13 @@ delegate:
 
 Row
 {
-    spacing: 0
+    spacing: Style.dp(5)
 
     Text {
         color: "#01375D"
         width: headerItem.width/3
         font.pointSize: 20
+        font.family: "OCR A Extended"
         text: parseInt(place)+1;
         horizontalAlignment:  Text.AlignHCenter
     }
@@ -61,13 +65,15 @@ Row
         color: "#01375D"
         width: headerItem.width/3
         font.pointSize: 20
+        font.family: "OCR A Extended"
         text: player;
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Text.AlignLeft
     }
     Text {
         color: "#01375D"
         width: headerItem.width/3
         font.pointSize: 20
+        font.family: "OCR A Extended"
         text: score;
         horizontalAlignment:  Text.AlignHCenter
     }

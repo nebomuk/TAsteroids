@@ -13,7 +13,8 @@ Rectangle {
     Text {
         id : buttonText
         text: name
-        font.pointSize: 20
+        font.pointSize: 24
+        font.family: "OCR A Extended"
         color: "#01375D"
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter:  parent.horizontalCenter

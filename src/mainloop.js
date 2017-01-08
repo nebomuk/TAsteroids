@@ -87,9 +87,9 @@ function mainLoop()
 		if(playerVehicles[i].reloadCooldown > 0)
 		--playerVehicles[i].reloadCooldown;
 
-		if(playerVehicles[i].shooting == true
+        if(playerVehicles[i].shooting === true
 		   && playerVehicles[i].shootCooldown <= 0
-		   && playerVehicles[i].indestructible == false)
+           && playerVehicles[i].indestructible === false)
 		{
 			var projectile =
 			graphicsEngine.createCircleVehicleAt(playerVehicles[i].x +cosAngle*54,

@@ -16,6 +16,7 @@ Item
         color: "#01375D"
         font.pointSize: input.font.pointSize
         text: qsTr("Enter your name");
+        font.family: "OCR A Extended"
         horizontalAlignment: Text.AlignLeft
 //        anchors.top : parent.top
 //        anchors.bottom: input.top

@@ -115,7 +115,8 @@ GraphicsView::~GraphicsView()
         {
             Qt::GestureType type = gesture->gestureType();
 
-
+            // TODO tapGesture cannot appear on more than one spot at the same time
+            // use touch points directly for multitouch soft buttons (see fingerpaint example)
             if(type == Qt::TapGesture)
             {
                 QTapGesture* tapGesture = static_cast<QTapGesture*>(gesture);
@@ -139,6 +140,7 @@ GraphicsView::~GraphicsView()
                         break;
                     }
                 }
+                // used for accelerating, see control.js
                 if(gesture->state() == Qt::GestureStarted && !buttonUnderGesture)
                 {
                     emit scriptProxy->signalGestureStarted(gesture->gestureType());
@@ -624,7 +626,7 @@ void GraphicsView::keyPressEvent(QKeyEvent *event)
     #ifdef Q_OS_ANDROID
     case Qt::Key_Back:
     {
-        if(gameOver_ || doubleBackToExitPressedOnce_)
+        if(graphicsEngine->gameState()->gameOver() || doubleBackToExitPressedOnce_)
         {
            this->close(); // back to menu
         }

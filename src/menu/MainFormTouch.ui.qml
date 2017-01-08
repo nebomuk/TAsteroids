@@ -7,8 +7,8 @@ import "Style.js" as Style
 
 Item {
     id: item1
-//    width: 800
-//    height: 384
+//    width: 1020
+//    height: 567
 
     property alias menuLevelMain : column
     property alias menuLevelPlayerCount : columnPlayerCount
