@@ -154,7 +154,7 @@ Item {
             height: buttonHeight
             visible: playerInput.visible
             anchors.top : playerInput.bottom
-            title1: qsTr("Ok")
+            title1: qsTr("Dismiss")
 
             MouseArea
             {

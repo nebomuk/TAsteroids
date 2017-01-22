@@ -316,7 +316,7 @@ void GraphicsView::populate()
     scene()->addItem(highScoreCounter_);
 
 
-//#ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID || Q_OS_IOS
 
     GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
     GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
@@ -363,7 +363,7 @@ void GraphicsView::populate()
     connect(shootButton,&GraphicsSoftButton::released, [this](){
         emit signalKeyRelease(Qt::Key_Space);
     });
-//#endif
+#endif
 
 
 
