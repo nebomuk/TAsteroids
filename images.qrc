@@ -16,5 +16,7 @@
         <file>images/ic_rotate_right_48px.svg</file>
         <file>images/black_hole.svg</file>
         <file>images/crosshairs.svg</file>
+        <file>images/turquoiseBomb.svg</file>
+        <file>images/accelerate.svg</file>
     </qresource>
 </RCC>

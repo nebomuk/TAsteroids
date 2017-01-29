@@ -120,6 +120,7 @@ function mainLoop()
 			var projectile =
 			graphicsEngine.createCircleVehicleAt(ufo.x +cosAngle*60,
 										   ufo.y +sinAngle*60, /*radius = */ 5.0);
+            projectile.file = ":images/turquoiseBomb.svg";
 			soundEngine.play('fire.wav');
 			graphicsEngine.appendProjectile(projectile);
 			var impulseX = cosAngle*40.0+ufo.xVelocity;

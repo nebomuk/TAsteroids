@@ -70,7 +70,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
     // pan and swipe gestures only work with 2 fingers
     QList<Qt::GestureType> gestures;
-    gestures << Qt::TapGesture << Qt::PinchGesture;
+    gestures  << Qt::PinchGesture;
     foreach(Qt::GestureType gesture, gestures)
     {
          this->viewport()->grabGesture(gesture);
@@ -115,42 +115,7 @@ GraphicsView::~GraphicsView()
         {
             Qt::GestureType type = gesture->gestureType();
 
-            // TODO tapGesture cannot appear on more than one spot at the same time
-            // use touch points directly for multitouch soft buttons (see fingerpaint example)
-            if(type == Qt::TapGesture)
-            {
-                QTapGesture* tapGesture = static_cast<QTapGesture*>(gesture);
-                QPointF scenePos = mapToScene(tapGesture->position().toPoint());
-                QList<GraphicsSoftButton*> softButtons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
-                bool buttonUnderGesture = false;
-                foreach(GraphicsSoftButton * button, softButtons)
-                {
-                    if(button->sceneBoundingRect().contains(scenePos)) // itemAt not working
-                    {
-                        buttonUnderGesture = true;
-                        if(gesture->state() == Qt::GestureStarted)
-                        {
-                            emit button->pressed();
-                        }
-                        else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled)
-                        {
-                            emit button->released();;
-                        }
-
-                        break;
-                    }
-                }
-                // used for accelerating, see control.js
-                if(gesture->state() == Qt::GestureStarted && !buttonUnderGesture)
-                {
-                    emit scriptProxy->signalGestureStarted(gesture->gestureType());
-                }
-                else if(gesture->state() == Qt::GestureFinished || gesture->state() == Qt::GestureCanceled) // allow button under gesture when gesture finished
-                {
-                    emit scriptProxy->signalGestureFinished(gesture->gestureType());
-                }
-            }
-            else if(type == Qt::PinchGesture)
+            if(type == Qt::PinchGesture)
             {
                 QPinchGesture* pinchGesture = static_cast<QPinchGesture*>(gesture);
                 bool isPinch = pinchGesture->totalScaleFactor() < 0.7;
@@ -163,21 +128,39 @@ GraphicsView::~GraphicsView()
                 {
                     emit scriptProxy->signalGestureFinished(gesture->gestureType());
                 }
-
             }
-
-
-
         }
 
         return true;
     }
-//    else if (event->type() == QEvent::TouchBegin)
-//    {
-//      return false;
-//    }
-    else return QGraphicsView::viewportEvent(event);
+
+    // dispatches events to QGraphicsItems (and GraphicsSoftButton)
+    return QGraphicsView::viewportEvent(event);
 }
+
+bool GraphicsView::touchInsideSoftButtons(QTouchEvent * touchEvent)
+{
+    QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
+    QList<QPointF> sceneTouchPoints;
+
+    foreach (QTouchEvent::TouchPoint touchPoint, touchPoints) {
+           sceneTouchPoints << mapToScene(touchPoint.pos().toPoint());
+    }
+   QList<GraphicsSoftButton*> softButtons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
+   foreach(GraphicsSoftButton * button, softButtons)
+   {
+       QMutableListIterator<QPointF> it = QMutableListIterator<QPointF>(sceneTouchPoints);
+       while(it.hasNext())
+       {
+           if(button->sceneBoundingRect().contains(it.next())) // itemAt not working
+           {
+               it.remove();
+           }
+       }
+   }
+   return sceneTouchPoints.isEmpty();
+}
+
 
 void GraphicsView::restart()
 {
@@ -322,9 +305,10 @@ void GraphicsView::populate()
     GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
     GraphicsSoftButton * rotateLeftButton = new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
     GraphicsSoftButton * shootButton = new GraphicsSoftButton(":images/crosshairs.svg");
+    GraphicsSoftButton * accelerateButton = new GraphicsSoftButton(":images/accelerate.svg");
 
-    leftSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateLeftButton << shieldButton;
-    rightSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateRightButton << shootButton;
+    leftSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateLeftButton << rotateRightButton << shieldButton;
+    rightSoftButtons_ = QList<GraphicsSoftButton*>()  <<  shootButton << accelerateButton;
     QList<GraphicsSoftButton*> buttons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
 
     foreach(GraphicsSoftButton * item, buttons)
@@ -335,6 +319,14 @@ void GraphicsView::populate()
     }
 
     adjustSoftButtonPositions();
+
+    connect(accelerateButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Up);
+    });
+
+    connect(accelerateButton,&GraphicsSoftButton::released,[this](){
+        emit signalKeyRelease(Qt::Key_Up);
+    });
 
     connect(shieldButton,&GraphicsSoftButton::pressed,[this](){
         emit signalKeyPress(Qt::Key_Delete);

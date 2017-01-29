@@ -102,11 +102,6 @@ function onGestureStarted(gesture)
     {
         return;
     }
-
-    if(gesture === Qt.TapGesture)
-    {
-        startAcceleration(playerVehicles[0]);
-    }
 }
 
 function onGestureFinished(gesture)
@@ -116,15 +111,14 @@ function onGestureFinished(gesture)
         return;
     }
 
-    if(gesture === Qt.TapGesture)
-    {
-        stopAcceleration(playerVehicles[0]);
-    }
     else if(gesture === Qt.PinchGesture)
     {
         startWormholeTravel(playerVehicles[0]);
     }
 }
+
+var isRotatingLeft = false;
+var isRotatingRight = false;
 
 function onKeyPress(key)
 	{
@@ -146,11 +140,13 @@ function onKeyPress(key)
 		case Qt.Key_Left:
 		{
 			playerVehicles[0].angularVelocity = -250.0;
+            isRotatingLeft = true;
 			break;
 		}
 		case Qt.Key_Right:
 		{
 			playerVehicles[0].angularVelocity = 250.0;
+            isRotatingRight = true;
 			break;
 		}
 		case Qt.Key_Space:
@@ -183,7 +179,7 @@ function onKeyPress(key)
         }
 		case Qt.Key_A:
 		{
-			playerVehicles[1].angularVelocity = -250.0;
+            playerVehicles[1].angularVelocity = -250.0;
 			break;
 		}
 		case Qt.Key_D:
@@ -210,6 +206,8 @@ function onKeyPress(key)
 	}
 }
 
+
+
 function onKeyRelease(key)
 {
 
@@ -228,13 +226,21 @@ switch (key)
 		}
 		case Qt.Key_Left:
 		{
-			playerVehicles[0].angularVelocity = 0;
+            isRotatingLeft = false;
+            if(isRotatingRight === false)
+            {
+                playerVehicles[0].angularVelocity = 0;
+            }
 			break;
 		}
 
 		case Qt.Key_Right:
 		{
-			playerVehicles[0].angularVelocity = 0;
+            isRotatingRight = false;
+            if(isRotatingLeft === false)
+            {
+                playerVehicles[0].angularVelocity = 0;
+            }
 			break;
 		}
 		case Qt.Key_Space:

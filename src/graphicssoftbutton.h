@@ -32,6 +32,7 @@ public:
 protected:
     virtual QPainterPath shape() const Q_DECL_OVERRIDE;
 
+    bool sceneEvent(QEvent *event) Q_DECL_OVERRIDE;
 signals:
     // can be called from outside
     void pressed();
