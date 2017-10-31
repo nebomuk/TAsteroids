@@ -1,4 +1,4 @@
-#TAsteroids
+# TAsteroids
 
 TAsteroids inspired 2D arcade game written in C++ and the Qt Framework. 
 
