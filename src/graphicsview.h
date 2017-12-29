@@ -8,6 +8,7 @@
 #include <QPointer>
 #include <QTime>
 #include <QGraphicsProxyWidget>
+#include <QLCDNumber>
 #include "Box2D/Box2D.h"
 #include "gamestate.h"
 #include "globalvariables.h"
@@ -98,7 +99,7 @@ private:
     QString dataLocation;
     QList<Vehicle*> playerVehicles_;
     QList<AnimatedItem*> hitpointBars_;
-    MechanicalCounter * highScoreCounter_;
+    QPointer<QLCDNumber> highScoreCounter_;
 
     QList<GraphicsSoftButton* > leftSoftButtons_;
     QList<GraphicsSoftButton* > rightSoftButtons_;

@@ -33,7 +33,6 @@ HEADERS += src/vehicle.h \
 	src/animateditem.h \
 	src/isound.h \
 	src/soundengine.h \
-    src/mechanicalcounter.h \
     src/Box2D/Collision/Shapes/b2CircleShape.h \
     src/Box2D/Collision/Shapes/b2PolygonShape.h \
     src/Box2D/Collision/Shapes/b2Shape.h \
@@ -80,7 +79,6 @@ SOURCES += src/vehicle.cpp \
 	src/asteroidcolorizer.cpp \
 	src/animateditem.cpp \
 	src/soundengine.cpp \
-    src/mechanicalcounter.cpp \
     src/Box2D/Collision/Shapes/b2CircleShape.cpp \
     src/Box2D/Collision/Shapes/b2PolygonShape.cpp \
     src/Box2D/Collision/Shapes/b2Shape.cpp \

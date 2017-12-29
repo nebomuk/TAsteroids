@@ -10,7 +10,6 @@
 #include "vehicle.h"
 #include "svgcache.h"
 #include "graphicsengine.h"
-#include "mechanicalcounter.h"
 #include "soundengine.h"
 #include "graphicssoftbutton.h"
 #include "globalvariables.h"
@@ -291,12 +290,18 @@ void GraphicsView::populate()
 	}
 
 	// a counter that shows the highscore
-	highScoreCounter_ = new MechanicalCounter;
-	highScoreCounter_->setDigitsFile(":train_digits.svg");
-	highScoreCounter_->setZValue(100.0);
-	highScoreCounter_->setPos(0.0 - borderSceneRectDist_.x() +64.0, -1200+32.0);
+    highScoreCounter_ = new QLCDNumber;
+    highScoreCounter_->resize(highScoreCounter_->sizeHint() * 3);
+    highScoreCounter_->setSegmentStyle(QLCDNumber::Flat);
+    highScoreCounter_->setStyleSheet("color: red;"
+                                    "background-color: transparent;"
+                                             );
+    highScoreCounter_->setFrameStyle(QFrame::NoFrame);
+    QGraphicsProxyWidget * proxy = scene()->addWidget(highScoreCounter_.data());
 
-    scene()->addItem(highScoreCounter_);
+    proxy->setZValue(100.0);
+    proxy->setPos(0.0 - borderSceneRectDist_.x() +64.0, -1200+32.0);
+
 
 
 #ifdef Q_OS_ANDROID || Q_OS_IOS
@@ -423,9 +428,9 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
 	{
 		hitpointBars_[i]->setPos(1600.0 + borderSceneRectDist_.x() -128-i*256,-(1200.0 - 32.0));
 	}
-	if(highScoreCounter_)
+    if(highScoreCounter_ != Q_NULLPTR && highScoreCounter_->graphicsProxyWidget() != Q_NULLPTR)
 	{
-		highScoreCounter_->setPos(QPointF(0.0 - borderSceneRectDist_.x() +64.0,-(1200.0 - 32.0)));
+        highScoreCounter_->graphicsProxyWidget()->setPos(QPointF(0.0 - borderSceneRectDist_.x() +64.0,-(1200.0 - 32.0)));
 	}
 
     adjustSoftButtonPositions();
@@ -550,8 +555,8 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 	}
     scene()->advance(); // move items and advance animations
 
-    if(highScoreCounter_)
-		highScoreCounter_->setValue(graphicsEngine->destroyedAsteroidCount());
+    if(highScoreCounter_ != Q_NULLPTR)
+        highScoreCounter_->display(graphicsEngine->destroyedAsteroidCount());
 }
 
 void GraphicsView::setPaused(bool b)
