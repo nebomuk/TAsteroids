@@ -19,7 +19,7 @@ int main(int argc, char ** argv)
     app.setQuitOnLastWindowClosed(false);
 
 	app.setApplicationName("tasteroids");
-	app.setOrganizationName("Taiko");
+    app.setOrganizationName("com.blogspot.tasteroids");
 	qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));  // seed the random number generator
 	app.setWindowIcon(QIcon(":icon.png"));
 	app.setOverrideCursor(QCursor(QPixmap(":cursor.png"),2,2));
