@@ -127,29 +127,6 @@ GraphicsView::~GraphicsView()
     return QGraphicsView::viewportEvent(event);
 }
 
-bool GraphicsView::touchInsideSoftButtons(QTouchEvent * touchEvent)
-{
-    QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
-    QList<QPointF> sceneTouchPoints;
-
-    foreach (QTouchEvent::TouchPoint touchPoint, touchPoints) {
-           sceneTouchPoints << mapToScene(touchPoint.pos().toPoint());
-    }
-   QList<GraphicsSoftButton*> softButtons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
-   foreach(GraphicsSoftButton * button, softButtons)
-   {
-       QMutableListIterator<QPointF> it = QMutableListIterator<QPointF>(sceneTouchPoints);
-       while(it.hasNext())
-       {
-           if(button->sceneBoundingRect().contains(it.next())) // itemAt not working
-           {
-               it.remove();
-           }
-       }
-   }
-   return sceneTouchPoints.isEmpty();
-}
-
 
 void GraphicsView::restart()
 {
@@ -254,7 +231,7 @@ void GraphicsView::populate()
 
 
 
-#ifdef (Q_OS_ANDROID || Q_OS_IOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 
     GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
     GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");

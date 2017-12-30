@@ -114,8 +114,6 @@ private:
 
     void adjustSoftButtonPositions();
 
-    // returns true if the touch event occurred inside one of the soft buttons
-    bool touchInsideSoftButtons(QTouchEvent *touchEvent);
 };
 #endif
 
