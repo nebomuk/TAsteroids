@@ -36,16 +36,6 @@ GraphicsView::GraphicsView(QWidget * parent)
 
 	timer = new QBasicTimer;
 
-	// dataLocation is the location for this application's data
-#ifdef Q_OS_LINUX
-	dataLocation = QString(QDir::homePath() + "/.tasteroids/");
-#else
-	dataLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/tasteroids/";
-#endif
-
-
-
-
 
 	// disable scroll bars
 	this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -190,18 +180,10 @@ void GraphicsView::clear()
 	delete scriptProxy;
     scriptProxy = Q_NULLPTR;
 
-	foreach(b2Body* body, groundBodies_)
-		graphicsEngine->world()->DestroyBody(body);
-
-		// destroy side rects
-	groundBodies_.clear();
-
 	if(graphicsEngine)
 		graphicsEngine->clear(); // clear all item lists
 
     scene()->clear(); // delete all items
-
-	bodyItems_.clear();
 
     // high score counter is child of scene
     highScoreCounter_ = Q_NULLPTR;
@@ -213,39 +195,7 @@ void GraphicsView::clear()
     rightSoftButtons_.clear();
 }
 
-// for testing purposes only, adds a physics aware rectangle
-QGraphicsRectItem * GraphicsView::addRect(QPointF pos, QSizeF size)
-{
-	b2BodyDef bodyDef;
-	b2PolygonDef shapeDef;
-    QGraphicsRectItem *groundItem = scene()->addRect(-size.width()/2, -size.height()/2,size.width(),size.height());
-	groundItem->setBrush(QColor(178, 192, 160));
-	groundItem->setPos(pos);
-	groundItem->setPen(Qt::NoPen);
-	bodyDef.position.Set(pos.x()/SCALE, -pos.y()/SCALE);
-	shapeDef.SetAsBox(size.width()/2/SCALE, size.height()/2/SCALE);
-	b2Body * groundBody = graphicsEngine->world()->CreateBody(&bodyDef);
-	groundBody->SetUserData(static_cast<void*>(groundItem));
-	groundBody->CreateShape(&shapeDef);
-	groundBodies_ << groundBody;
-	return groundItem;
-}
 
-void GraphicsView::addPolygons()
-{
-    QPolygonF poly;
-    poly << QPointF(0, -10)*5 << QPointF(-5, 0)*5 << QPointF(5, 0)*5;
-    for (int i = 0; i < 3; ++i) {
-        QGraphicsBox2DPolygonItem *polygon = new QGraphicsBox2DPolygonItem(graphicsEngine->world());
-        polygon->setPos(600, -400);
-        polygon->setRotation(qrand() % 360);
-        polygon->setPolygon(poly);
-        polygon->setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
-        polygon->setup();
-        bodyItems_ << polygon;
-        scene()->addItem(polygon);
-    }
-}
 
 void GraphicsView::populate()
 {
@@ -304,7 +254,7 @@ void GraphicsView::populate()
 
 
 
-#ifdef Q_OS_ANDROID || Q_OS_IOS
+#ifdef (Q_OS_ANDROID || Q_OS_IOS)
 
     GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
     GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
@@ -481,9 +431,6 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 {
 
 	graphicsEngine->processWorld();
-	foreach(QGraphicsBox2DPolygonItem* item, bodyItems_)
-		item->adjust(); // apply physics calculations
-
 	graphicsEngine->processExplosions();
 	graphicsEngine->processProjectiles();
 	graphicsEngine->processAsteroids();
@@ -698,7 +645,7 @@ void GraphicsView::setupScript()
 // read window geometry
 void GraphicsView::readSettings()
 {
-	QSettings settings(dataLocation + "tasteroids.ini", QSettings::IniFormat,this);
+    QSettings settings;
 	QString className = this->metaObject()->className();
 	this->restoreGeometry(settings.value(className + "/geometry",QByteArray()).toByteArray());
     graphicsEngine->gameState()->setInitialPhase(settings.value("phase",0).toInt());
@@ -707,7 +654,7 @@ void GraphicsView::readSettings()
 // save window geometry
 void GraphicsView::writeSettings()
 {
-	QSettings settings(dataLocation + "tasteroids.ini", QSettings::IniFormat,this);
+    QSettings settings;
 	QString className = this->metaObject()->className();
 	settings.setValue(className + "/geometry",saveGeometry());
 	if(!settings.contains("phase"))

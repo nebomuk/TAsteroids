@@ -66,7 +66,6 @@ signals:
 protected:
 
     // experimental function to add physics rects
-    QGraphicsRectItem * addRect(QPointF pos, QSizeF size);
 
     // events
     virtual void timerEvent(QTimerEvent* event) Q_DECL_OVERRIDE;
@@ -96,7 +95,6 @@ signals:
 private:
     GraphicsEngine * graphicsEngine;
     QBasicTimer *timer;
-    QString dataLocation;
     QList<Vehicle*> playerVehicles_;
     QList<AnimatedItem*> hitpointBars_;
     QPointer<QLCDNumber> highScoreCounter_;
@@ -111,13 +109,9 @@ private:
     //and the scene rect, which has a constant size
     QPointF borderSceneRectDist_;
 
-    QList<QGraphicsBox2DPolygonItem*> bodyItems_;
-    QList<b2Body*> groundBodies_;
-
     bool doubleBackToExitPressedOnce_;
 
-    // create some colored fun polygons that you can push around
-    void addPolygons();
+
     void adjustSoftButtonPositions();
 
     // returns true if the touch event occurred inside one of the soft buttons

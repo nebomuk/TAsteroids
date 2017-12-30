@@ -68,7 +68,8 @@ HEADERS += src/vehicle.h \
     src/sound.h \
     src/graphicssoftbutton.h \
     src/jsproxy.h \
-    src/menugameinteraction.h
+    src/menugameinteraction.h \
+    src/shapebuilder.h
 SOURCES += src/vehicle.cpp \
 	src/movingitem.cpp \
 	src/graphicsview.cpp \
@@ -115,7 +116,8 @@ SOURCES += src/vehicle.cpp \
     src/graphicssoftbutton.cpp \
     src/jsproxy.cpp \
     src/menugameinteraction.cpp \
-    src/gamestate.cpp
+    src/gamestate.cpp \
+    src/shapebuilder.cpp
 RESOURCES = hitpointsBar_images.qrc \
 	digits_images.qrc \
 	images.qrc \
