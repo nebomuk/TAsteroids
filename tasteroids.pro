@@ -149,6 +149,13 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/gradlew.bat \
+    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/AndroidManifest.xml \
+    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradlew \
+    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/res/values/libs.xml \
+    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/build.gradle \
+    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
