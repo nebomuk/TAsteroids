@@ -33,7 +33,7 @@ void Sound::play()
 
 void Sound::stop()
 {
-    foreach(QSoundEffect * soundeffect , soundeffects_)
+    for(QSoundEffect * soundeffect : soundeffects_)
     {
          soundeffect->stop();
     }
@@ -41,7 +41,7 @@ void Sound::stop()
 
 void Sound::stopAll()
 {
-    foreach(QSoundEffect *soundeffect , soundeffects_)
+    for(QSoundEffect *soundeffect : soundeffects_)
     {
          soundeffect->stop();
     }
@@ -55,7 +55,7 @@ const char *Sound::file() const
 
 void Sound::setFile(const char *cstr)
 {
-    foreach(QSoundEffect * soundeffect , soundeffects_)
+    for(QSoundEffect * soundeffect : soundeffects_)
     {
         soundeffect->setSource(QUrl::fromLocalFile(QString::fromLocal8Bit(cstr)));
     }
@@ -74,14 +74,14 @@ void Sound::setLoops(int number)
 {
     if(number == -1)
     {
-        foreach(QSoundEffect *soundeffect , soundeffects_)
+        for(QSoundEffect *soundeffect : soundeffects_)
         {
             soundeffect->setLoopCount(QSoundEffect::Infinite);
         }
     }
     else
     {
-        foreach(QSoundEffect * soundeffect , soundeffects_)
+        for(QSoundEffect * soundeffect : soundeffects_)
         {
             soundeffect->setLoopCount(number);
         }

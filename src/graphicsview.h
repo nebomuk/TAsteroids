@@ -114,6 +114,8 @@ private:
 
     void adjustSoftButtonPositions();
 
+    void createHighScoreCounter();
+    void createSoftButtons();
 };
 #endif
 

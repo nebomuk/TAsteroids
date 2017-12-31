@@ -14,7 +14,7 @@ AsteroidColorizer::~AsteroidColorizer()
 void AsteroidColorizer::loadDefault()
 {
 
-	foreach(QString name, asteroidNames_)
+    for(QString name : asteroidNames_)
 	{
 		ImageList images;
 		for(int i = 0; i< 32; ++i)
@@ -90,9 +90,9 @@ ImageList AsteroidColorizer::imagesForAsteroid(const QString asteroidName, QColo
 
 ImageList AsteroidColorizer::coloredImageList(QString key)
 {
-     ImageList uncolored = defaultImages_[key];
+     const ImageList uncolored = defaultImages_[key];
     ImageList colored;
-    foreach(QImage image, uncolored)
+    for(QImage image : uncolored)
     {
         colored.append(tinted(image,cacheColor_));
     }

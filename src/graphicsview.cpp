@@ -60,7 +60,7 @@ GraphicsView::GraphicsView(QWidget * parent)
     // pan and swipe gestures only work with 2 fingers
     QList<Qt::GestureType> gestures;
     gestures  << Qt::PinchGesture;
-    foreach(Qt::GestureType gesture, gestures)
+    for(Qt::GestureType gesture : gestures)
     {
          this->viewport()->grabGesture(gesture);
     }
@@ -100,7 +100,7 @@ GraphicsView::~GraphicsView()
     {
         QGestureEvent* e = static_cast<QGestureEvent*>(event);
         QList<QGesture*> gestures = e->gestures();
-        foreach(QGesture* gesture, gestures)
+        for(QGesture* gesture : gestures)
         {
             Qt::GestureType type = gesture->gestureType();
 
@@ -174,6 +174,78 @@ void GraphicsView::clear()
 
 
 
+void GraphicsView::createHighScoreCounter()
+{
+    highScoreCounter_ = new QLCDNumber;
+    highScoreCounter_->resize(highScoreCounter_->sizeHint() * 3);
+    highScoreCounter_->setSegmentStyle(QLCDNumber::Flat);
+    highScoreCounter_->setStyleSheet("color: red;"
+                                    "background-color: transparent;"
+                                             );
+    highScoreCounter_->setFrameStyle(QFrame::NoFrame);
+    QGraphicsProxyWidget * proxy = scene()->addWidget(highScoreCounter_.data());
+
+    proxy->setZValue(100.0);
+    proxy->setPos(0.0 - borderSceneRectDist_.x() +64.0, -1200+32.0);
+}
+
+void GraphicsView::createSoftButtons()
+{
+    GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
+    GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
+    GraphicsSoftButton * rotateLeftButton = new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
+    GraphicsSoftButton * shootButton = new GraphicsSoftButton(":images/crosshairs.svg");
+    GraphicsSoftButton * accelerateButton = new GraphicsSoftButton(":images/accelerate.svg");
+
+    leftSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateLeftButton << rotateRightButton << shieldButton;
+    rightSoftButtons_ = QList<GraphicsSoftButton*>()  <<  shootButton << accelerateButton;
+    QList<GraphicsSoftButton*> buttons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
+
+    for(GraphicsSoftButton * item : buttons)
+    {
+        item->setZValue(100.0);
+        item->scaleToWidth(256.0);
+        scene()->addItem(item);
+    }
+
+
+    connect(accelerateButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Up);
+    });
+
+    connect(accelerateButton,&GraphicsSoftButton::released,[this](){
+        emit signalKeyRelease(Qt::Key_Up);
+    });
+
+    connect(shieldButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Delete);
+    });
+    connect(shieldButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Delete);
+    });
+
+    connect(rotateRightButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Right);
+    });
+    connect(rotateRightButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Right);
+    });
+
+    connect(rotateLeftButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Left);
+    });
+    connect(rotateLeftButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Left);
+    });
+
+    connect(shootButton,&GraphicsSoftButton::pressed,[this](){
+        emit signalKeyPress(Qt::Key_Space);
+    });
+    connect(shootButton,&GraphicsSoftButton::released, [this](){
+        emit signalKeyRelease(Qt::Key_Space);
+    });
+}
+
 void GraphicsView::populate()
 {
     graphicsEngine->gameState()->setPhase(graphicsEngine->gameState()->initialPhase());
@@ -216,81 +288,15 @@ void GraphicsView::populate()
 	hitpointBars_ << graphicsEngine->createHitpointsBarAt(QPointF(1600.0 + borderSceneRectDist_.x() -128-i*256,-1200+32.0));
 	}
 
-	// a counter that shows the highscore
-    highScoreCounter_ = new QLCDNumber;
-    highScoreCounter_->resize(highScoreCounter_->sizeHint() * 3);
-    highScoreCounter_->setSegmentStyle(QLCDNumber::Flat);
-    highScoreCounter_->setStyleSheet("color: red;"
-                                    "background-color: transparent;"
-                                             );
-    highScoreCounter_->setFrameStyle(QFrame::NoFrame);
-    QGraphicsProxyWidget * proxy = scene()->addWidget(highScoreCounter_.data());
-
-    proxy->setZValue(100.0);
-    proxy->setPos(0.0 - borderSceneRectDist_.x() +64.0, -1200+32.0);
-
-
+    createHighScoreCounter();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 
-    GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
-    GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
-    GraphicsSoftButton * rotateLeftButton = new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
-    GraphicsSoftButton * shootButton = new GraphicsSoftButton(":images/crosshairs.svg");
-    GraphicsSoftButton * accelerateButton = new GraphicsSoftButton(":images/accelerate.svg");
-
-    leftSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateLeftButton << rotateRightButton << shieldButton;
-    rightSoftButtons_ = QList<GraphicsSoftButton*>()  <<  shootButton << accelerateButton;
-    QList<GraphicsSoftButton*> buttons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
-
-    foreach(GraphicsSoftButton * item, buttons)
-    {
-        item->setZValue(100.0);
-        item->scaleToWidth(256.0);
-        scene()->addItem(item);
-    }
+    createSoftButtons();
 
     adjustSoftButtonPositions();
 
-    connect(accelerateButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Up);
-    });
-
-    connect(accelerateButton,&GraphicsSoftButton::released,[this](){
-        emit signalKeyRelease(Qt::Key_Up);
-    });
-
-    connect(shieldButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Delete);
-    });
-    connect(shieldButton,&GraphicsSoftButton::released, [this](){
-        emit signalKeyRelease(Qt::Key_Delete);
-    });
-
-    connect(rotateRightButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Right);
-    });
-    connect(rotateRightButton,&GraphicsSoftButton::released, [this](){
-        emit signalKeyRelease(Qt::Key_Right);
-    });
-
-    connect(rotateLeftButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Left);
-    });
-    connect(rotateLeftButton,&GraphicsSoftButton::released, [this](){
-        emit signalKeyRelease(Qt::Key_Left);
-    });
-
-    connect(shootButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Space);
-    });
-    connect(shootButton,&GraphicsSoftButton::released, [this](){
-        emit signalKeyRelease(Qt::Key_Space);
-    });
 #endif
-
-
-
 
 	// TimeoutInterval is a global variable and controls the framerate 
     timer->start(TimeoutInterval,this); // starting global timer here
@@ -414,13 +420,13 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 	graphicsEngine->processUfos();
 
 	// keep items inside the visible area
-	foreach(Vehicle * asteroid, graphicsEngine->asteroids())
+    for(Vehicle * asteroid :  graphicsEngine->asteroids())
 		wrapSprite(asteroid);
 
-	foreach(Vehicle * projectile, graphicsEngine->projectiles())
+    for(Vehicle * projectile : graphicsEngine->projectiles())
 		wrapSprite(projectile);
 
-	foreach(Vehicle * ufo, graphicsEngine->ufos())
+    for(Vehicle * ufo : graphicsEngine->ufos())
 		wrapSprite(ufo);
 
 	if(scriptProxy)

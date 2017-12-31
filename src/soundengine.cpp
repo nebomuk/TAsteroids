@@ -12,7 +12,7 @@ SoundEngine::SoundEngine(QObject * parent) : QObject(parent)
 
 void SoundEngine::loadSounds(const QStringList& fileNames)
 {
-	foreach(QString sourceFileName, fileNames)
+    for(QString sourceFileName : fileNames)
 	{
 			QString fileName = QFileInfo(sourceFileName).fileName(); // returns file name without path
 
@@ -70,7 +70,7 @@ void SoundEngine::stop(const QString& filename)
 void SoundEngine::stopAll()
 {
     QList<ISound*> sounds = soundPlayers_.values();
-    foreach (ISound * soundPlayer, sounds) {
+    for (ISound * soundPlayer : sounds) {
         soundPlayer->stop();
 
     }
@@ -83,7 +83,7 @@ SoundEngine::~SoundEngine()
 
 		// destroy the temporary files that have been created before
 		bool tempRemoveFailed = false;
-		foreach(QString file, tempFileNames_)
+        for(QString file : tempFileNames_)
 		{
 			QDir dir;
 			if(!dir.remove(file))
