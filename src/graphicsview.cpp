@@ -359,7 +359,7 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
 	// adjust the hitpoints bars on the screen
 	for(int i = 0; i< hitpointBars_.size(); ++i)
 	{
-		hitpointBars_[i]->setPos(1600.0 + borderSceneRectDist_.x() -128-i*256,-(1200.0 - 32.0));
+        hitpointBars_[i]->graphicsProxyWidget()->setPos(1600.0 + borderSceneRectDist_.x() -128-i*256,-(1200.0 - 32.0));
 	}
     if(highScoreCounter_ != Q_NULLPTR && highScoreCounter_->graphicsProxyWidget() != Q_NULLPTR)
 	{
@@ -451,12 +451,12 @@ void GraphicsView::timerEvent(QTimerEvent* event)
 
 			if(playerVehicles_[i]->hitpoints() > 1)
 			{
-				hitpointBars_[i]->setFrame(playerVehicles_[i]->hitpoints());
+                hitpointBars_[i]->setValue(playerVehicles_[i]->hitpoints());
 			}
 			else
 			{
                 graphicsEngine->createExplosionAt(playerVehicles_[i]->pos())->setTransform(QTransform::fromScale(0.4, 0.4));
-				hitpointBars_[i]->setFrame(0);
+                hitpointBars_[i]->setValue(0);
 				delete playerVehicles_[i]; // playerVehicle is automatically set to NULL
 				playerVehicles_[i] = NULL;
 				graphicsEngine->soundEngine()->stop("loop_engine.wav_" + QString::number(i));

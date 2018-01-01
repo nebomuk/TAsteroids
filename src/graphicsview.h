@@ -9,6 +9,7 @@
 #include <QTime>
 #include <QGraphicsProxyWidget>
 #include <QLCDNumber>
+#include <QProgressBar>
 #include "Box2D/Box2D.h"
 #include "gamestate.h"
 #include "globalvariables.h"
@@ -96,7 +97,7 @@ private:
     GraphicsEngine * graphicsEngine;
     QBasicTimer *timer;
     QList<Vehicle*> playerVehicles_;
-    QList<AnimatedItem*> hitpointBars_;
+    QList<QProgressBar*> hitpointBars_;
     QPointer<QLCDNumber> highScoreCounter_;
 
     QList<GraphicsSoftButton* > leftSoftButtons_;

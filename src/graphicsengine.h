@@ -6,6 +6,7 @@
 #include <QGraphicsSimpleTextItem>
 #include <QTimer>
 #include <QPointer>
+#include <QProgressBar>
 #include "Box2D/Box2D.h"
 #include "globalvariables.h"
 
@@ -85,7 +86,7 @@ enum asteroidType
 	void setDestroyedAsteroidCount(int destroyedAsteroidCount){ destroyedAsteroidCount_ = destroyedAsteroidCount; }
 
 	/*Q_INVOKABLE*/ AnimatedItem* createExplosionAt(const QPointF& position);
-	/*Q_INVOKABLE*/ AnimatedItem* createHitpointsBarAt(const QPointF& position);
+    /*Q_INVOKABLE*/ QProgressBar *createHitpointsBarAt(const QPointF& position);
 
 	// clears all lists and stops all sounds
 	void clear();

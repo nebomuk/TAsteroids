@@ -118,7 +118,7 @@ SOURCES += src/vehicle.cpp \
     src/menugameinteraction.cpp \
     src/gamestate.cpp \
     src/shapebuilder.cpp
-RESOURCES = hitpointsBar_images.qrc \
+RESOURCES = \
 	images.qrc \
 	golevka.qrc \
 	bacchus.qrc \
