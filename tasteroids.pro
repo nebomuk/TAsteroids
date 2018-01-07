@@ -18,7 +18,6 @@ QT += qml quick widgets
 QT += 3dcore 3drender 3dinput 3dquick qml quick 3dquickextras
 
 HEADERS += src/vehicle.h \
-	src/sdlsound.h \
 	src/globalvariables.h \
 	src/movingitem.h \
 	src/centerrectinrect.h \
@@ -74,7 +73,6 @@ SOURCES += src/vehicle.cpp \
 	src/movingitem.cpp \
 	src/graphicsview.cpp \
 	src/graphicsengine.cpp \
-	src/sdlsound.cpp  \
 	src/main.cpp \
 	src/svgcache.cpp \
 	src/asteroidcolorizer.cpp \

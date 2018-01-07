@@ -33,14 +33,6 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
         explosionImages_ << image.scaledToWidth(qRound(explosionWidth*1.5f),Qt::SmoothTransformation);
 	}
 
-	QList<QSvgRenderer*> renderers;
-	for(int i = 0; i<11; ++i)
-		renderers.push_back(new QSvgRenderer(":hitpointsBar_images/hitpointsBar" + QString::number(i) + ".svg"));
-
-	SvgCache * hitpointsBarCache = new SvgCache;
-	hitpointsBarCache->addSvgRenderers(renderers);
-    hitpointsBarImages_ << hitpointsBarCache->images();
-
 	hideTextTimer_.setSingleShot(true);
 	connect(&hideTextTimer_,SIGNAL(timeout()),this,SLOT(hideText()));
 

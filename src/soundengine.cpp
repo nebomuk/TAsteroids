@@ -1,5 +1,4 @@
 #include "soundengine.h"
-#include "sdlsound.h"
 #include <QDir>
 #include <QMessageBox>
 #include "mocksound.h"
