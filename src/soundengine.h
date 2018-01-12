@@ -43,12 +43,14 @@ public slots:
 	// copys the files in soundFiles into the system's temp directory
 	// and makes them available to the SoundEngine with their names (without path)
 	// this is necessary for resource files, because the SDL Sound backend doesn't support Qt-resources
-	void loadSounds(const QStringList& soundFiles);
+    void loadSounds(const QStringList& filePaths);
 
 private:
 	QHash<QString,ISound*> soundPlayers_;
 	QStringList tempFileNames_;
 	int loopDuplicateCount_;
+    bool copyFilesToTempDir_;
+    void removeTemporaryFiles();
 };
 
 #endif // SOUNDENGINE_H

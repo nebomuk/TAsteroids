@@ -127,7 +127,6 @@ protected:
 
 private:
     ImageList explosionImages_;
-    ImageList hitpointsBarImages_;
 	QList<AnimatedItem*> explosions;
 	QList<Vehicle*> projectiles_;
 	QList<Vehicle*> asteroids_;
