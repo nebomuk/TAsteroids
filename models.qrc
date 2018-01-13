@@ -5,5 +5,8 @@
         <file>models/kleopatra.obj</file>
         <file>models/ky26.obj</file>
         <file>models/toutatis.obj</file>
+        <file>new_models/alternativeKleopatra.obj</file>
+        <file>new_models/detailedSpiky.obj</file>
+        <file>new_models/detailedVolcano.obj</file>
     </qresource>
 </RCC>

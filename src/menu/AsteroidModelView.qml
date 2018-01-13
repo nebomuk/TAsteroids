@@ -25,27 +25,25 @@ Scene3D {
 
             property var meshDict : [
             {
-                scale : 1.2,
-                meshSource : "qrc:/models/bacchus.obj"
-            },
-            {
-                scale : 0.006,
-                meshSource : "qrc:/models/kleopatra.obj"
-            },
-            {
                 scale : 1.5,
                 meshSource : "qrc:/models/golevka.obj"
             },
             {
-                scale : 30.0,
-                meshSource : "qrc:/models/ky26.obj"
+                scale : 0.3,
+                meshSource : "qrc:/models/toutatis.obj"
             },
             {
                 scale : 0.3,
-                meshSource : "qrc:/models/toutatis.obj"
+                meshSource : "qrc:/new_models/detailedVolcano.obj"
+            },
+            {
+                scale : 0.04,
+                meshSource : "qrc:/new_models/alternativeKleopatra.obj"
+            },
+            {
+                scale : 0.4,
+                meshSource : "qrc:/new_models/detailedSpiky.obj"
             }
-
-
 
             ];
 
