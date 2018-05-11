@@ -15,6 +15,7 @@ Scene3D {
             focus: true
             aspects: ["input", "logic"]
             cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
+            multisample: Qt.platform.os  != "android" && Qt.platform.os != "ios"
 
 
             AsteroidCameraEntity {
