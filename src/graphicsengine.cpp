@@ -27,10 +27,11 @@ GraphicsEngine::GraphicsEngine(QObject *parent) :
 
     QImage first = QImage(":images/explosion/explosionBackground.png");
 	int explosionWidth = first.width();
-    explosionImages_ << first.scaledToWidth(qRound(explosionWidth*1.5f),Qt::SmoothTransformation);
-	for(int i = 0; i <15; ++i)
+    explosionImages_ << first.scaledToWidth(qRound(explosionWidth*1.6f),Qt::SmoothTransformation);
+    int numberOfImages = QDir(":images/explosionGreen/").count()-1;
+    for(int i = 0; i <numberOfImages; ++i)
 	{
-        QImage image(":images/explosion/explosion" + QString::number(i)+".png");
+        QImage image(":images/explosionGreen/explosion" + QString::number(i)+".png");
         explosionImages_ << image.scaledToWidth(qRound(explosionWidth*1.5f),Qt::SmoothTransformation);
 	}
 
@@ -310,9 +311,9 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 
 	switch(asteroidSize)
 	{
-    case 2: scale = 2.0; break;
-    case 1: scale = 1.0; break;
-    case 0: scale = 0.5; break;
+    case 2: scale = 1.0; break;
+    case 1: scale = 0.5; break;
+    case 0: scale = 0.25; break;
 	default:;
 	}
 
@@ -328,10 +329,10 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
     }
 	switch(type)
 	{
-    case golevka:	asteroid->addImages(asteroidColorizer_->imagesForAsteroid("golevka",tintColor)); break;
-    case kleopatra: asteroid->addImages(asteroidColorizer_->imagesForAsteroid("kleopatra",tintColor)); break;
-    case ky26:		asteroid->addImages(asteroidColorizer_->imagesForAsteroid("ky26",tintColor)); break;
-    case toutatis:  asteroid->addImages(asteroidColorizer_->imagesForAsteroid("toutatis",tintColor)); break;
+    case golevka:	asteroid->setFile(":images/virus/egg.svg"); break;
+    case kleopatra: asteroid->setFile(":images/virus/rotor.svg"); break;
+    case ky26:		asteroid->setFile(":images/virus/star.svg"); break;
+    case toutatis:  asteroid->setFile(":images/virus/wheel.svg"); break;
 	default:
 		qDebug("GraphicsEngine::createAsteroidAt: invalid asteroidType");
         return Q_NULLPTR;

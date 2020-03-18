@@ -61,7 +61,7 @@ Entity {
     property real theta: 0.0
     property real phi: 0.0
     property Material material
-    property string meshSource: "qrc:/models/toutatis.obj"
+    property string meshSource: "qrc:/new_models/virus.obj"
 
     components: [ transform, mesh, root.material ]
 

@@ -18,5 +18,6 @@
         <file>images/crosshairs.svg</file>
         <file>images/turquoiseBomb.svg</file>
         <file>images/accelerate.svg</file>
+        <file>images/backgroundRed.png</file>
     </qresource>
 </RCC>

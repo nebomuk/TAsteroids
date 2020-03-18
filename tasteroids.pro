@@ -5,6 +5,7 @@ android {
     QT += androidextras
     SOURCES += src/androidhelper.cpp #my android specific cpp file
     HEADERS += src/androidhelper.h   #my android specific header file
+#QMAKE_LINK -= -nostdlib++
 }
 
 TRANSLATIONS=ta_ger.ts
@@ -129,7 +130,9 @@ RESOURCES = \
 	toutatis.qrc \
 	script.qrc \
         sounds.qrc \
-        menu_files.qrc
+        menu_files.qrc \
+    explosion_image_green.qrc \
+    virus.qrc
 	
 SOURCES +=
 
@@ -143,20 +146,34 @@ RESOURCES +=  models.qrc
 OTHER_FILES += src/mainloop.js \
 	src/control.js 
 
+#DISTFILES += \
+#    android/AndroidManifest.xml \
+#    android/gradle/wrapper/gradle-wrapper.jar \
+#    android/gradlew \
+#    android/res/values/libs.xml \
+#    android/build.gradle \
+#    android/gradle/wrapper/gradle-wrapper.properties \
+#    android/gradlew.bat \
+#    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/AndroidManifest.xml \
+#    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradle/wrapper/gradle-wrapper.jar \
+#    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradlew \
+#    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/res/values/libs.xml \
+#    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/build.gradle \
+#    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradle/wrapper/gradle-wrapper.properties \
+#    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradlew.bat
+
+#ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
 DISTFILES += \
     android/AndroidManifest.xml \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
-    android/res/values/libs.xml \
     android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.jar \
     android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
     android/gradlew.bat \
-    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/AndroidManifest.xml \
-    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradle/wrapper/gradle-wrapper.jar \
-    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradlew \
-    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/res/values/libs.xml \
-    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/build.gradle \
-    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradle/wrapper/gradle-wrapper.properties \
-    ../../../Dropbox/nwie/wie-Tasteroids/tasteroids7/android/gradlew.bat
+    android/res/values/libs.xml
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
+}

@@ -72,7 +72,7 @@ GraphicsView::GraphicsView(QWidget * parent)
 
     QGraphicsScene * scene = new QGraphicsScene(0.0,-1200.0,1600.0,1200.0,this);
 	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-	scene->setBackgroundBrush(QPixmap(":images/stars1.png"));
+    scene->setBackgroundBrush(QPixmap(":images/backgroundRed.png").scaledToWidth(2400));
 	setSceneRect(scene->sceneRect());
 
 

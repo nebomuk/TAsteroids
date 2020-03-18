@@ -8,5 +8,6 @@
         <file>new_models/alternativeKleopatra.obj</file>
         <file>new_models/detailedSpiky.obj</file>
         <file>new_models/detailedVolcano.obj</file>
+        <file>new_models/virus.obj</file>
     </qresource>
 </RCC>

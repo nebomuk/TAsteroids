@@ -36,8 +36,8 @@ Entity {
 
     PhongMaterial {
         id: redAdsMaterial
-        ambient: "#002D33"
-        diffuse: "#00B9CE"
+        ambient: "#b8535c"
+        diffuse: "#e36873"
     }
 
 
@@ -55,14 +55,14 @@ Entity {
                 target: asteroid
                 property: "theta"
                 from: 0; to: 360
-                duration: 2000
+                duration: 5000
             }
 
             NumberAnimation {
                 target: asteroid
                 property: "phi"
                 from: 0; to: 360
-                duration: 2000
+                duration: 5000
             }
         }
     }

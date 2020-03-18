@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/virus/rotor.svg</file>
+        <file>images/virus/wheel.svg</file>
+        <file>images/virus/star.svg</file>
+        <file>images/virus/egg.svg</file>
+    </qresource>
+</RCC>

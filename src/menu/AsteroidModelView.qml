@@ -25,25 +25,29 @@ Scene3D {
             property var currentIndex : 0
 
             property var meshDict : [
+//            {
+//                scale : 1.5,
+//                meshSource : "qrc:/models/golevka.obj"
+//            },
+//            {
+//                scale : 0.3,
+//                meshSource : "qrc:/models/toutatis.obj"
+//            },
+//            {
+//                scale : 0.3,
+//                meshSource : "qrc:/new_models/detailedVolcano.obj"
+//            },
+//            {
+//                scale : 0.04,
+//                meshSource : "qrc:/new_models/alternativeKleopatra.obj"
+//            },
+//            {
+//                scale : 0.4,
+//                meshSource : "qrc:/new_models/detailedSpiky.obj"
+//            },
             {
-                scale : 1.5,
-                meshSource : "qrc:/models/golevka.obj"
-            },
-            {
-                scale : 0.3,
-                meshSource : "qrc:/models/toutatis.obj"
-            },
-            {
-                scale : 0.3,
-                meshSource : "qrc:/new_models/detailedVolcano.obj"
-            },
-            {
-                scale : 0.04,
-                meshSource : "qrc:/new_models/alternativeKleopatra.obj"
-            },
-            {
-                scale : 0.4,
-                meshSource : "qrc:/new_models/detailedSpiky.obj"
+                scale : 0.5,
+                meshSource : "qrc:/new_models/virus.obj"
             }
 
             ];

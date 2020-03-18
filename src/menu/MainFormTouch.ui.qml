@@ -1,6 +1,8 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
+import QtGraphicalEffects 1.12
+
 import "Style.js" as Style
 
 
@@ -216,6 +218,13 @@ Item {
         height: parent.height
         width: sourceSize.width * item1.height / sourceSize.height
         source: "qrc:/menu0.png"
+         Colorize {
+               anchors.fill: image0
+               source: image0
+               hue: 0.0
+                       saturation: 0.5
+                       lightness: 0.2
+           }
     }
     Image {
         z : -1
@@ -225,6 +234,13 @@ Item {
         height: parent.height
         fillMode: Image.TileHorizontally
         source: "qrc:/menu1.png"
+         Colorize {
+               anchors.fill: image1
+               source: image1
+               hue: 0.0
+                       saturation: 0.5
+                       lightness: 0.2
+           }
     }
     Image {
         z : -1
@@ -235,6 +251,13 @@ Item {
         height: parent.height
         width: sourceSize.width * item1.height / sourceSize.height
         source: "qrc:/menu2.png"
+         Colorize {
+               anchors.fill: image2
+               source: image2
+               hue: 0.0
+                       saturation: 0.5
+                       lightness: 0.2
+           }
     }
 
 }

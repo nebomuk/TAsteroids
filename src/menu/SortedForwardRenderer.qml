@@ -77,7 +77,7 @@ TechniqueFilter {
                 objectName : "cameraSelector"
                 ClearBuffers {
                     buffers : ClearBuffers.ColorDepthBuffer
-                    clearColor: "#000718" // default background dark blue
+                    clearColor: "#943232" // default background dark blue
                     SortPolicy {
                         sortTypes: [
                             SortPolicy.StateChangeCost,

@@ -7,7 +7,7 @@ Rectangle {
     height: 58
     color: "#00000000"
     radius: 2
-    border.color: "#0095a6"
+    border.color: "#e36873"
     border.width: 2
 
     Text {
@@ -15,7 +15,7 @@ Rectangle {
         text: title1
         font.pointSize: 24
         font.family: "OCR A Extended"
-        color: "#01375D"
+        color: "#421317"
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter:  parent.horizontalCenter
     }

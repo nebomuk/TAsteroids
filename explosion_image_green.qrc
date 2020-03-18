@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/explosionGreen/explosion0.png</file>
+        <file>images/explosionGreen/explosion1.png</file>
+        <file>images/explosionGreen/explosion2.png</file>
+        <file>images/explosionGreen/explosion3.png</file>
+        <file>images/explosionGreen/explosion4.png</file>
+        <file>images/explosionGreen/explosion5.png</file>
+        <file>images/explosionGreen/explosion6.png</file>
+        <file>images/explosionGreen/explosion7.png</file>
+        <file>images/explosionGreen/explosion8.png</file>
+        <file>images/explosionGreen/explosion9.png</file>
+        <file>images/explosionGreen/explosion10.png</file>
+        <file>images/explosionGreen/explosion11.png</file>
+    </qresource>
+</RCC>
