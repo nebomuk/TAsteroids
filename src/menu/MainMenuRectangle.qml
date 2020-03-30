@@ -15,7 +15,7 @@ Rectangle {
         text: title1
         font.pointSize: 24
         font.family: "OCR A Extended"
-        color: "#421317"
+        color: "#ffe8ea"
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter:  parent.horizontalCenter
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,7 +14,7 @@
    height="10"
    id="svg3353"
    sodipodi:version="0.32"
-   inkscape:version="0.46"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    version="1.0"
    sodipodi:docname="redBomb.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
@@ -22,6 +23,18 @@
    inkscape:export-ydpi="90">
   <defs
      id="defs3355">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient870">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0"
+         id="stop866" />
+      <stop
+         style="stop-color:#b3b3b3;stop-opacity:1"
+         offset="1"
+         id="stop868" />
+    </linearGradient>
     <linearGradient
        id="linearGradient3251">
       <stop
@@ -309,7 +322,7 @@
        gradientUnits="userSpaceOnUse" />
     <radialGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient3251"
+       xlink:href="#linearGradient870"
        id="radialGradient3257"
        cx="3.9553785"
        cy="4.0364933"
@@ -326,18 +339,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16"
-     inkscape:cx="6.714158"
-     inkscape:cy="3.3355988"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="3.975265"
+     inkscape:cy="1.2020036"
      inkscape:document-units="px"
      inkscape:current-layer="g6770"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1278"
-     inkscape:window-height="913"
+     inkscape:window-width="1920"
+     inkscape:window-height="1031"
      inkscape:window-x="0"
-     inkscape:window-y="24" />
+     inkscape:window-y="25"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata3358">
     <rdf:RDF>
@@ -346,6 +360,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -359,13 +374,13 @@
        transform="translate(-242.124,-1231.2)">
       <path
          sodipodi:type="arc"
-         style="opacity:1;fill:url(#radialGradient3257);fill-opacity:1;stroke:none;stroke-width:0.40000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:42.50999663;stroke-opacity:1"
+         style="opacity:1;fill:url(#radialGradient3257);fill-opacity:1.0;stroke:none;stroke-width:0.40000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:42.50999663;stroke-opacity:1"
          id="path3249"
          sodipodi:cx="3.9553785"
          sodipodi:cy="4.0364933"
          sodipodi:rx="3.557631"
          sodipodi:ry="3.314563"
-         d="M 7.5130095,4.0364933 A 3.557631,3.314563 0 1 1 0.39774752,4.0364933 A 3.557631,3.314563 0 1 1 7.5130095,4.0364933 z"
+         d="M 7.5130095,4.0364933 A 3.557631,3.314563 0 0 1 3.9553785,7.3510563 3.557631,3.314563 0 0 1 0.39774752,4.0364933 3.557631,3.314563 0 0 1 3.9553785,0.72193027 3.557631,3.314563 0 0 1 7.5130095,4.0364933 Z"
          transform="matrix(1.4054296,0,0,1.5084945,269.11081,1288.7513)" />
     </g>
   </g>
