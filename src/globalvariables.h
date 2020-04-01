@@ -1,7 +1,9 @@
 #ifndef __GLOBALVARIABLES_H__
 #define __GLOBALVARIABLES_H__
 
+#include <QImage>
 #include <QList>
+#include <QPixmap>
 
 
 // all variables here must be const else linker errors will occur

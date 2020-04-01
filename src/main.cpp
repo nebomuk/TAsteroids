@@ -15,12 +15,14 @@
 
 int main(int argc, char ** argv)
 {
-	QApplication app( argc, argv );
-
     // crashes when trying to use ANGLE and opengl driver might not be available
    #ifdef Q_OS_WIN
-    QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+  QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
     #endif
+
+	QApplication app( argc, argv );
+
+
 
     app.setQuitOnLastWindowClosed(false);
 
