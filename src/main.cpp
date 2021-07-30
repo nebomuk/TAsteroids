@@ -15,9 +15,15 @@
 
 int main(int argc, char ** argv)
 {
+#if QT_VERSION > 0x060000
+    qputenv("QSG_RHI_BACKEND", "opengl");
+#endif
+
     // crashes when trying to use ANGLE and opengl driver might not be available
    #ifdef Q_OS_WIN
+#if QT_VERSION < 0x060000
   QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+#endif
     #endif
 
 	QApplication app( argc, argv );
@@ -28,7 +34,6 @@ int main(int argc, char ** argv)
 
     app.setApplicationName("TAsteroids");
     app.setOrganizationName("com.blogspot.tasteroids");
-	qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));  // seed the random number generator
 	app.setWindowIcon(QIcon(":icon.png"));
 	app.setOverrideCursor(QCursor(QPixmap(":cursor.png"),2,2));
 	QFontDatabase::addApplicationFont(":OCRA.ttf");

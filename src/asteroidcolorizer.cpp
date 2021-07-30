@@ -43,7 +43,7 @@ void AsteroidColorizer::loadDefault()
 	painter.setCompositionMode(mode);
 	painter.fillRect(resultImage.rect(), color);
 	painter.end();
-	resultImage.setAlphaChannel(image.alphaChannel());
+//	resultImage.setAlphaChannel(image.alphaChannel());
 
 	return resultImage;
 }

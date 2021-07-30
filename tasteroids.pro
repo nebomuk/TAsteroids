@@ -10,8 +10,11 @@ android {
 TRANSLATIONS=ta_ger.ts
 QT += gui \
 	core \
-        svg \
-        multimedia 
+        svg multimedia
+
+greaterThan(QT_MAJOR_VERSION, 5) {
+    QT += svgwidgets
+}
 	
 QT += qml quick widgets
 

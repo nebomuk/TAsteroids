@@ -3,6 +3,7 @@
 #include <QBitmap>
 #include <QProgressBar>
 #include <QGraphicsProxyWidget>
+#include <QRandomGenerator>
 #include "svgcache.h"
 #include "asteroidcolorizer.h"
 #include "contactlistener.h"
@@ -318,7 +319,7 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 	Vehicle * asteroid = new Vehicle;
 	asteroid->setAsteroid(true);
 
-	asteroidType type = static_cast<asteroidType>(qrand() % 4);
+    asteroidType type = static_cast<asteroidType>( QRandomGenerator::global()->generate() % 4);
 
     QColor tintColor;
     if(gameState_->phase() > 0)
@@ -335,7 +336,7 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 		qDebug("GraphicsEngine::createAsteroidAt: invalid asteroidType");
         return Q_NULLPTR;
 	}
-	int startFrame = qrand() % 32;
+    int startFrame =  QRandomGenerator::global()->generate() % 32;
 	asteroid->setFrame(startFrame);
 	asteroid->setFrameRateDivisor(3);
 	asteroid->setZValue(3.0);
@@ -351,8 +352,8 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 
 	float side = (size.width() + size.height()) / 2.0f;
 	asteroid->applyPhysics(world_,side/2.0f);
-	qreal randNum0 = (qrand() % 2000 - 1000) / 100.0f;
-	qreal randNum1 = (qrand() % 2000 - 1000) / 100.0f;
+    qreal randNum0 = ( QRandomGenerator::global()->generate() % 2000 - 1000) / 100.0f;
+    qreal randNum1 = ( QRandomGenerator::global()->generate() % 2000 - 1000) / 100.0f;
 	asteroid->applyImpulse(randNum0*1/scale,randNum1*1/scale); // random speed, smaller asteroids are faster
 	asteroids_ << asteroid;
 	scene_->addItem(asteroid);
