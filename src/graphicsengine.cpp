@@ -352,8 +352,8 @@ Vehicle * GraphicsEngine::createAsteroidAt(qreal x, qreal y, int asteroidSize)
 
 	float side = (size.width() + size.height()) / 2.0f;
 	asteroid->applyPhysics(world_,side/2.0f);
-    qreal randNum0 = ( QRandomGenerator::global()->generate() % 2000 - 1000) / 100.0f;
-    qreal randNum1 = ( QRandomGenerator::global()->generate() % 2000 - 1000) / 100.0f;
+    qreal randNum0 = ( QRandomGenerator::global()->bounded(10.0));
+    qreal randNum1 = ( QRandomGenerator::global()->bounded(10.0));
 	asteroid->applyImpulse(randNum0*1/scale,randNum1*1/scale); // random speed, smaller asteroids are faster
 	asteroids_ << asteroid;
 	scene_->addItem(asteroid);

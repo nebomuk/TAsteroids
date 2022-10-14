@@ -47,3 +47,4 @@ gradle.properties*
 local.properties*
 
 *.iml
+*.qtc_clangd
