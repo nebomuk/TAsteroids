@@ -15,6 +15,7 @@
 #include "globalvariables.h"
 #include "centerrectinrect.h"
 #include "QGraphicsBox2DPolygonItem.h"
+#include "vehicle.h"
 
 /*
  this is the game's main widget which instanciates all other classes.

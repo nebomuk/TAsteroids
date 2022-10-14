@@ -9,6 +9,7 @@
 #include <QProgressBar>
 #include "Box2D/Box2D.h"
 #include "globalvariables.h"
+#include "vehicle.h"
 
 /*
 this class provides a convennient interface to the script environment to place enemies in the scene

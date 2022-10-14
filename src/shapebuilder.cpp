@@ -1,6 +1,7 @@
 #include "QGraphicsBox2DPolygonItem.h"
 #include "shapebuilder.h"
 #include "globalvariables.h"
+#include <QRandomGenerator>
 
 #include <QGraphicsScene>
 
@@ -34,9 +35,9 @@ void ShapeBuilder::addPolygons(QGraphicsScene *scene, b2World * world)
     for (int i = 0; i < 3; ++i) {
         QGraphicsBox2DPolygonItem *polygon = new QGraphicsBox2DPolygonItem(world);
         polygon->setPos(600, -400);
-        polygon->setRotation(qrand() % 360);
+        polygon->setRotation(QRandomGenerator::global()->generate() % 360);
         polygon->setPolygon(poly);
-        polygon->setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
+        polygon->setBrush(QColor(128 + QRandomGenerator::global()->generate() % 128, 128 +QRandomGenerator::global()->generate() % 128, 128 + QRandomGenerator::global()->generate() % 128));
         polygon->setup();
         scene->addItem(polygon);
     }

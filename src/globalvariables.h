@@ -30,9 +30,9 @@ enum itemType
 
 // forward declarations, this allows headers that include globalvariables.h to store pointers to this classes
 
-class AnimatedItem;
-class MovingItem;
-class Vehicle;
+//class AnimatedItem;
+//class MovingItem;
+//class Vehicle;
 class GraphicsEngine;
 class JSProxy;
 class MechanicalCounter;
