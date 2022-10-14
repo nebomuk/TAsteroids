@@ -16,7 +16,7 @@
 int main(int argc, char ** argv)
 {
 #if QT_VERSION > 0x060000
-    qputenv("QSG_RHI_BACKEND", "opengl");
+    //qputenv("QSG_RHI_BACKEND", "opengl");
 #endif
 
     // crashes when trying to use ANGLE and opengl driver might not be available
