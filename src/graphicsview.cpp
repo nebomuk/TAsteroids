@@ -65,6 +65,7 @@ GraphicsView::GraphicsView(QWidget * parent)
          this->viewport()->grabGesture(gesture);
     }
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
+    viewport()->setMouseTracking(true);
 
 	this->setRenderHint(QPainter::Antialiasing,false);
 
@@ -191,57 +192,63 @@ void GraphicsView::createHighScoreCounter()
 
 void GraphicsView::createSoftButtons()
 {
-    GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
-    GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
-    GraphicsSoftButton * rotateLeftButton = new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
-    GraphicsSoftButton * shootButton = new GraphicsSoftButton(":images/crosshairs.svg");
-    GraphicsSoftButton * accelerateButton = new GraphicsSoftButton(":images/accelerate.svg");
+    const int DEBUG_BUTTONS_ENABLED = false;
+    if(DEBUG_BUTTONS_ENABLED)
+    {
+        GraphicsSoftButton * rotateRightButton = new GraphicsSoftButton(":images/ic_rotate_right_48px.svg");
+        GraphicsSoftButton * rotateLeftButton = new GraphicsSoftButton(":images/ic_rotate_left_48px.svg");
+        GraphicsSoftButton * accelerateButton = new GraphicsSoftButton(":images/accelerate.svg");
+        leftSoftButtons_ = QList<GraphicsSoftButton*>() <<  rotateLeftButton << rotateRightButton;
+        rightSoftButtons_ = QList<GraphicsSoftButton*>()  << accelerateButton;
 
-    leftSoftButtons_ = QList<GraphicsSoftButton*>()  << rotateLeftButton << rotateRightButton << shieldButton;
-    rightSoftButtons_ = QList<GraphicsSoftButton*>()  <<  shootButton << accelerateButton;
+        connect(accelerateButton,&GraphicsSoftButton::pressed,this, [this](){
+            emit signalKeyPress(Qt::Key_Up);
+        });
+
+        connect(accelerateButton,&GraphicsSoftButton::released,this, [this](){
+            emit signalKeyRelease(Qt::Key_Up);
+        });
+
+        connect(rotateRightButton,&GraphicsSoftButton::pressed,this, [this](){
+            emit signalKeyPress(Qt::Key_Right);
+        });
+        connect(rotateRightButton,&GraphicsSoftButton::released,this,  [this](){
+            emit signalKeyRelease(Qt::Key_Right);
+        });
+
+        connect(rotateLeftButton,&GraphicsSoftButton::pressed,this, [this](){
+            emit signalKeyPress(Qt::Key_Left);
+        });
+        connect(rotateLeftButton,&GraphicsSoftButton::released,this,  [this](){
+            emit signalKeyRelease(Qt::Key_Left);
+        });
+    }
+
+    GraphicsSoftButton *  shieldButton = new GraphicsSoftButton(":images/ic_filter_tilt_shift_48px.svg");
+    GraphicsSoftButton * shootButton = new GraphicsSoftButton(":images/crosshairs.svg");
+
+    leftSoftButtons_ = QList<GraphicsSoftButton*>() << shieldButton;
+    rightSoftButtons_ = QList<GraphicsSoftButton*>()  <<  shootButton;
     QList<GraphicsSoftButton*> buttons = QList<GraphicsSoftButton*>() << leftSoftButtons_ << rightSoftButtons_;
 
-    for(GraphicsSoftButton * item : buttons)
+    for(GraphicsSoftButton * item : qAsConst(buttons))
     {
         item->setZValue(100.0);
         item->scaleToWidth(256.0);
         scene()->addItem(item);
     }
 
-
-    connect(accelerateButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Up);
-    });
-
-    connect(accelerateButton,&GraphicsSoftButton::released,[this](){
-        emit signalKeyRelease(Qt::Key_Up);
-    });
-
-    connect(shieldButton,&GraphicsSoftButton::pressed,[this](){
+    connect(shieldButton,&GraphicsSoftButton::pressed,this, [this](){
         emit signalKeyPress(Qt::Key_Delete);
     });
-    connect(shieldButton,&GraphicsSoftButton::released, [this](){
+    connect(shieldButton,&GraphicsSoftButton::released,this,  [this](){
         emit signalKeyRelease(Qt::Key_Delete);
     });
 
-    connect(rotateRightButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Right);
-    });
-    connect(rotateRightButton,&GraphicsSoftButton::released, [this](){
-        emit signalKeyRelease(Qt::Key_Right);
-    });
-
-    connect(rotateLeftButton,&GraphicsSoftButton::pressed,[this](){
-        emit signalKeyPress(Qt::Key_Left);
-    });
-    connect(rotateLeftButton,&GraphicsSoftButton::released, [this](){
-        emit signalKeyRelease(Qt::Key_Left);
-    });
-
-    connect(shootButton,&GraphicsSoftButton::pressed,[this](){
+    connect(shootButton,&GraphicsSoftButton::pressed,this, [this](){
         emit signalKeyPress(Qt::Key_Space);
     });
-    connect(shootButton,&GraphicsSoftButton::released, [this](){
+    connect(shootButton,&GraphicsSoftButton::released,this,  [this](){
         emit signalKeyRelease(Qt::Key_Space);
     });
 }
@@ -594,7 +601,22 @@ void GraphicsView::keyReleaseEvent(QKeyEvent *event)
 		this->close();
 	}
 	else
-		emit signalKeyRelease(event->key());
+        emit signalKeyRelease(event->key());
+}
+
+void GraphicsView::mousePressEvent(QMouseEvent *event)
+{
+    emit signalMousePress(event->button(), this->mapToScene(event->pos()).toPoint());
+}
+
+void GraphicsView::mouseReleaseEvent(QMouseEvent *event)
+{
+    emit signalMouseRelease(event->button(),this->mapToScene(event->pos()).toPoint());
+}
+
+void GraphicsView::mouseMoveEvent(QMouseEvent *event)
+{
+    emit signalMouseMove(event->button(),this->mapToScene(event->pos()).toPoint());
 }
 
 void GraphicsView::setupScript()
@@ -602,6 +624,11 @@ void GraphicsView::setupScript()
     scriptProxy = new JSProxy(this);
 	connect(this,SIGNAL(signalKeyPress(int)),scriptProxy,SIGNAL(signalKeyPress(int)));
 	connect(this,SIGNAL(signalKeyRelease(int)),scriptProxy,SIGNAL(signalKeyRelease(int)));
+
+    connect(this,&GraphicsView::signalMousePress,scriptProxy,&JSProxy::signalMousePress);
+    connect(this,&GraphicsView::signalMouseRelease,scriptProxy,&JSProxy::signalMouseRelease);
+    connect(this,&GraphicsView::signalMouseMove,scriptProxy,&JSProxy::signalMouseMove);
+
 
 
     scriptProxy->newQObjectWithName(graphicsEngine->gameState(),"gameState");

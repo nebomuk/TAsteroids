@@ -13,13 +13,13 @@ var finalPhase = 5 // the number of levels
 phaseChange(0);
 
 var ufo;
-var ufoAppearCountdown = 500;
+var ufoAppearCountdown = 5000;
 
 function mainLoop()
 {
 	for(var i = 0; i < playerVehicles.length; ++i)
 	{
-		if(isNullQObject(playerVehicles[i]) == true) // check for wrapped NULL pointer
+        if(isNullQObject(playerVehicles[i]) === true) // check for wrapped NULL pointer
 			continue;
 
 		/*wormhole*/
@@ -48,7 +48,7 @@ function mainLoop()
 		}
 
 		/*shield*/
-		if(playerVehicles[i].indestructible == true)
+        if(playerVehicles[i].indestructible === true)
 		{
 			playerVehicles[i].shieldDuration-=3; // weaken shield
 
@@ -69,11 +69,11 @@ function mainLoop()
 		}
 
 
-		var cosAngle = Math.cos(playerVehicles[i].angle*Math.PI/180.0);
-		var sinAngle = Math.sin(playerVehicles[i].angle*Math.PI/180.0);
+        let cosAngle = Math.cos(playerVehicles[i].angle*Math.PI/180.0);
+        let sinAngle = Math.sin(playerVehicles[i].angle*Math.PI/180.0);
 
 		/*acceleration*/
-		if(playerVehicles[i].accelerating == true)
+        if(playerVehicles[i].accelerating === true)
 		{
 			// update acceleration
 			playerVehicles[i].xAcceleration = cosAngle*36.0;
@@ -100,8 +100,8 @@ function mainLoop()
 			soundEngine.play('fire.wav');
 
 			graphicsEngine.appendProjectile(projectile);
-			var impulseX = cosAngle*40.0+playerVehicles[i].xVelocity;
-			var impulseY = sinAngle*40.0+playerVehicles[i].yVelocity;
+            let impulseX = cosAngle*40.0+playerVehicles[i].xVelocity;
+            let impulseY = sinAngle*40.0+playerVehicles[i].yVelocity;
 			projectile.applyImpulse(impulseX,impulseY);
 			projectile.diplomacy = 1; // diplomacy of player
 			projectile.isProjectile = true;
@@ -111,20 +111,40 @@ function mainLoop()
 		}
 	}
 
-    if(!isNullQObject(ufo) && ufo.wormholeState == Vehicle.OUTSIDE)
+    /*mouse Control*/
+
+    if(isNullQObject(playerVehicles[0]) === false && playerVehicles[0].mouseControl === true)
+    {
+        let angleVSign = calculateAngleVelocitySign(playerVehicles[0],playerVehicles[0].mousePoint);
+
+        playerVehicles[0].angularVelocity = 250*angleVSign;
+
+        if(playerVehicles[0].angularVelocity === 0)
+        {
+            startAcceleration(playerVehicles[0]);
+        }
+        else
+        {
+            stopAcceleration(playerVehicles[0]);
+        }
+
+    }
+
+
+    if(!isNullQObject(ufo) && ufo.wormholeState === Vehicle.OUTSIDE)
 	{
-		var cosAngle = Math.cos(ufo.angle*Math.PI/180.0);
-		var sinAngle = Math.sin(ufo.angle*Math.PI/180.0);
+        let cosAngleUfo = Math.cos(ufo.angle*Math.PI/180.0);
+        let sinAngleUfo = Math.sin(ufo.angle*Math.PI/180.0);
 		if(ufo.shootCooldown <= 0)
 		{
-			var projectile =
-			graphicsEngine.createCircleVehicleAt(ufo.x +cosAngle*60,
-										   ufo.y +sinAngle*60, /*radius = */ 5.0);
+            let projectile =
+            graphicsEngine.createCircleVehicleAt(ufo.x +cosAngleUfo*60,
+                                           ufo.y +sinAngleUfo*60, /*radius = */ 5.0);
             projectile.file = ":images/turquoiseBomb.svg";
 			soundEngine.play('fire.wav');
 			graphicsEngine.appendProjectile(projectile);
-			var impulseX = cosAngle*40.0+ufo.xVelocity;
-			var impulseY = sinAngle*40.0+ufo.yVelocity;
+            let impulseX = cosAngleUfo*40.0+ufo.xVelocity;
+            let impulseY = sinAngleUfo*40.0+ufo.yVelocity;
 			projectile.applyImpulse(impulseX,impulseY);
 			projectile.diplomacy = 3; // diplomacy of player
 			projectile.isProjectile = true;
@@ -133,8 +153,8 @@ function mainLoop()
 		else
 			--ufo.shootCooldown;
 
-		ufo.xAcceleration = cosAngle*10.0;
-		ufo.yAcceleration = sinAngle*10.0;
+        ufo.xAcceleration = cosAngleUfo*10.0;
+        ufo.yAcceleration = sinAngleUfo*10.0;
 
 		++ufo.stayTime;
 		if(ufo.stayTime  > 1000) // if it stayed too long and it hasn't been destroyed
@@ -180,7 +200,7 @@ function isNearPlayers(px,py)
 {
 	for(var i = 0; i < playerVehicles.length; ++i)
 	{
-		if(isNullQObject(playerVehicles[i]) == true) // check for wrapped NULL pointer
+        if(isNullQObject(playerVehicles[i]) === true) // check for wrapped NULL pointer
 			continue;
 
 		if(distance(playerVehicles[i].px,playerVehicles[i].py,px,py) < 512.0)
@@ -227,17 +247,17 @@ function phaseChange(newPhase)
         graphicsEngine.showText('Level ' + (newPhase+1),3000);
 
         for(i = 0; i< 3; ++i)
-		{
-			do
-			{
-				randPosX = 0+  Math.floor(Math.random() *1600.0);
-				randPosY = 0;//-400 -Math.floor(Math.random() * 600.0);
-			}
-			while(isNearPlayers(randPosX,randPosY));
+        {
+            do
+            {
+                randPosX = 0+  Math.floor(Math.random() *1600.0);
+                randPosY = 0;//-400 -Math.floor(Math.random() * 600.0);
+            }
+            while(isNearPlayers(randPosX,randPosY));
 
-			graphicsEngine.createAsteroidAt(randPosX,randPosY,2.0);
+            graphicsEngine.createAsteroidAt(randPosX,randPosY,2.0);
 
-		}
+        }
 		// restore hitpoints every 2 levels
 		if(newPhase % 2 == 0)
 		{
@@ -245,5 +265,34 @@ function phaseChange(newPhase)
 				playerVehicles[i].hitpoints = 10;
 		}
     }
+}
+
+function calculateAngleVelocitySign(vehicle, point)
+{
+    let diffy = point.y - vehicle.py;
+    let diffx = point.x - vehicle.px;
+    const bAngle = Math.round(Math.atan2(diffy,diffx) * 360 / Math.PI/2 +360)%360;
+    const nVAngle = Math.round(vehicle.angle%360+360) % 360;
+
+  //   console.log(" normalizedVehicleAngle: " + nVAngle  + " angleBetween: " + bAngle );
+   // console.log("btn: " + button + " point: " + point + " vehiclex: " + Math.round(vehicle.px) + " vehicley: " + Math.round(vehicle.py) +" angle: " + normalizedVehicleAngle  + " atan2: " + angleBetween);
+
+    const angleSum = bAngle + nVAngle;
+    if(Math.abs(bAngle - nVAngle) < 10 || (angleSum > 350 && angleSum < 360) )
+    {
+        return 0;
+    }
+
+    let angleDiff = bAngle - nVAngle;
+    if(angleDiff < -180)
+    {
+        angleDiff += 360;
+    }
+    else if(angleDiff > 180)
+    {
+        angleDiff -=360;
+    }
+    return angleDiff > 0 ? 1 : -1;
+
 }
 

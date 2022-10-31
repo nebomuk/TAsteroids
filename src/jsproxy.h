@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QQmlEngine>
+#include <QPoint>
 
 
 /// This class serves as a proxy between the script environments and GraphicsView
@@ -34,6 +35,9 @@ public:
 signals:
     void signalKeyPress(int);
     void signalKeyRelease(int);
+    void signalMousePress(int, QPoint);
+    void signalMouseRelease(int,QPoint);
+    void signalMouseMove(int, QPoint);
     void signalGestureStarted(int);
     void signalGestureFinished(int);
     void signalTimerEvent();

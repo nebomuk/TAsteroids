@@ -15,7 +15,7 @@ Rectangle {
         text: title1
         font.pointSize: 24
         font.family: "OCR A Extended"
-        color: "#01375D"
+        color: parent.border.color
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter:  parent.horizontalCenter
     }
@@ -24,8 +24,14 @@ Rectangle {
 
         anchors.fill: parent
         hoverEnabled: Qt.platform.os != "android" && Qt.platform.os != "ios"
-        onEntered:  parent.color = parent.border.color
-        onExited: parent.color = "#00000000"
+        onEntered:  {
+            parent.color = parent.border.color
+            buttonText.color = "black"
+        }
+        onExited: {
+            parent.color = "#00000000"
+            buttonText.color = parent.border.color
+        }
     }
 }
 

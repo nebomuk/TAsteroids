@@ -10,6 +10,7 @@
 #include <QGraphicsProxyWidget>
 #include <QLCDNumber>
 #include <QProgressBar>
+#include <QPoint>
 #include "Box2D/Box2D.h"
 #include "gamestate.h"
 #include "globalvariables.h"
@@ -74,10 +75,13 @@ protected:
     virtual void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
     virtual void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
     virtual void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    virtual void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    virtual void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    virtual void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     virtual bool viewportEvent(QEvent *event) Q_DECL_OVERRIDE;
 
     // save window geometry
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
     // keep player inside visible area
     void wrapSprite(MovingItem * item);
@@ -93,6 +97,11 @@ signals:
     // these signals are emitted by keyPressEvent /keyReleaseEvent
     void signalKeyPress(int);
     void signalKeyRelease(int);
+
+    void signalMousePress(int, QPoint);
+    void signalMouseRelease(int,QPoint);
+    void signalMouseMove(int,QPoint);
+
 
 private:
     GraphicsEngine * graphicsEngine;

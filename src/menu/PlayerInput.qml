@@ -13,7 +13,7 @@ Item
 
     Text {
         id : placeholder
-        color: "#01375D"
+        color: "#0095a6"
         font.pointSize: input.font.pointSize
         text: qsTr("Enter your name");
         font.family: "OCR A Extended"

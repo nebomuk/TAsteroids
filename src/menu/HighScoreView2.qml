@@ -4,6 +4,10 @@ import "Style.js" as Style
 
 ListView
 {
+
+    property color textColor : "#0095a6"
+    property string fontFamily : "OCR A Extended"
+
     id : listView
 
     // set some default height width, because ListView does not have such attributes by default
@@ -16,31 +20,30 @@ ListView
 
     clip: true
 
-    header :
-        Row
+    header : Row
     {
 
     spacing: Style.dp(30)
 
     Text {
 
-        color: "#01375D"
+        color: textColor
         font.pointSize: 20
-        font.family: "OCR A Extended"
+        font.family: fontFamily
         text: qsTr("place");
         horizontalAlignment: Text.AlignHCenter
     }
     Text {
 
-        color: "#01375D"
+        color: textColor
         font.pointSize: 20
-        font.family: "OCR A Extended"
+        font.family: fontFamily
         text: qsTr("player");
         horizontalAlignment: Text.AlignHCenter
     }
     Text {
-        color: "#01375D"
-        font.family: "OCR A Extended"
+        color: textColor
+        font.family: fontFamily
         font.pointSize: 20
         text: qsTr("score");
         horizontalAlignment: Text.AlignHCenter
@@ -54,26 +57,26 @@ Row
     spacing: Style.dp(5)
 
     Text {
-        color: "#01375D"
+        color: textColor
         width: headerItem.width/3
         font.pointSize: 20
-        font.family: "OCR A Extended"
+        font.family: fontFamily
         text: parseInt(place)+1;
         horizontalAlignment:  Text.AlignHCenter
     }
     Text {
-        color: "#01375D"
+        color: textColor
         width: headerItem.width/3
         font.pointSize: 20
-        font.family: "OCR A Extended"
+        font.family: fontFamily
         text: player;
         horizontalAlignment: Text.AlignLeft
     }
     Text {
-        color: "#01375D"
+        color: textColor
         width: headerItem.width/3
         font.pointSize: 20
-        font.family: "OCR A Extended"
+        font.family: fontFamily
         text: score;
         horizontalAlignment:  Text.AlignHCenter
     }

@@ -5,6 +5,11 @@ ScriptProxy.signalKeyRelease.connect(onKeyRelease);
 ScriptProxy.signalGestureStarted.connect(onGestureStarted);
 ScriptProxy.signalGestureFinished.connect(onGestureFinished);
 
+ScriptProxy.signalMousePress.connect(onMousePress);
+ScriptProxy.signalMouseRelease.connect(onMouseRelease);
+ScriptProxy.signalMouseMove.connect(onMouseMove);
+
+
 //coordinate system 0,0 of playerVehicles[1] is in topleft corner
 // angles are degree by default
 
@@ -169,7 +174,7 @@ function onKeyPress(key)
 	}
 
 	if(!isNullQObject(playerVehicles[1])
-        && playerVehicles[1].control == true && playerVehicles[1].wormholeState == Vehicle.OUTSIDE)
+        && playerVehicles[1].control === true && playerVehicles[1].wormholeState === Vehicle.OUTSIDE)
 	switch(key)
 	{
 		case Qt.Key_W:
@@ -286,6 +291,29 @@ switch (key)
 		}
 		default:;
 	}
+}
+
+function onMousePress(button,point)
+{
+  //  startAcceleration(playerVehicles[0]);
+    playerVehicles[0].mouseControl = true;
+    playerVehicles[0].mousePoint = point;
+
+}
+
+
+
+function onMouseRelease(button,point)
+{
+    stopAcceleration(playerVehicles[0]);
+    playerVehicles[0].angularVelocity = 0;
+    playerVehicles[0].mouseControl = false;
+
+}
+
+function onMouseMove(button, point)
+{
+    playerVehicles[0].mousePoint = point;
 }
 
 

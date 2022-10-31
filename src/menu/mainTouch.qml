@@ -32,7 +32,7 @@ Window {
             Connections
             {
                 target: rootWindow
-                onClosing : {
+                function onClosing(args) {
                     if(mainForm.menuLevelMain.visible)
                     {
                         close.accepted = true; // quit app

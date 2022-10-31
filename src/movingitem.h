@@ -34,7 +34,7 @@ class MovingItem : public AnimatedItem
 	Q_PROPERTY(qreal angularVelocity READ angularVelocity WRITE setAngularVelocity STORED true)
 	Q_PROPERTY(qreal angle READ angle WRITE setAngle STORED false)
 	Q_PROPERTY(float px READ x WRITE setPX STORED false) // use this property if physics is enabled to set the X pos
-	Q_PROPERTY(float py READ x WRITE setPX STORED false)
+    Q_PROPERTY(float py READ y WRITE setPX STORED false)
 
 public:
 	MovingItem(QGraphicsItem * parent = 0);
